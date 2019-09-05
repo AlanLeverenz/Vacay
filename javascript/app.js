@@ -1,3 +1,7 @@
+
+
+// === code for gathering data from countriesREST
+
 $(document).ready(function() {
 
   // onclick CLEAR ==============================================
@@ -74,5 +78,28 @@ $(document).ready(function() {
     }); // end ajax
 
   }); // end click
+
+  var firebaseConfig = {
+    apiKey: "AIzaSyAcPU6hT3d3dhhypK3w3sJOOFTM9-ZQQV4",
+    authDomain: "vacay-project1.firebaseapp.com",
+    databaseURL: "https://vacay-project1.firebaseio.com",
+    projectId: "vacay-project1",
+    storageBucket: "",
+    messagingSenderId: "1002876054986",
+    appId: "1:1002876054986:web:5e247e0ba1f7218504f333"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  
+  var vacayData = firebase.database();
+  
+  //
+  //
+  // FIREBASE CODING HERE
+  //
+  //
 
 }); // end document.ready
