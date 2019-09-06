@@ -21,6 +21,11 @@ $(document).ready(function() {
             .val()
             .trim();
 
+        //gooogle maps thing
+        getCountryGoogleCode();
+        //Show google maps map thing
+        showGoogleMapsIframe();
+
         // build queryURL
         var queryURL = "https://restcountries.eu/rest/v2/name/" + search;
         console.log(queryURL);
@@ -40,9 +45,6 @@ $(document).ready(function() {
             var flagImg = $("<img>");
             flagImg.attr("src", flagSRC);
             flagInsert.append(flagImg);
-
-            //Show google maps map thing
-            showGoogleMapsIframe();
 
             var name = results[0].name;
             var pName = $("<h4>").html(name);
