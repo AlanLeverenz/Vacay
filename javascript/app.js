@@ -7,7 +7,7 @@ $(document).ready(function() {
         event.preventDefault();
         // empty the current top-articles div
         $("#country-information").empty();
-        hideGoogleMapsIframe();
+        $("#googleMapsIframe").hide();
     }); // end clear-results-button
 
     // onclick SEARCH ======================================
@@ -21,10 +21,8 @@ $(document).ready(function() {
             .val()
             .trim();
 
-        //gooogle maps thing
-        getCountryGoogleCode();
         //Show google maps map thing
-        showGoogleMapsIframe();
+        $("#googleMapsIframe").show();
 
         // build queryURL
         var queryURL = "https://restcountries.eu/rest/v2/name/" + search;
