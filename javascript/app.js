@@ -7,7 +7,7 @@ $(document).ready(function() {
         event.preventDefault();
         // empty the current top-articles div
         $("#country-information").empty();
-        $("#googleMapsIframe").hide();
+        $("#googleMapsIframeDiv").hide();
     }); // end clear-results-button
 
     // onclick SEARCH ======================================
@@ -22,7 +22,12 @@ $(document).ready(function() {
             .trim();
 
         //Show google maps map thing
-        $("#googleMapsIframe").show();
+        $("#googleMapsIframe").attr(
+            "src",
+            "https://www.google.com/maps/embed/v1/place?key=AIzaSyA3L9poaBkBRy2xg-qvpF6Qyr7XTDe8gNM&q=" +
+                search
+        );
+        $("#googleMapsIframeDiv").show();
 
         // build queryURL
         var queryURL = "https://restcountries.eu/rest/v2/name/" + search;
