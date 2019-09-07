@@ -1,6 +1,8 @@
 // === code for gathering data from countriesREST
 
 $(document).ready(function() {
+    //Google maps API key
+    var googleMapsApikey = "AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg";
     // onclick CLEAR ==============================================
 
     $("#clear-results-button").on("click", function(event) {
