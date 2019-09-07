@@ -24,7 +24,9 @@ $(document).ready(function() {
         //Show google maps map thing
         $("#googleMapsIframe").attr(
             "src",
-            "https://www.google.com/maps/embed/v1/place?key=AIzaSyA3L9poaBkBRy2xg-qvpF6Qyr7XTDe8gNM&q=" +
+            "https://www.google.com/maps/embed/v1/place?key=" +
+                googleMapsApikey +
+                "&q=" +
                 search
         );
         $("#googleMapsIframeDiv").show();
