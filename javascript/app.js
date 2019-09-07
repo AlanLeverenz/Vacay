@@ -9,7 +9,49 @@ $(document).ready(function() {
         $("#country-information").empty();
         $("#googleMapsIframeDiv").hide();
     }); // end clear-results-button
-
+    var placesQuery =
+        "https://maps.googleapis.com/maps/api/js?key=" +
+        googleMapsApikey +
+        "&libraries=places";
+    $.getScript({
+        url: placesQuery,
+        dataType: "script"
+    }).then(function(data, textStatus) {
+        // console.log(data);
+        //autocomplete search
+        var pacContainer = document.getElementById("pac-container");
+        // The input element
+        var input = document.getElementById("search-term");
+        // Autocomplete result restrictions
+        var options = { types: ["(regions)"] };
+        //Create autocomplete object
+        var autocomplete = new google.maps.places.Autocomplete(input, options);
+        //Feilds IDK
+        autocomplete.setFields([
+            "address_components",
+            "geometry",
+            "icon",
+            "name"
+        ]);
+        // autocomplete.setTypes(["(country)"]);
+        autocomplete.addListener("place_changed", function() {
+            var place = autocomplete.getPlace();
+            if (place.address_components) {
+                var address = [
+                    (place.address_components[0] &&
+                        place.address_components[0].short_name) ||
+                        "",
+                    (place.address_components[1] &&
+                        place.address_components[1].short_name) ||
+                        "",
+                    (place.address_components[2] &&
+                        place.address_components[2].short_name) ||
+                        ""
+                ].join(" ");
+                console.log(address);
+            }
+        });
+    });
     // onclick SEARCH ======================================
     $("#search-button").on("click", function(event) {
         event.preventDefault();

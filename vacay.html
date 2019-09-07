@@ -47,11 +47,14 @@
                     <form>
                         <div class="form-group">
                             <label for="search-term">Country</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="search-term"
-                            />
+                            <div id="pac-container">
+                                <input
+                                    class="form-control"
+                                    id="search-term"
+                                    type="text"
+                                    placeholder="Enter a location"
+                                />
+                            </div>
                         </div>
                         <div class="form-group">
                             <button
@@ -94,6 +97,10 @@
                         style="border:0"
                         id="googleMapsIframe"
                     ></iframe>
+                    <img
+                        height="20px"
+                        src="images/poweredByGoogle/powered_by_google_on_white_hdpi.png"
+                    />
                 </div>
                 <!-- country information appended here -->
                 <div class="card-body" id="country-information"></div>
@@ -157,7 +164,12 @@
         <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
 
         <!-- <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.database.js"></script> -->
-        <script type="text/javascript" src="javascript/ourApiKeys.js"></script>
+        <div id="apiKeyFiles">
+            <script
+                type="text/javascript"
+                src="javascript/ourApiKeys.js"
+            ></script>
+        </div>
         <!-- JS source file -->
         <script type="text/javascript" src="javascript/app.js"></script>
 
