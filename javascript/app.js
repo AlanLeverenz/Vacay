@@ -75,8 +75,6 @@ $(document).ready(function() {
 
             var timeZone = results[0].timezones[0];
             var pTimeZone = $("<p>").html("<b>Time Zone:</b> " + timeZone);
-<<<<<<< HEAD
-=======
             
             var callingCodes = results[0].callingCodes[0];
             var pCallingCodes = $("<p>").html("<b>Calling Code(s):</b> " + callingCodes);
@@ -121,7 +119,6 @@ $(document).ready(function() {
   // FIREBASE CODING HERE
   //
   //
->>>>>>> master
 
             var callingCodes = results[0].callingCodes[0];
             var pCallingCodes = $("<p>").html(
