@@ -36,96 +36,124 @@
                 <h1>Vacay</h1>
             </div>
             <!-- search box -->
-            <div class="card col-8 mx-auto px-0" id="search-parameters">
+            <div class="row">
                 <div
-                    class="card-header pb-0"
-                    style="background-color: rgb(30,30,30); color: white;"
+                    class="card col-8 mx-auto mb-0 px-0"
+                    id="search-parameters"
                 >
-                    <h5>Search</h5>
-                </div>
-                <div class="card-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="search-term">Country</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="search-term"
-                            />
-                        </div>
-                        <div class="form-group">
-                            <button
-                                class="btn btn-secondary"
-                                id="search-button"
-                            >
-                                <i class="fa fa-search"></i> Search
-                            </button>
-                            <button
-                                class="btn btn-secondary"
-                                id="clear-results-button"
-                            >
-                                <i class="fa fa-trash"></i> Clear Results
-                            </button>
-                        </div>
-                    </form>
+                    <div
+                        class="card-header pb-0"
+                        style="background-color: rgb(30,30,30); color: white;"
+                    >
+                        <h5>Search</h5>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="search-term">Country</label>
+                                <div id="pac-container">
+                                    <input
+                                        class="form-control"
+                                        id="search-term"
+                                        type="text"
+                                        placeholder="Enter a location"
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button
+                                    class="btn btn-secondary"
+                                    id="search-button"
+                                >
+                                    <i class="fa fa-search"></i> Search
+                                </button>
+                                <button
+                                    class="btn btn-secondary"
+                                    id="clear-results-button"
+                                >
+                                    <i class="fa fa-trash"></i> Clear Results
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
             <br />
-            <!-- country information -->
 
-            <div class="card col-8 mx-auto px-0">
+            <div class="row">
                 <div
-                    class="card-header pb-0"
-                    id="country-info-header"
-                    style="background-color: rgb(30,30,30); color: white;"
+                    class="card col-7 mx-auto my-2 px-0"
+                    id="googleMapsIframeDiv"
+                    style="display:none"
                 >
-                    <h5>Country Information</h5>
+                    <div>
+                        <iframe
+                            width="100%"
+                            height="450"
+                            frameborder="0"
+                            style="border:0"
+                            id="googleMapsIframe"
+                        ></iframe>
+                        <img
+                            height="20px"
+                            src="images/poweredByGoogle/powered_by_google_on_white_hdpi.png"
+                        />
+                    </div>
                 </div>
-                <!-- space for country flag SVG area has to be set in view box -->
-                <!-- <svg width="82" height="82" viewbox="0 0 102 102">
+            </div>
+            <!-- country information -->
+            <div class="row my-4">
+                <div class="card col-7 mx-auto px-0">
+                    <div
+                        class="card-header pb-0"
+                        id="country-info-header"
+                        style="background-color: rgb(30,30,30); color: white;"
+                    >
+                        <h5>Country Information</h5>
+                    </div>
+                    <!-- space for country flag SVG area has to be set in view box -->
+                    <!-- <svg width="82" height="82" viewbox="0 0 102 102">
             <rect x="1" y="1" width="100" height="100" stroke="black" stroke-width="2" fill="white"/>
             <text fill="black" x="10" y="30" id="flag"></text>
         </svg> -->
-                <div id="googleMapsIframeDiv" style="display:none">
-                    <iframe
-                        width="100%"
-                        height="450"
-                        frameborder="0"
-                        style="border:0"
-                        id="googleMapsIframe"
-                    ></iframe>
+
+                    <!-- country information appended here -->
+                    <div class="card-body" id="country-information"></div>
                 </div>
-                <!-- country information appended here -->
-                <div class="card-body" id="country-information"></div>
-            </div>
 
-            <!-- inventory -->
+                <!-- inventory -->
 
-            <!-- map of colombia -->
+                <!-- map of colombia -->
 
-            <!-- <div class="card" style="width: 18rem;">
+                <!-- <div class="card" style="width: 18rem;">
     <img src="" class="card-img-top" alt="...">
     <div class="card-body">
       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
     </div>
   </div> -->
 
-            <!-- DANS WEATHER DIV -->
-            <br class="weathertoggle" />
-            <div
-                class="card col-8 mx-auto px-0 weathertoggle"
-                id="weatherContainer"
-            >
+                <!-- DANS WEATHER DIV -->
+
                 <div
-                    class="card-header pb-0 weathertoggle"
-                    id="weathertoggle"
-                    style="background-color: rgb(30,30,30); color: white;"
+                    class="card col-4 mx-auto px-0 weathertoggle"
+                    id="weatherContainer"
                 >
-                    <!-- CARD TITLE -->
-                    <h5 class="weathertoggle" id="weatherHeader">Weather</h5>
+                    <div
+                        class="card-header pb-0 weathertoggle"
+                        id="weathertoggle"
+                        style="background-color: rgb(30,30,30); color: white;"
+                    >
+                        <!-- CARD TITLE -->
+                        <h5 class="weathertoggle" id="weatherHeader">
+                            Weather
+                        </h5>
+                    </div>
+                    <!-- WEATHER WILL DISPLAY HERE -->
+                    <div
+                        class="card-body weathertoggle"
+                        id="weatherRender"
+                    ></div>
                 </div>
-                <!-- WEATHER WILL DISPLAY HERE -->
-                <div class="card-body weathertoggle" id="weatherRender"></div>
             </div>
         </div>
         <!-- end container-->
@@ -157,7 +185,12 @@
         <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
 
         <!-- <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.database.js"></script> -->
-        <script type="text/javascript" src="javascript/ourApiKeys.js"></script>
+        <div id="apiKeyFiles">
+            <script
+                type="text/javascript"
+                src="javascript/ourApiKeys.js"
+            ></script>
+        </div>
         <!-- JS source file -->
         <script type="text/javascript" src="javascript/app.js"></script>
 
