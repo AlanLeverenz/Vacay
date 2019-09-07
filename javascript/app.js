@@ -35,22 +35,12 @@ $(document).ready(function() {
             "icon",
             "name"
         ]);
-        // autocomplete.setTypes(["(country)"]);
+        // GET COUNTRY NAME FROM AUTOCMPLETE INPUT
         autocomplete.addListener("place_changed", function() {
             var place = autocomplete.getPlace();
             if (place.address_components) {
-                var address = [
-                    (place.address_components[0] &&
-                        place.address_components[0].short_name) ||
-                        "",
-                    (place.address_components[1] &&
-                        place.address_components[1].short_name) ||
-                        "",
-                    (place.address_components[2] &&
-                        place.address_components[2].short_name) ||
-                        ""
-                ].join(" ");
-                console.log(address);
+                var userInputCountry = place.address_components[3].long_name;
+                console.log(userInputCountry);
             }
         });
     });
