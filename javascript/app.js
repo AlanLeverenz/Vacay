@@ -75,6 +75,53 @@ $(document).ready(function() {
 
             var timeZone = results[0].timezones[0];
             var pTimeZone = $("<p>").html("<b>Time Zone:</b> " + timeZone);
+<<<<<<< HEAD
+=======
+            
+            var callingCodes = results[0].callingCodes[0];
+            var pCallingCodes = $("<p>").html("<b>Calling Code(s):</b> " + callingCodes);
+
+        // append to the country info div
+        countryInfoDiv.append(pName).append(pCapital).append(pSubRegion).append(pRegion).append(pBorders).append(pCurrency).append(pLanguages).append(pPopulation).append(pTimeZone).append(pCallingCodes);
+        
+    }); // end ajax
+
+  }); // end click
+
+  // var firebaseConfig = {
+  //   apiKey: "AIzaSyAcPU6hT3d3dhhypK3w3sJOOFTM9-ZQQV4",
+  //   authDomain: "vacay-project1.firebaseapp.com",
+  //   databaseURL: "https://vacay-project1.firebaseio.com",
+  //   projectId: "vacay-project1",
+  //   storageBucket: "",
+  //   messagingSenderId: "1002876054986",
+  //   appId: "1:1002876054986:web:5e247e0ba1f7218504f333"
+  // };
+
+  // var firebaseConfig = {
+  //   apiKey: "AIzaSyD5TgHMFez2lODS4UgYrIobJSWGPtf0bI8",
+  //   authDomain: "bcs-vacay-p1.firebaseapp.com",
+  //   databaseURL: "https://bcs-vacay-p1.firebaseio.com",
+  //   projectId: "bcs-vacay-p1",
+  //   storageBucket: "",
+  //   messagingSenderId: "1029877283379",
+  //   appId: "1:1029877283379:web:7e7ee570b829e6699cc146"
+  // };
+
+  // // Initialize Firebase
+  // firebase.initializeApp(firebaseConfig);
+  
+  // // Initialize Firebase
+  // firebase.initializeApp(firebaseConfig);
+  
+  // var vacayData = firebase.database();
+  
+  //
+  //
+  // FIREBASE CODING HERE
+  //
+  //
+>>>>>>> master
 
             var callingCodes = results[0].callingCodes[0];
             var pCallingCodes = $("<p>").html(
