@@ -3,8 +3,10 @@
 $(document).ready(function() {
     //Google maps API key
     var googleMapsApikey = "AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg";
-    // onclick CLEAR ==============================================
+    // Temporary variable for current place search country value
+    var userInputCountry;
 
+    // onclick CLEAR ==============================================
     $("#clear-results-button").on("click", function(event) {
         event.preventDefault();
         // empty the current top-articles div
@@ -21,13 +23,13 @@ $(document).ready(function() {
     }).then(function(data, textStatus) {
         // console.log(data);
         //autocomplete search
-        var pacContainer = document.getElementById("pac-container");
+
         // The input element
         var input = document.getElementById("search-term");
         // Autocomplete result restrictions
         var options = { types: ["(regions)"] };
         //Create autocomplete object
-        var autocomplete = new google.maps.places.Autocomplete(input, options);say
+        var autocomplete = new google.maps.places.Autocomplete(input, options);
         //Feilds IDK
         autocomplete.setFields([
             "address_components",
@@ -35,22 +37,22 @@ $(document).ready(function() {
             "icon",
             "name"
         ]);
-        // autocomplete.setTypes(["(country)"]);
+
+        // -----------
+        // ALANNNNN
+        // --------
+        // GET COUNTRY NAME FROM AUTOCMPLETE INPUT
         autocomplete.addListener("place_changed", function() {
-            var place = autocomplete.getPlace();
-            if (place.address_components) {
-                var address = [
-                    (place.address_components[0] &&
-                        place.address_components[0].short_name) ||
-                        "",
-                    (place.address_components[1] &&
-                        place.address_components[1].short_name) ||
-                        "",
-                    (place.address_components[2] &&
-                        place.address_components[2].short_name) ||
-                        ""
-                ].join(" ");
-                console.log(address);
+            var currentPlace = autocomplete.getPlace();
+
+            if (currentPlace.address_components) {
+                console.log(currentPlace.address_components);
+                userInputCountry =
+                    currentPlace.address_components[
+                        currentPlace.address_components.length - 1
+                    ].long_name;
+
+                console.log("autocomplete", userInputCountry);
             }
         });
     });
@@ -60,11 +62,20 @@ $(document).ready(function() {
         // empty the current top-articles div
         $("#country-information").empty();
 
-        // fetch form values
-        var search = $("#search-term")
-            .val()
-            .trim();
-
+        //search var
+        var search;
+        // Check if user didn't use google autocomplete
+        if (userInputCountry === "") {
+            // fetch form values
+            search = $("#search-term")
+                .val()
+                .trim();
+        } else {
+            search = userInputCountry;
+        }
+        console.log(search);
+        //reset user input country
+        userInputCountry = "";
         //Show google maps map thing
         $("#googleMapsIframe").attr(
             "src",
@@ -79,7 +90,7 @@ $(document).ready(function() {
         if ( search.includes(', ')) {
             searchArr = search.split(", ")
             search = searchArr[1];
-        }
+        } console.log("SEARCH COUNTRY = " + search);
 
         // build queryURL
         var queryURL = "https://restcountries.eu/rest/v2/name/" + search;
@@ -166,7 +177,7 @@ $(document).ready(function() {
     var vacayData = firebase.database();
 
     // Button for adding trains
-  $("#add-inventory-btn").on("click", function(event) {
+  $("#add-itinerary-btn").on("click", function(event) {
     // Prevent the default form submit behavior
     event.preventDefault();
 
