@@ -27,7 +27,7 @@ $(document).ready(function() {
         // Autocomplete result restrictions
         var options = { types: ["(regions)"] };
         //Create autocomplete object
-        var autocomplete = new google.maps.places.Autocomplete(input, options);
+        var autocomplete = new google.maps.places.Autocomplete(input, options);say
         //Feilds IDK
         autocomplete.setFields([
             "address_components",
@@ -74,6 +74,12 @@ $(document).ready(function() {
                 search
         );
         $("#googleMapsIframeDiv").show();
+
+        // parse search-term to get country
+        if ( search.includes(', ')) {
+            searchArr = search.split(", ")
+            search = searchArr[1];
+        }
 
         // build queryURL
         var queryURL = "https://restcountries.eu/rest/v2/name/" + search;
@@ -142,7 +148,6 @@ $(document).ready(function() {
         }); // end ajax
     }); // end click
 
-
     // FIREBASE CODE FOR STORING INVENTORY TABLE ITEMS
     var firebaseConfig = {
       apiKey: "AIzaSyD5TgHMFez2lODS4UgYrIobJSWGPtf0bI8",
@@ -153,9 +158,6 @@ $(document).ready(function() {
       messagingSenderId: "1029877283379",
       appId: "1:1029877283379:web:7e7ee570b829e6699cc146"
     };
-
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
 
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
@@ -236,9 +238,6 @@ $(document).ready(function() {
     ) // end append tr
 }); // end
 
-
-
-
-  }); // END ADD INVENTORY BUTTON
+  }); // END ADD ITINERARY BUTTON
 
 }); // end document.ready
