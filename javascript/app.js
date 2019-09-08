@@ -86,6 +86,12 @@ $(document).ready(function() {
         );
         $("#googleMapsIframeDiv").show();
 
+        // parse search-term to get country
+        if ( search.includes(', ')) {
+            searchArr = search.split(", ")
+            search = searchArr[1];
+        } console.log("SEARCH COUNTRY = " + search);
+
         // build queryURL
         var queryURL = "https://restcountries.eu/rest/v2/name/" + search;
         console.log(queryURL);
@@ -153,80 +159,96 @@ $(document).ready(function() {
         }); // end ajax
     }); // end click
 
-    // var firebaseConfig = {
-    //   apiKey: "AIzaSyAcPU6hT3d3dhhypK3w3sJOOFTM9-ZQQV4",
-    //   authDomain: "vacay-project1.firebaseapp.com",
-    //   databaseURL: "https://vacay-project1.firebaseio.com",
-    //   projectId: "vacay-project1",
-    //   storageBucket: "",
-    //   messagingSenderId: "1002876054986",
-    //   appId: "1:1002876054986:web:5e247e0ba1f7218504f333"
-    // };
+    // FIREBASE CODE FOR STORING INVENTORY TABLE ITEMS
+    var firebaseConfig = {
+      apiKey: "AIzaSyD5TgHMFez2lODS4UgYrIobJSWGPtf0bI8",
+      authDomain: "bcs-vacay-p1.firebaseapp.com",
+      databaseURL: "https://bcs-vacay-p1.firebaseio.com",
+      projectId: "bcs-vacay-p1",
+      storageBucket: "",
+      messagingSenderId: "1029877283379",
+      appId: "1:1029877283379:web:7e7ee570b829e6699cc146"
+    };
 
-    // var firebaseConfig = {
-    //   apiKey: "AIzaSyD5TgHMFez2lODS4UgYrIobJSWGPtf0bI8",
-    //   authDomain: "bcs-vacay-p1.firebaseapp.com",
-    //   databaseURL: "https://bcs-vacay-p1.firebaseio.com",
-    //   projectId: "bcs-vacay-p1",
-    //   storageBucket: "",
-    //   messagingSenderId: "1029877283379",
-    //   appId: "1:1029877283379:web:7e7ee570b829e6699cc146"
-    // };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
 
-    // // Initialize Firebase
-    // firebase.initializeApp(firebaseConfig);
+    // assign database to variable
+    var vacayData = firebase.database();
 
-    // // Initialize Firebase
-    // firebase.initializeApp(firebaseConfig);
+    // Button for adding trains
+  $("#add-itinerary-btn").on("click", function(event) {
+    // Prevent the default form submit behavior
+    event.preventDefault();
 
-    // var vacayData = firebase.database();
+        // Grabs user input
+        var destination = $("#destination-input").val().trim();
+        var arriveDate = $("#arrive-date-input").val().trim();
+        var arriveVia = $("#arrive-via-input").val().trim();
+        var accommodations = $("#accommodations-input").val().trim();
+        var carRental = $("#car-rental-input").val().trim();
+        var departDate = $("#departure-date-input").val().trim();
+        var departVia = $("#depart-via-input").val().trim();
+        
+    // Creates local "temporary" object for holding itinerary
+    var newItinerary = {
+        destination: destination,
+        arriveDate: arriveDate,
+        arriveVia: arriveVia,
+        accommodations: accommodations,
+        carRental: carRental,
+        departDate: departDate,
+        departVia: departVia
+      };
 
-    //
-    //
-    // FIREBASE CODING HERE
-    //
-    //   //
+    vacayData.ref().push(newItinerary);
 
-    //             var callingCodes = results[0].callingCodes[0];
-    //             var pCallingCodes = $("<p>").html(
-    //                 "<b>Calling Code(s):</b> " + callingCodes
-    //             );
+    // logs everything to console
+    console.log(newItinerary.destination);
+    console.log(newItinerary.arriveDate);
+    console.log(newItinerary.arriveVia);
+    console.log(newItinerary.accommodations);
+    console.log(newItinerary.carRental);
+    console.log(newItinerary.departDate);
+    console.log(newItinerary.departVia);
 
-    //             // append to the country info div
-    //             countryInfoDiv
-    //                 .append(pName)
-    //                 .append(pCapital)
-    //                 .append(pSubRegion)
-    //                 .append(pRegion)
-    //                 .append(pBorders)
-    //                 .append(pCurrency)
-    //                 .append(pLanguages)
-    //                 .append(pPopulation)
-    //                 .append(pTimeZone)
-    //                 .append(pCallingCodes);
-    //         }); // end ajax
-    //     }); // end click
+    console.log("Itinerary successfully added.");
 
-    //     var firebaseConfig = {
-    //         apiKey: "AIzaSyAcPU6hT3d3dhhypK3w3sJOOFTM9-ZQQV4",
-    //         authDomain: "vacay-project1.firebaseapp.com",
-    //         databaseURL: "https://vacay-project1.firebaseio.com",
-    //         projectId: "vacay-project1",
-    //         storageBucket: "",
-    //         messagingSenderId: "1002876054986",
-    //         appId: "1:1002876054986:web:5e247e0ba1f7218504f333"
-    //     };
-    //     // Initialize Firebase
-    //     firebase.initializeApp(firebaseConfig);
+    // clears all of the text boxes
+    $("#destination-input").val("");
+    $("#arrive-date-input").val("");
+    $("#arrive-via-input").val("");
+    $("#accommodations-input").val("");
+    $("#car-rental-input").val("");
+    $("#departure-date-input").val("");
+    $("#depart-via-input").val("");
 
-    //     // Initialize Firebase
-    //     firebase.initializeApp(firebaseConfig);
+    // Create Firebase event for adding itineraries to the database and a table row
+    vacayData.ref().on("child_added", function(childSnapshot, prevChildKey) {
+    console.log(childSnapshot.val());
 
-    //     var vacayData = firebase.database();
+    // Store everything in a variable
+    var tDestination = childSnapshot.val().destination;
+    var tArriveDate = childSnapshot.val().arriveDate;
+    var tArriveVia = childSnapshot.val().arriveVia;
+    var tAccommodations = childSnapshot.val().accommodations;
+    var tCarRental = childSnapshot.val().carRental;
+    var tDepartDate = childSnapshot.val().departDate;
+    var tDepartVia = childSnapshot.val().departVia;
 
-    //     //
-    //     //
-    //     // FIREBASE CODING HERE
-    //     //
-    //     //
+    $("#itinerary-table tbody").append(
+        $("<tr>").append(
+            $("<td>").text(tDestination),
+            $("<td>").text(tArriveDate),
+            $("<td>").text(tArriveVia),
+            $("<td>").text(tAccommodations),
+            $("<td>").text(tCarRental),
+            $("<td>").text(tDepartDate),
+            $("<td>").text(tDepartVia),
+        ) // end append tbody
+    ) // end append tr
+}); // end
+
+  }); // END ADD ITINERARY BUTTON
+
 }); // end document.ready
