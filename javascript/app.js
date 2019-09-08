@@ -160,9 +160,10 @@ $(document).ready(function() {
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 
+    // assign database to variable
     var vacayData = firebase.database();
 
-      // Button for adding trains
+    // Button for adding trains
   $("#add-inventory-btn").on("click", function(event) {
     // Prevent the default form submit behavior
     event.preventDefault();
@@ -173,20 +174,67 @@ $(document).ready(function() {
         var arriveVia = $("#arrive-via-input").val().trim();
         var accommodations = $("#accommodations-input").val().trim();
         var carRental = $("#car-rental-input").val().trim();
-        var departDate = $("#depart-date-input").val().trim();
+        var departDate = $("#departure-date-input").val().trim();
         var departVia = $("#depart-via-input").val().trim();
         
-            // Creates local "temporary" object for holding train data
-    var newInventory = {
-        name: trainName,
+    // Creates local "temporary" object for holding itinerary
+    var newItinerary = {
         destination: destination,
-        firstTrain: firstTrain,
-        frequency: frequency,
-        station: station,
-        distance: distance,
-        interval: interval,
-        delay: delay,
+        arriveDate: arriveDate,
+        arriveVia: arriveVia,
+        accommodations: accommodations,
+        carRental: carRental,
+        departDate: departDate,
+        departVia: departVia
       };
+
+    vacayData.ref().push(newItinerary);
+
+    // logs everything to console
+    console.log(newItinerary.destination);
+    console.log(newItinerary.arriveDate);
+    console.log(newItinerary.arriveVia);
+    console.log(newItinerary.accommodations);
+    console.log(newItinerary.carRental);
+    console.log(newItinerary.departDate);
+    console.log(newItinerary.departVia);
+
+    console.log("Itinerary successfully added.");
+
+    // clears all of the text boxes
+    $("#destination-input").val("");
+    $("#arrive-date-input").val("");
+    $("#arrive-via-input").val("");
+    $("#accommodations-input").val("");
+    $("#car-rental-input").val("");
+    $("#departure-date-input").val("");
+    $("#depart-via-input").val("");
+
+    // Create Firebase event for adding itineraries to the database and a table row
+    vacayData.ref().on("child_added", function(childSnapshot, prevChildKey) {
+    console.log(childSnapshot.val());
+
+    // Store everything in a variable
+    var tDestination = childSnapshot.val().destination;
+    var tArriveDate = childSnapshot.val().arriveDate;
+    var tArriveVia = childSnapshot.val().arriveVia;
+    var tAccommodations = childSnapshot.val().accommodations;
+    var tCarRental = childSnapshot.val().carRental;
+    var tDepartDate = childSnapshot.val().departDate;
+    var tDepartVia = childSnapshot.val().departVia;
+
+    $("#itinerary-table tbody").append(
+        $("<tr>").append(
+            $("<td>").text(tDestination),
+            $("<td>").text(tArriveDate),
+            $("<td>").text(tArriveVia),
+            $("<td>").text(tAccommodations),
+            $("<td>").text(tCarRental),
+            $("<td>").text(tDepartDate),
+            $("<td>").text(tDepartVia),
+        ) // end append tbody
+    ) // end append tr
+}); // end
 
 
 
