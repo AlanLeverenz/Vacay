@@ -19,10 +19,9 @@
             href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
         />
 
-        <!-- Firebase References
-    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
-     -->
+        <!-- font awesome kit -->
+        <script src="https://kit.fontawesome.com/768efcae0e.js"></script>
+
         <!-- CSS STYLE LINK -->
         <link rel="stylesheet" href="css/style.css" />
     </head>
@@ -121,19 +120,12 @@
                     <div class="card-body" id="country-information"></div>
                 </div>
 
-                <!-- inventory -->
-
-                <!-- map of colombia -->
-
-                <!-- <div class="card" style="width: 18rem;">
-    <img src="" class="card-img-top" alt="...">
-    <div class="card-body">
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-  </div> -->
-
-                <!-- DANS WEATHER DIV -->
-
+            <!-- DANS WEATHER DIV -->
+            <br class="weathertoggle" />
+            <div
+                class="card col-8 mx-auto px-0 weathertoggle"
+                id="weatherContainer"
+            >
                 <div
                     class="card col-4 mx-auto px-0 weathertoggle"
                     id="weatherContainer"
@@ -156,7 +148,78 @@
                 </div>
             </div>
         </div>
-        <!-- end container-->
+
+        <!-- ALAN'S ITINERARY SECTION -->
+        <br>
+
+        <div class="container">
+            
+            <div class="card col-8 mx-auto px-0" id="search-parameters">
+                <div
+                    class="card-header pb-0"
+                    style="background-color: rgb(30,30,30); color: white;">
+                    <h5>My Itinerary</h5>
+                </div>
+
+                <div class="card-body">
+                    <table class="table table-hover" id='itinerary-table'>
+                    <thead>
+                        <tr>
+                            <th>Destination</th>
+                            <th>Arrival Date</th>
+                            <th>Arrive Via</th>
+                            <th>Accommodations</th>
+                            <th>Car Rental</th>
+                            <th>Departure Date</th>
+                            <th>Depart Via</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    </table>
+                </div>
+
+        <!-- Add Itinerary  -->
+        <div class="card text-black mb-3 mt-2">
+          <div class="card-header">Add Itinerary</div>
+          <div class="card-body">
+            <!-- Entry Form -->
+            <form>
+              <div class="form-group">
+                <label for="destination-input">Destination</label>
+                <input type="text" class="form-control" id="destination-input">
+              </div>
+              <div class="form-group">
+                <label for="arrive-date-input">Arrival Date</label>
+                <input type="text" class="form-control" id="arrive-date-input">
+              </div>
+              <div class="form-group">
+                <label for="arrive-via-input">Arrive Via</label>
+                <input type="text" class="form-control" id="arrive-via-input">
+              </div>
+              <div class="form-group">
+                <label for="accommdations-input">Accommodations</label>
+                <input type="text" class="form-control" id="accommodations-input">
+              </div>
+              <div class="form-group">
+                <label for="car-rental-input">Car Rental</label>
+                <input type="text" class="form-control" id="car-rental-input">
+              </div>
+              <div class="form-group">
+                <label for="departure-date-input">Departure Date</label>
+                <input type="text" class="form-control" id="departure-date-input">
+              </div>
+              <div class="form-group">
+                <label for="depart-via-input">Depart Via</label>
+                <input type="text" class="form-control" id="depart-via-input">
+              </div>
+
+              <button type="submit" class="btn btn-primary" id="add-itinerary-btn">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
         <!-- SCRIPT SOURCE FILES ========================================================== -->
 
@@ -184,11 +247,11 @@
 
         <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
 
-        <!-- <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.database.js"></script> -->
+        <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-database.js"></script>
 
         <!-- JS source file -->
         <script type="text/javascript" src="javascript/app.js"></script>
-
         <script type="text/javascript" src="javascript/weather.js"></script>
+
     </body>
 </html>
