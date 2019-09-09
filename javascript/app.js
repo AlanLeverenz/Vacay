@@ -1,5 +1,3 @@
-// === code for gathering data from countriesREST
-
 $(document).ready(function() {
     //Google maps API key
     var googleMapsApikey = "AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg";
@@ -9,9 +7,12 @@ $(document).ready(function() {
     // onclick CLEAR ==============================================
     $("#clear-results-button").on("click", function(event) {
         event.preventDefault();
-        // empty the current top-articles div
+        // empty the API search results
         $("#country-information").empty();
+        $("#currencyConverter").empty();
+        $("#weatherRender").empty();
         $("#googleMapsIframeDiv").hide();
+        // NOTE: Itinerary requires both html and Firebase childSnapshot values removed
     }); // end clear-results-button
     var placesQuery =
         "https://maps.googleapis.com/maps/api/js?key=" +
@@ -39,7 +40,7 @@ $(document).ready(function() {
         ]);
 
         // -----------
-        // ALANNNNN
+        // ALAN
         // --------
         // GET COUNTRY NAME FROM AUTOCMPLETE INPUT
         autocomplete.addListener("place_changed", function() {
@@ -59,8 +60,15 @@ $(document).ready(function() {
     // onclick SEARCH ======================================
     $("#search-button").on("click", function(event) {
         event.preventDefault();
-        // empty the current top-articles div
+        // empty the country, currency, and weather child elements
         $("#country-information").empty();
+        $("#currencyConverter").empty();
+        $("#weatherRender").empty();
+        // show cards
+        $(".show-country").show();
+        $(".show-currency").show();
+        $(".show-weather").show();
+        $(".show-itinerary").show();
 
         //search var
         var search;
@@ -249,6 +257,16 @@ $(document).ready(function() {
     ) // end append tr
 }); // end
 
-  }); // END ADD ITINERARY BUTTON
+}); // END ADD ITINERARY BUTTON
+
+// Lets take an example in a user db:
+
+// ref.child("Users").child("User1").setvalue("User 1");
+// ref.child("Users").child("User2").setvalue("User 2");
+// ref.child("Users").child("User3").setvalue("User 3");
+// Now if you want to remove a specific user from the database you have to use this code:
+
+// ref.child("Users").child("User2").removeValue();
+
 
 }); // end document.ready
