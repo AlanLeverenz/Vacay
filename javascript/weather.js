@@ -17,11 +17,14 @@ $(document).ready(function(){
 
         // FUNCTIONS INITIATED UP REQUEST RETURN
       }).then(function(data) {
-        console.log(data.list[0]);
+        console.log("WEATHER = " + data.list[0]);
 
+        // WEATHER PERIOD
+        var period = "Current";
+        var pPeriod = $("<h4>").html(period);
         // TEMPERATURE
           var temp = data.list[0].main.temp;
-          var ptemp = $("<p>").html("<b>Current temperature: </b>" + temp);
+          var ptemp = $("<p>").html("<b>Temperature: </b>" + temp);
         // TEMPERATURE HIGH
           var tempHigh = data.list[0].main.temp_max;
           var ptempHigh = $("<p>").html("<b>Todays high: </b>" + tempHigh);
@@ -40,11 +43,11 @@ $(document).ready(function(){
         // WIND
           var wind = data.list[0].wind.speed;
           var pwind = $("<p>").html("<b>Wind: </b>" + wind + "mph");
-          console.log(ptemp);
+          // console.log(ptemp);
 
       // ASSIGNING VARS TO THE APPENDING OF RETRIEVED DATA TO THE HTML CONTAINER
       var weatherRender = $("#weatherRender");
-      weatherRender.append(ptemp).append(ptempHigh).append(ptempLow).append(phumidity).append(ppressure).append(pclouds).append(pwind);
+      weatherRender.append(pPeriod).append(ptemp).append(ptempHigh).append(ptempLow).append(phumidity).append(ppressure).append(pclouds).append(pwind);
     }); // end ajax then
   }); // end on-click
 }); // end document.ready

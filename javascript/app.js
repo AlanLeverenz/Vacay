@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     //Google maps API key
     var googleMapsApikey = "AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg";
     // Temporary variable for current place search country value
@@ -39,7 +40,7 @@ $(document).ready(function() {
             "name"
         ]);
 
-        // -----------
+        // --------
         // ALAN
         // --------
         // GET COUNTRY NAME FROM AUTOCMPLETE INPUT
@@ -57,18 +58,25 @@ $(document).ready(function() {
             }
         });
     });
-    // onclick SEARCH ======================================
+
+    // onclick ADD INVENTORY ITEM (FORM) =====================
+    $("#add-itinerary-button").on("click", function(event) {
+        event.preventDefault();
+        $(".toggle-itinerary-form").show();
+    });
+
+    // onclick SEARCH =========================================
     $("#search-button").on("click", function(event) {
         event.preventDefault();
         // empty the country, currency, and weather child elements
         $("#country-information").empty();
-        $("#currencyConverter").empty();
+        // $("#currencyConverter").empty();
         $("#weatherRender").empty();
         // show cards
-        $(".show-country").show();
-        $(".show-currency").show();
-        $(".show-weather").show();
-        $(".show-itinerary").show();
+        $(".toggle-country").show();
+        $(".toggle-currency").show();
+        $(".toggle-weather").show();
+        $(".toggle-itinerary-table").show();
 
         //search var
         var search;
@@ -115,13 +123,16 @@ $(document).ready(function() {
             // insert flag in Country Information header
             var flagInsert = $("#flag");
             var flagSRC = results[0].flag;
-            console.log(flagSRC);
             var flagImg = $("<img>");
             flagImg.attr("src", flagSRC);
+            flagImg.attr("width",auto);
+            flagImg.attr("height","82px");
+            flagImg.attr("style","float:right");
             flagInsert.append(flagImg);
 
             var name = results[0].name;
             var pName = $("<h4>").html(name);
+            pName.attr("clear","both");
 
             var capital = results[0].capital;
             var pCapital = $("<p>").html("<b>Capital:</b> " + capital);
@@ -136,7 +147,8 @@ $(document).ready(function() {
             var pBorders = $("<p>").html("<b>Borders With:</b> " + borders);
 
             var currency = results[0].currencies[0]["name"];
-            var pCurrency = $("<p>").html("<b>Currency:</b> " + currency);
+            var code = results[0].currencies[0]["code"];
+            var pCurrency = $("<p>").html("<b>Currency:</b> " + currency + " (" + code + ")");
 
             var languages = results[0].languages[0]["name"];
             var pLanguages = $("<p>").html("<b>Language:</b> " + languages);
@@ -148,8 +160,7 @@ $(document).ready(function() {
             var pTimeZone = $("<p>").html("<b>Time Zone:</b> " + timeZone);
 
             var callingCodes = results[0].callingCodes[0];
-            var pCallingCodes = $("<p>").html(
-                "<b>Calling Code(s):</b> " + callingCodes
+            var pCallingCodes = $("<p>").html("<b>Calling Code(s):</b> " + callingCodes
             );
 
             // append to the country info div
@@ -164,8 +175,19 @@ $(document).ready(function() {
                 .append(pPopulation)
                 .append(pTimeZone)
                 .append(pCallingCodes);
+
+        // CURRENCY QUERY
+        $("#currencyNameCode").empty();
+        var currencyDiv = $("#currencyNameCode");
+        var currencyString = currency + '<span class="badge badge-light">' + code + '</span>';
+        console.log("CURRENCY NAME: " + currency);
+        console.log("CURRENCY CODE: " + code);
+        var currencyNameCode = $("<h4>").html(currencyString);
+        currencyDiv.append(currencyNameCode);
+
         }); // end ajax
-    }); // end click
+
+    }); // end Search button click
 
     // FIREBASE CODE FOR STORING INVENTORY TABLE ITEMS
     var firebaseConfig = {
@@ -246,7 +268,7 @@ $(document).ready(function() {
 
     $("#itinerary-table tbody").append(
         $("<tr>").append(
-            $("<td>").text(tDestination),
+            $("<th scope='row'>").text(tDestination),
             $("<td>").text(tArriveDate),
             $("<td>").text(tArriveVia),
             $("<td>").text(tAccommodations),
