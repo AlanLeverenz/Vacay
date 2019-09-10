@@ -1,5 +1,15 @@
 $(document).ready(function() {
 
+    // links date picker to date fields in the itinerary form
+    $(function() {
+        $("#arrive-date-input").datepicker();
+        $("#departure-date-input").datepicker();
+        $("#format").change(function() {
+        $("#arrive-date-input").datepicker("div", "dateFormat", $(this).val() );
+        $("#departure-date-input").datepicker("div", "dateFormat", $(this).val() );
+        });
+    });
+
     //Google maps API key
     var googleMapsApikey = "AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg";
     // Temporary variable for current place search country value
@@ -260,7 +270,7 @@ $(document).ready(function() {
         $('#select1').append($('<a class="dropdown-item" href="#"></a>').val(p).html(p));
     });
 
-    // quote button
+    // target button
     $('#select2').empty();
     $.each(options, function(i, p) {
         $('#select2').append($('<a class="dropdown-item" href="#"></a>').val(p).html(p));
@@ -364,7 +374,7 @@ $(document).ready(function() {
             var carRental = $("#car-rental-input").val().trim();
             var departDate = $("#departure-date-input").val().trim();
             var departVia = $("#depart-via-input").val().trim();
-            
+
         // Creates local "temporary" object for holding itinerary
         var newItinerary = {
             destination: destination,
@@ -379,6 +389,7 @@ $(document).ready(function() {
         // hide the itinerary form
         $("#toggle-itinerary-form").hide();
 
+        // push itinerary items into Firebase
         vacayData.ref().push(newItinerary);
 
         // logs everything to console
