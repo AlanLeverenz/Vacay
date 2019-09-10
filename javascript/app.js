@@ -1,19 +1,17 @@
-$(document).ready(function() {
+// AJAX SETUP
+$.ajaxSetup({
+    cache: true
+});
 
+// === code for gathering data from countriesREST
+
+$(document).ready(function() {
     // links date picker to date fields in the itinerary form
-    $(function() {
-        $("#arrive-date-input").datepicker();
-        $("#departure-date-input").datepicker();
-        $("#format").change(function() {
-        $("#arrive-date-input").datepicker("div", "dateFormat", $(this).val() );
-        $("#departure-date-input").datepicker("div", "dateFormat", $(this).val() );
-        });
-    });
 
     //Google maps API key
     var googleMapsApikey = "AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg";
     // Temporary variable for current place search country value
-    var userInputCountry;
+    var userInputCountry = "";
 
     // onclick CLEAR ==============================================
     $("#clear-results-button").on("click", function(event) {
@@ -30,13 +28,20 @@ $(document).ready(function() {
         "https://maps.googleapis.com/maps/api/js?key=" +
         googleMapsApikey +
         "&libraries=places";
-    $.getScript({
-        url: placesQuery,
-        dataType: "script"
-    }).then(function(data, textStatus) {
-        // console.log(data);
-        //autocomplete search
+    jQuery.cachedScript = function(url, options) {
+        // Allow user to set any option except for dataType, cache, and url
+        options = $.extend(options || {}, {
+            dataType: "script",
+            cache: true,
+            url: url
+        });
 
+        // Use $.ajax() since it is more flexible than $.getScript
+        // Return the jqXHR object so we can chain callbacks
+        return jQuery.ajax(options);
+    };
+    $.cachedScript(placesQuery).done(function(script, textStatus) {
+        // console.log(textStatus);
         // The input element
         var input = document.getElementById("search-term");
         // Autocomplete result restrictions
@@ -59,13 +64,13 @@ $(document).ready(function() {
             var currentPlace = autocomplete.getPlace();
 
             if (currentPlace.address_components) {
-                console.log(currentPlace.address_components);
+                // console.log(currentPlace.address_components);
                 userInputCountry =
                     currentPlace.address_components[
                         currentPlace.address_components.length - 1
                     ].long_name;
 
-                console.log("autocomplete", userInputCountry);
+                // console.log("autocomplete", userInputCountry);
             }
         });
     });
@@ -96,19 +101,25 @@ $(document).ready(function() {
         $(".toggle-itinerary-table").show();
 
         //search var
-        var search;
+        var search = "";
         // Check if user didn't use google autocomplete
         if (userInputCountry === "") {
             // fetch form values
             search = $("#search-term")
                 .val()
                 .trim();
+            console.log(search);
         } else {
             search = userInputCountry;
         }
-        console.log(search);
+        console.log("search country result", search);
+
+        // google maps info geocoder thing
+        geocoder = new google.maps.Geocoder();
+
         //reset user input country
         userInputCountry = "";
+
         //Show google maps map thing
         $("#googleMapsIframe").attr(
             "src",
@@ -120,10 +131,11 @@ $(document).ready(function() {
         $("#googleMapsIframeDiv").show();
 
         // parse search-term to get country
-        if ( search.includes(', ')) {
-            searchArr = search.split(", ")
+        if (search.includes(", ")) {
+            searchArr = search.split(", ");
             search = searchArr[1];
-        } console.log("SEARCH COUNTRY = " + search);
+        }
+        console.log("SEARCH COUNTRY = " + search);
 
         // build queryURL
         var queryURL = "https://restcountries.eu/rest/v2/name/" + search;
@@ -131,7 +143,6 @@ $(document).ready(function() {
             url: queryURL,
             method: "GET"
         }).then(function(results) {
-
             //  keys to capture
             var countryInfoDiv = $("#country-information");
 
@@ -141,14 +152,14 @@ $(document).ready(function() {
             var flagSRC = results[0].flag;
             var flagImg = $("<img>");
             flagImg.attr("src", flagSRC);
-            flagImg.attr("width","82px");
-            flagImg.attr("height","82px");
-            flagImg.attr("style","float:right");
+            flagImg.attr("width", "82px");
+            flagImg.attr("height", "82px");
+            flagImg.attr("style", "float:right");
             flagInsert.append(flagImg);
 
             var name = results[0].name;
             var pName = $("<h4>").html(name);
-            pName.attr("clear","both");
+            pName.attr("clear", "both");
 
             var capital = results[0].capital;
             var pCapital = $("<p>").html("<b>Capital:</b> " + capital);
@@ -164,7 +175,9 @@ $(document).ready(function() {
 
             var currency = results[0].currencies[0]["name"];
             var code = results[0].currencies[0]["code"];
-            var pCurrency = $("<p>").html("<b>Currency:</b> " + currency + " (" + code + ")");
+            var pCurrency = $("<p>").html(
+                "<b>Currency:</b> " + currency + " (" + code + ")"
+            );
 
             var languages = results[0].languages[0]["name"];
             var pLanguages = $("<p>").html("<b>Language:</b> " + languages);
@@ -176,57 +189,67 @@ $(document).ready(function() {
             var pTimeZone = $("<p>").html("<b>Time Zone:</b> " + timeZone);
 
             var callingCodes = results[0].callingCodes[0];
-            var pCallingCodes = $("<p>").html("<b>Calling Code(s):</b> " + callingCodes
+            var pCallingCodes = $("<p>").html(
+                "<b>Calling Code(s):</b> " + callingCodes
             );
 
-        // append to the country info div
-        countryInfoDiv
-            .append(pName)
-            .append(pCapital)
-            .append(pSubRegion)
-            .append(pRegion)
-            .append(pBorders)
-            .append(pCurrency)
-            .append(pLanguages)
-            .append(pPopulation)
-            .append(pTimeZone)
-            .append(pCallingCodes);
+            // append to the country info div
+            countryInfoDiv
+                .append(pName)
+                .append(pCapital)
+                .append(pSubRegion)
+                .append(pRegion)
+                .append(pBorders)
+                .append(pCurrency)
+                .append(pLanguages)
+                .append(pPopulation)
+                .append(pTimeZone)
+                .append(pCallingCodes);
 
             // Get currency name and code -------------------------------------
 
             $("#currencyNameCode").empty();
             var currencyDiv = $("#currencyNameCode");
-            var currencyString = currency + '<span class="badge badge-light" id="select-code">' + code + '</span>';
+            var currencyString =
+                currency +
+                '<span class="badge badge-light" id="select-code">' +
+                code +
+                "</span>";
             var currencyNameCode = $("<h4>").html(currencyString);
             currencyDiv.append(currencyNameCode);
-            
+
             // hard-code the source currency as USD
             source = "USD";
             // set jQuery DOM location for quote to be displayed
             var display = $("#exchangeRateDisplay");
             // call function that uses the apilayer.net API to get exchange rate quotes
-            var quote = getCurrency(source,code,display);
-            
+            var quote = getCurrency(source, code);
+
             // place in html page
-
-
-
         }); // end countriesREST ajax
     }); // end Search button click
 
-
     // CURRENCY FUNCTION (gets the selected country's exchange rate and displays it on vacay.html ==================================
-    var getCurrency = function(source,code) {
-
-        var endpoint = 'live';
+    var getCurrency = function(source, code) {
+        var endpoint = "live";
         var format = "1";
-        var access_key = '01b52c666cbce3e38e9f5458de93fd6c';
-        var url = "http://apilayer.net/api/" + endpoint + "?access_key=" + access_key + "&currencies=" + code + "&source=" + source + "&format=" + format;
+        var access_key = "01b52c666cbce3e38e9f5458de93fd6c";
+        var url =
+            "http://apilayer.net/api/" +
+            endpoint +
+            "?access_key=" +
+            access_key +
+            "&currencies=" +
+            code +
+            "&source=" +
+            source +
+            "&format=" +
+            format;
         $.ajax({
             url: url,
-            dataType: 'jsonp',
+            dataType: "jsonp",
             success: function(response) {
-                var sourceCode  = source + code;
+                var sourceCode = source + code;
                 var quote = response.quotes[sourceCode];
                 $("#exchangeRateDisplay").empty();
                 var currencyDivID = $("#exchangeRateDisplay");
@@ -236,50 +259,204 @@ $(document).ready(function() {
                 currencyDivID.append(currencyQuote);
             } // end response function
         }); // end ajax
-    } // end getCurrency function
+    }; // end getCurrency function
 
     // array of currency codes
-    var options = ["USD", "EUR", "AED", "AFN", "ALL", "AMD", "ANG",
-    "AOA", "ARS", "AUD", "AWG", "AZN", "BAM", "BND",
-    "BOB", "BRL", "BSD", "BTN", "BWP", "BYN", "BZD",
-    "CAD", "CDF", "CLP", "CNY", "COP", "CRC", "CUC",
-    "CUP", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD",
-    "EGP", "ERN", "ETB", "EUR", "FJD", "FKP", "GBP",
-    "GEL", "GGP", "GHS", "GIP", "GMD", "GNF", "GTQ",
-    "GYD", "HKD", "HNL", "HRK", "HTG", "HUF", "IDR",
-    "ILS", "IMP", "INR", "IQD", "IRR", "ISK", "JEP",
-    "JMD", "JOD", "JPY", "KES", "KGS", "KHR", "KMF",
-    "KPW", "KRW", "KWD", "KYD", "KST", "LAK", "LBP",
-    "LKR", "LRD", "LSL", "LYD", "MAD", "MDL", "MGA",
-    "MKD", "MMK", "MNT", "MOP", "MRU", "MUR", "MVR",
-    "MWK", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO",
-    "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PGK",
-    "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD",
-    "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SEK",
-    "SGD", "SHP", "SLL", "SOS", "SPL", "SRD", "STN",
-    "SVC", "SYP", "SZL", "THB", "TJS", "TMT", "TND",
-    "TOP", "TRY", "TTD", "TVD", "TWD", "TZS", "UAH",
-    "UGX", "UYU", "UZS", "VEF", "VND", "VUV", "WST",
-    "XAF", "XCD", "XDR", "XOF", "XPF", "YER", "ZAR",
-    "ZMW", "ZWD"];
+    var options = [
+        "AED",
+        "AFN",
+        "ALL",
+        "AMD",
+        "ANG",
+        "AOA",
+        "ARS",
+        "AUD",
+        "AWG",
+        "AZN",
+        "BAM",
+        "BBD",
+        "BDT",
+        "BGN",
+        "BHD",
+        "BIF",
+        "BMD",
+        "BND",
+        "BOB",
+        "BRL",
+        "BSD",
+        "BTC",
+        "BTN",
+        "BWP",
+        "BYN",
+        "BYR",
+        "BZD",
+        "CAD",
+        "CDF",
+        "CHF",
+        "CLF",
+        "CLP",
+        "CNY",
+        "COP",
+        "CRC",
+        "CUC",
+        "CUP",
+        "CVE",
+        "CZK",
+        "DJF",
+        "DKK",
+        "DOP",
+        "DZD",
+        "EGP",
+        "ERN",
+        "ETB",
+        "EUR",
+        "FJD",
+        "FKP",
+        "GBP",
+        "GEL",
+        "GGP",
+        "GHS",
+        "GIP",
+        "GMD",
+        "GNF",
+        "GTQ",
+        "GYD",
+        "HKD",
+        "HNL",
+        "HRK",
+        "HTG",
+        "HUF",
+        "IDR",
+        "ILS",
+        "IMP",
+        "INR",
+        "IQD",
+        "IRR",
+        "ISK",
+        "JEP",
+        "JMD",
+        "JOD",
+        "JPY",
+        "KES",
+        "KGS",
+        "KHR",
+        "KMF",
+        "KPW",
+        "KRW",
+        "KWD",
+        "KYD",
+        "KZT",
+        "LAK",
+        "LBP",
+        "LKR",
+        "LRD",
+        "LSL",
+        "LTL",
+        "LVL",
+        "LYD",
+        "MAD",
+        "MDL",
+        "MGA",
+        "MKD",
+        "MMK",
+        "MNT",
+        "MOP",
+        "MRO",
+        "MUR",
+        "MVR",
+        "MWK",
+        "MXN",
+        "MYR",
+        "MZN",
+        "NAD",
+        "NGN",
+        "NIO",
+        "NOK",
+        "NPR",
+        "NZD",
+        "OMR",
+        "PAB",
+        "PEN",
+        "PGK",
+        "PHP",
+        "PKR",
+        "PLN",
+        "PYG",
+        "QAR",
+        "RON",
+        "RSD",
+        "RUB",
+        "RWF",
+        "SAR",
+        "SBD",
+        "SCR",
+        "SDG",
+        "SEK",
+        "SGD",
+        "SHP",
+        "SLL",
+        "SOS",
+        "SRD",
+        "STD",
+        "SVC",
+        "SYP",
+        "SZL",
+        "THB",
+        "TJS",
+        "TMT",
+        "TND",
+        "TOP",
+        "TRY",
+        "TTD",
+        "TWD",
+        "TZS",
+        "UAH",
+        "UGX",
+        "USD",
+        "UYU",
+        "UZS",
+        "VEF",
+        "VND",
+        "VUV",
+        "WST",
+        "XAF",
+        "XAG",
+        "XAU",
+        "XCD",
+        "XDR",
+        "XOF",
+        "XPF",
+        "YER",
+        "ZAR",
+        "ZMK",
+        "ZMW",
+        "ZWL"
+     ];
 
     // INSERT ARRAY INTO BUTTON DROPDOWNS --------
     // source button
-    $('#select1').empty();
+    $("#select1").empty();
     $.each(options, function(i, p) {
-        $('#select1').append($('<a class="dropdown-item" href="#"></a>').val(p).html(p));
+        $("#select1").append(
+            $('<a class="dropdown-item" href="#"></a>')
+                .val(p)
+                .html(p)
+        );
     });
 
     // target button
     $('#select2').empty();
     $.each(options, function(i, p) {
-        $('#select2').append($('<a class="dropdown-item" href="#"></a>').val(p).html(p));
+        $("#select2").append(
+            $('<a class="dropdown-item" href="#"></a>')
+                .val(p)
+                .html(p)
+        );
     });
-    
+
     // CLICK ON CURRENCY CONVERSION BUTTONS ===========================
     // currency source
     $(document).on("click", "#select1 a", function() {
-
         // get Source code
         var source = $(this).text();
         // console.log("source = " + source);
@@ -287,7 +464,7 @@ $(document).ready(function() {
         $("#source-code").empty();
         var sourceDiv = $("#source-code");
         var currencySource = $("<p>");
-        currencySource.attr("id","source-code-attr");
+        currencySource.attr("id", "source-code-attr");
         var mySource = "<b>" + source + "</b>";
         currencySource.html(mySource);
         sourceDiv.append(currencySource);
@@ -302,7 +479,7 @@ $(document).ready(function() {
         $("#target-code").empty();
         var targetDiv = $("#target-code");
         var currencyTarget = $("<p>");
-        currencyTarget.attr("id","target-code-attr");
+        currencyTarget.attr("id", "target-code-attr");
         var myTarget = "<b>" + target + "</b>";
         currencyTarget.html(myTarget);
         targetDiv.append(currencyTarget);
@@ -315,20 +492,30 @@ $(document).ready(function() {
         var myTarget = $("#target-code p").text();
         // console.log("source/target = " + mySource + " / " + myTarget);
         // call newQuote function
-        getNewQuote(mySource,myTarget);
+        getNewQuote(mySource, myTarget);
     });
 
-     // CURRENCY FUNCTION (gets the selected country's exchange rate and displays it on vacay.html ==================================
-     var getNewQuote = function(source,code) {
-        var endpoint = 'live';
+    // CURRENCY FUNCTION (gets the selected country's exchange rate and displays it on vacay.html ==================================
+    var getNewQuote = function(source, code) {
+        var endpoint = "live";
         var format = "1";
-        var access_key = '01b52c666cbce3e38e9f5458de93fd6c';
-        var url = "http://apilayer.net/api/" + endpoint + "?access_key=" + access_key + "&currencies=" + code + "&source=" + source + "&format=" + format;
+        var access_key = "01b52c666cbce3e38e9f5458de93fd6c";
+        var url =
+            "http://apilayer.net/api/" +
+            endpoint +
+            "?access_key=" +
+            access_key +
+            "&currencies=" +
+            code +
+            "&source=" +
+            source +
+            "&format=" +
+            format;
         $.ajax({
             url: url,
-            dataType: 'jsonp',
+            dataType: "jsonp",
             success: function(response) {
-                var sourceCode  = source + code;
+                var sourceCode = source + code;
                 var quote = response.quotes[sourceCode];
                 $("#calc-quote").empty();
                 var currencyDivID = $("#calc-quote");
@@ -338,21 +525,19 @@ $(document).ready(function() {
                 currencyDivID.append(currencyQuote);
             } // end response function
         }); // end ajax
-    } // end getCurrency function
-
-
+    }; // end getCurrency function
 
     // INVENTORY FIREBASE ====================================================
 
     // FIREBASE CODE FOR STORING INVENTORY TABLE ITEMS
     var firebaseConfig = {
-      apiKey: "AIzaSyD5TgHMFez2lODS4UgYrIobJSWGPtf0bI8",
-      authDomain: "bcs-vacay-p1.firebaseapp.com",
-      databaseURL: "https://bcs-vacay-p1.firebaseio.com",
-      projectId: "bcs-vacay-p1",
-      storageBucket: "",
-      messagingSenderId: "1029877283379",
-      appId: "1:1029877283379:web:7e7ee570b829e6699cc146"
+        apiKey: "AIzaSyD5TgHMFez2lODS4UgYrIobJSWGPtf0bI8",
+        authDomain: "bcs-vacay-p1.firebaseapp.com",
+        databaseURL: "https://bcs-vacay-p1.firebaseio.com",
+        projectId: "bcs-vacay-p1",
+        storageBucket: "",
+        messagingSenderId: "1029877283379",
+        appId: "1:1029877283379:web:7e7ee570b829e6699cc146"
     };
 
     // Initialize Firebase
@@ -413,34 +598,34 @@ $(document).ready(function() {
         $("#depart-via-input").val("");
 
         // Create Firebase event for adding itineraries to the database and a table row
-        vacayData.ref().on("child_added", function(childSnapshot, prevChildKey) {
-        console.log(childSnapshot.val());
+        vacayData
+            .ref()
+            .on("child_added", function(childSnapshot, prevChildKey) {
+                console.log(childSnapshot.val());
 
-        // Store everything in a variable
-        var tDestination = childSnapshot.val().destination;
-        var tArriveDate = childSnapshot.val().arriveDate;
-        var tArriveVia = childSnapshot.val().arriveVia;
-        var tAccommodations = childSnapshot.val().accommodations;
-        var tCarRental = childSnapshot.val().carRental;
-        var tDepartDate = childSnapshot.val().departDate;
-        var tDepartVia = childSnapshot.val().departVia;
+                // Store everything in a variable
+                var tDestination = childSnapshot.val().destination;
+                var tArriveDate = childSnapshot.val().arriveDate;
+                var tArriveVia = childSnapshot.val().arriveVia;
+                var tAccommodations = childSnapshot.val().accommodations;
+                var tCarRental = childSnapshot.val().carRental;
+                var tDepartDate = childSnapshot.val().departDate;
+                var tDepartVia = childSnapshot.val().departVia;
 
-        $("#itinerary-table tbody").append(
-            $("<tr>").append(
-                $("<th scope='row'>").text(tDestination),
-                $("<td>").text(tArriveDate),
-                $("<td>").text(tArriveVia),
-                $("<td>").text(tAccommodations),
-                $("<td>").text(tCarRental),
-                $("<td>").text(tDepartDate),
-                $("<td>").text(tDepartVia),
-                ) // end append tbody
-            ) // end append tr
-        }); // end vacay.ref
-
+                $("#itinerary-table tbody").append(
+                    $("<tr>").append(
+                        $("<th scope='row'>").text(tDestination),
+                        $("<td>").text(tArriveDate),
+                        $("<td>").text(tArriveVia),
+                        $("<td>").text(tAccommodations),
+                        $("<td>").text(tCarRental),
+                        $("<td>").text(tDepartDate),
+                        $("<td>").text(tDepartVia)
+                    ) // end append tbody
+                ); // end append tr
+            }); // end vacay.ref
     }); // END ADD ITINERARY BUTTON
 }); // end document.ready
-
 
 // ref.child("Users").child("User1").setvalue("User 1");
 // ref.child("Users").child("User2").setvalue("User 2");
@@ -448,5 +633,3 @@ $(document).ready(function() {
 // Now if you want to remove a specific user from the database you have to use this code:
 
 // ref.child("Users").child("User2").removeValue();
-
-
