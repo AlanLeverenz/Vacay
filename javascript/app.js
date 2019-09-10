@@ -15,6 +15,7 @@ $(document).ready(function() {
         $("#googleMapsIframeDiv").hide();
         // NOTE: Itinerary requires both html and Firebase childSnapshot values removed
     }); // end clear-results-button
+
     var placesQuery =
         "https://maps.googleapis.com/maps/api/js?key=" +
         googleMapsApikey +
@@ -63,6 +64,12 @@ $(document).ready(function() {
     $("#add-itinerary-button").on("click", function(event) {
         event.preventDefault();
         $(".toggle-itinerary-form").show();
+    });
+
+    // onclick HIDE FORM =====================
+    $("#hide-itinerary-form-button").on("click", function(event) {
+        event.preventDefault();
+        $(".toggle-itinerary-form").hide();
     });
 
     // onclick SEARCH =========================================
@@ -185,16 +192,22 @@ $(document).ready(function() {
             
             // hard-code the source currency as USD
             source = "USD";
+            // set jQuery DOM location for quote to be displayed
+            var display = $("#exchangeRateDisplay");
             // call function that uses the apilayer.net API to get exchange rate quotes
-            getCurrency(source,code);
+            var quote = getCurrency(source,code,display);
+            
+            // place in html page
+
+
 
         }); // end countriesREST ajax
     }); // end Search button click
 
 
-    // CURRENCY FUNCTION (gets a quote and displays it on vacay.html
-
+    // CURRENCY FUNCTION (gets the selected country's exchange rate and displays it on vacay.html ==================================
     var getCurrency = function(source,code) {
+
         var endpoint = 'live';
         var format = "1";
         var access_key = '01b52c666cbce3e38e9f5458de93fd6c';
@@ -215,8 +228,111 @@ $(document).ready(function() {
         }); // end ajax
     } // end getCurrency function
 
+    // array of currency codes
+    var options = ["USD", "EUR", "AED", "AFN", "ALL", "AMD", "ANG",
+    "AOA", "ARS", "AUD", "AWG", "AZN", "BAM", "BND",
+    "BOB", "BRL", "BSD", "BTN", "BWP", "BYN", "BZD",
+    "CAD", "CDF", "CLP", "CNY", "COP", "CRC", "CUC",
+    "CUP", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD",
+    "EGP", "ERN", "ETB", "EUR", "FJD", "FKP", "GBP",
+    "GEL", "GGP", "GHS", "GIP", "GMD", "GNF", "GTQ",
+    "GYD", "HKD", "HNL", "HRK", "HTG", "HUF", "IDR",
+    "ILS", "IMP", "INR", "IQD", "IRR", "ISK", "JEP",
+    "JMD", "JOD", "JPY", "KES", "KGS", "KHR", "KMF",
+    "KPW", "KRW", "KWD", "KYD", "KST", "LAK", "LBP",
+    "LKR", "LRD", "LSL", "LYD", "MAD", "MDL", "MGA",
+    "MKD", "MMK", "MNT", "MOP", "MRU", "MUR", "MVR",
+    "MWK", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO",
+    "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PGK",
+    "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD",
+    "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SEK",
+    "SGD", "SHP", "SLL", "SOS", "SPL", "SRD", "STN",
+    "SVC", "SYP", "SZL", "THB", "TJS", "TMT", "TND",
+    "TOP", "TRY", "TTD", "TVD", "TWD", "TZS", "UAH",
+    "UGX", "UYU", "UZS", "VEF", "VND", "VUV", "WST",
+    "XAF", "XCD", "XDR", "XOF", "XPF", "YER", "ZAR",
+    "ZMW", "ZWD"];
 
-    // INVENTORY FIREBASE =============================================
+    // INSERT ARRAY INTO BUTTON DROPDOWNS --------
+    // source button
+    $('#select1').empty();
+    $.each(options, function(i, p) {
+        $('#select1').append($('<a class="dropdown-item" href="#"></a>').val(p).html(p));
+    });
+
+    // quote button
+    $('#select2').empty();
+    $.each(options, function(i, p) {
+        $('#select2').append($('<a class="dropdown-item" href="#"></a>').val(p).html(p));
+    });
+    
+    // CLICK ON CURRENCY CONVERSION BUTTONS ===========================
+    // currency source
+    $(document).on("click", "#select1 a", function() {
+
+        // get Source code
+        var source = $(this).text();
+        // console.log("source = " + source);
+
+        $("#source-code").empty();
+        var sourceDiv = $("#source-code");
+        var currencySource = $("<p>");
+        currencySource.attr("id","source-code-attr");
+        var mySource = "<b>" + source + "</b>";
+        currencySource.html(mySource);
+        sourceDiv.append(currencySource);
+    });
+
+    // currency target
+    $(document).on("click", "#select2 a", function() {
+        // get target code
+        var target = $(this).text();
+        // console.log("source = " + target);
+
+        $("#target-code").empty();
+        var targetDiv = $("#target-code");
+        var currencyTarget = $("<p>");
+        currencyTarget.attr("id","target-code-attr");
+        var myTarget = "<b>" + target + "</b>";
+        currencyTarget.html(myTarget);
+        targetDiv.append(currencyTarget);
+    });
+
+    // currency target
+    $(document).on("click", "#exchangeRateCalc", function() {
+        // get source and target codes from html
+        var mySource = $("#source-code p").text();
+        var myTarget = $("#target-code p").text();
+        // console.log("source/target = " + mySource + " / " + myTarget);
+        // call newQuote function
+        getNewQuote(mySource,myTarget);
+    });
+
+     // CURRENCY FUNCTION (gets the selected country's exchange rate and displays it on vacay.html ==================================
+     var getNewQuote = function(source,code) {
+        var endpoint = 'live';
+        var format = "1";
+        var access_key = '01b52c666cbce3e38e9f5458de93fd6c';
+        var url = "http://apilayer.net/api/" + endpoint + "?access_key=" + access_key + "&currencies=" + code + "&source=" + source + "&format=" + format;
+        $.ajax({
+            url: url,
+            dataType: 'jsonp',
+            success: function(response) {
+                var sourceCode  = source + code;
+                var quote = response.quotes[sourceCode];
+                $("#calc-quote").empty();
+                var currencyDivID = $("#calc-quote");
+                var currencyQuote = $("<p>");
+                var myQuote = "<b>" + quote + "</b>";
+                currencyQuote.html(myQuote);
+                currencyDivID.append(currencyQuote);
+            } // end response function
+        }); // end ajax
+    } // end getCurrency function
+
+
+
+    // INVENTORY FIREBASE ====================================================
 
     // FIREBASE CODE FOR STORING INVENTORY TABLE ITEMS
     var firebaseConfig = {
@@ -231,86 +347,89 @@ $(document).ready(function() {
 
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-
     // assign database to variable
     var vacayData = firebase.database();
 
-    // Button for adding trains
-  $("#add-itinerary-btn").on("click", function(event) {
-    // Prevent the default form submit behavior
-    event.preventDefault();
+    // ON CLICK EVENT FOR ADDING AN ITINERARY ITEM ==================
 
-        // Grabs user input
-        var destination = $("#destination-input").val().trim();
-        var arriveDate = $("#arrive-date-input").val().trim();
-        var arriveVia = $("#arrive-via-input").val().trim();
-        var accommodations = $("#accommodations-input").val().trim();
-        var carRental = $("#car-rental-input").val().trim();
-        var departDate = $("#departure-date-input").val().trim();
-        var departVia = $("#depart-via-input").val().trim();
-        
-    // Creates local "temporary" object for holding itinerary
-    var newItinerary = {
-        destination: destination,
-        arriveDate: arriveDate,
-        arriveVia: arriveVia,
-        accommodations: accommodations,
-        carRental: carRental,
-        departDate: departDate,
-        departVia: departVia
-      };
+    $("#add-itinerary-btn").on("click", function(event) {
+        // Prevent the default form submit behavior
+        event.preventDefault();
 
-    vacayData.ref().push(newItinerary);
+            // Grabs user input
+            var destination = $("#destination-input").val().trim();
+            var arriveDate = $("#arrive-date-input").val().trim();
+            var arriveVia = $("#arrive-via-input").val().trim();
+            var accommodations = $("#accommodations-input").val().trim();
+            var carRental = $("#car-rental-input").val().trim();
+            var departDate = $("#departure-date-input").val().trim();
+            var departVia = $("#depart-via-input").val().trim();
+            
+        // Creates local "temporary" object for holding itinerary
+        var newItinerary = {
+            destination: destination,
+            arriveDate: arriveDate,
+            arriveVia: arriveVia,
+            accommodations: accommodations,
+            carRental: carRental,
+            departDate: departDate,
+            departVia: departVia
+        };
 
-    // logs everything to console
-    console.log(newItinerary.destination);
-    console.log(newItinerary.arriveDate);
-    console.log(newItinerary.arriveVia);
-    console.log(newItinerary.accommodations);
-    console.log(newItinerary.carRental);
-    console.log(newItinerary.departDate);
-    console.log(newItinerary.departVia);
+        // hide the itinerary form
+        $("#toggle-itinerary-form").hide();
 
-    console.log("Itinerary successfully added.");
+        vacayData.ref().push(newItinerary);
 
-    // clears all of the text boxes
-    $("#destination-input").val("");
-    $("#arrive-date-input").val("");
-    $("#arrive-via-input").val("");
-    $("#accommodations-input").val("");
-    $("#car-rental-input").val("");
-    $("#departure-date-input").val("");
-    $("#depart-via-input").val("");
+        // logs everything to console
+        console.log(newItinerary.destination);
+        console.log(newItinerary.arriveDate);
+        console.log(newItinerary.arriveVia);
+        console.log(newItinerary.accommodations);
+        console.log(newItinerary.carRental);
+        console.log(newItinerary.departDate);
+        console.log(newItinerary.departVia);
 
-    // Create Firebase event for adding itineraries to the database and a table row
-    vacayData.ref().on("child_added", function(childSnapshot, prevChildKey) {
-    console.log(childSnapshot.val());
+        console.log("Itinerary successfully added.");
 
-    // Store everything in a variable
-    var tDestination = childSnapshot.val().destination;
-    var tArriveDate = childSnapshot.val().arriveDate;
-    var tArriveVia = childSnapshot.val().arriveVia;
-    var tAccommodations = childSnapshot.val().accommodations;
-    var tCarRental = childSnapshot.val().carRental;
-    var tDepartDate = childSnapshot.val().departDate;
-    var tDepartVia = childSnapshot.val().departVia;
+        // clears all of the text boxes
+        $("#destination-input").val("");
+        $("#arrive-date-input").val("");
+        $("#arrive-via-input").val("");
+        $("#accommodations-input").val("");
+        $("#car-rental-input").val("");
+        $("#departure-date-input").val("");
+        $("#depart-via-input").val("");
 
-    $("#itinerary-table tbody").append(
-        $("<tr>").append(
-            $("<th scope='row'>").text(tDestination),
-            $("<td>").text(tArriveDate),
-            $("<td>").text(tArriveVia),
-            $("<td>").text(tAccommodations),
-            $("<td>").text(tCarRental),
-            $("<td>").text(tDepartDate),
-            $("<td>").text(tDepartVia),
-        ) // end append tbody
-    ) // end append tr
-}); // end
+        // Create Firebase event for adding itineraries to the database and a table row
+        vacayData.ref().on("child_added", function(childSnapshot, prevChildKey) {
+        console.log(childSnapshot.val());
 
-}); // END ADD ITINERARY BUTTON
+        // Store everything in a variable
+        var tDestination = childSnapshot.val().destination;
+        var tArriveDate = childSnapshot.val().arriveDate;
+        var tArriveVia = childSnapshot.val().arriveVia;
+        var tAccommodations = childSnapshot.val().accommodations;
+        var tCarRental = childSnapshot.val().carRental;
+        var tDepartDate = childSnapshot.val().departDate;
+        var tDepartVia = childSnapshot.val().departVia;
 
-// Lets take an example in a user db:
+        $("#itinerary-table tbody").append(
+            $("<tr>").append(
+                $("<th scope='row'>").text(tDestination),
+                $("<td>").text(tArriveDate),
+                $("<td>").text(tArriveVia),
+                $("<td>").text(tAccommodations),
+                $("<td>").text(tCarRental),
+                $("<td>").text(tDepartDate),
+                $("<td>").text(tDepartVia),
+                ) // end append tbody
+            ) // end append tr
+        }); // end vacay.ref
+
+    }); // END ADD ITINERARY BUTTON
+}); // end document.ready
+
 
 // ref.child("Users").child("User1").setvalue("User 1");
 // ref.child("Users").child("User2").setvalue("User 2");
@@ -320,4 +439,3 @@ $(document).ready(function() {
 // ref.child("Users").child("User2").removeValue();
 
 
-}); // end document.ready

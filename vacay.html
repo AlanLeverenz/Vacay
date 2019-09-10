@@ -128,40 +128,48 @@
                         <!-- CURRENCY NAME AND CODE INSERTED HERE -->
                         <div id="currencyNameCode"></div>
 
-                        <br>
-
                         <!-- EXCHANGE RATE INSERTED HERE -->
-                        <div id="exchangeRateDisplay">
-                            <p><b>Exchange Rate: [quote] </b></p>
-                        </div>
+                        <div id="exchangeRateDisplay"></div>
 
-                        <br>
+                        <!-- place calculator in a card to separate -->
 
-                        <!-- USER SELECTS FROM DROPDOWN -->
-                        <div class="dropdown">
-                            <button class="btn btn-light dropdown-toggle" type="button" id="currency-one-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Source
-                            </button>
-                            <div class="dropdown-menu" id="select" aria-labelledby="currency-one-button"></div>
-                        </div>
-                        <br>
-                        <div class="dropdown">
-                            <button class="btn btn-light dropdown-toggle" type="button" id="currency-two-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Quote
-                            </button>
-                            <div class="dropdown-menu" id="select" aria-labelledby="currency-two-button"></div>
-                        </div>
-                        <br>
-                        <!-- INSERT CALCULATE BUTTON HERE with ID for an ON event -->
-                        <button
-                            class="btn btn-light"
-                            id="exchangeRateCalc">
-                            <i class="fas fa-calculator"></i> Calculate
-                        </button>
+                        <div class="card">
+                            <div class="card-body">
 
-                    </div>
-                </div>
+                                <!-- USER SELECTS FROM DROPDOWN -->
+                                <div class="dropdown">
+                                    <button class="btn btn-light dropdown-toggle" type="button" id="currency-one-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Source
+                                    </button>
+                                    <div class="dropdown-menu click" id="select1" aria-labelledby="currency-one-button"></div>
+                                </div>
+                                <div id="source-code"></div>
 
+                                <div class="spacer"></div>
+
+                                <div class="dropdown">
+                                    <button class="btn btn-light dropdown-toggle" type="button" id="currency-two-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Target
+                                    </button>
+                                    <div class="dropdown-menu click" id="select2" aria-labelledby="currency-two-button"></div>
+                                </div>
+                                <div id="target-code"></div>
+
+                                <div class="spacer"></div>
+
+                                <!-- calculator -->
+                                <div class="calculator">
+                                    <button
+                                        class="btn btn-light click"
+                                        id="exchangeRateCalc">
+                                        <i class="fas fa-calculator"></i> Quote
+                                    </button>
+                                </div>
+                                <div id="calc-quote"></div>
+                            </div> <!-- end card body -->
+                        </div> <!-- end converter inside card -->
+                    </div> <!-- end card body -->
+                </div> <!-- end currency converter card -->
             </div> <!-- end row -->
         </div> <!-- container -->
 
@@ -196,7 +204,7 @@
                 </div> <!-- end table card-body -->
 
                 <!-- Add itinerary button -->
-                <div class="form-group" style="margin:12px">
+                <div class="form-group">
                     <button
                         class="btn btn-primary"
                         id="add-itinerary-button">
@@ -208,7 +216,8 @@
             <!-- ADD NEW ITINERARY FORM -->
             <!-- Itinerary Entry Form -->
             <div class="card text-black mb-3 mt-2 toggle-itinerary-form" style="display:none">
-            <div class="card-header">Add Itinerary</div>
+            <div class="card-header itinerary-form-header">Add Itinerary</div>
+
             <div class="card-body">
                 <form>
                     <div class="form-group">
@@ -240,6 +249,7 @@
                         <input type="text" class="form-control" id="depart-via-input">
                     </div>
                     <button type="submit" class="btn btn-primary" id="add-itinerary-btn">Submit</button>
+                    <button class="btn btn-primary" id="hide-itinerary-form-button">Hide Form</button>
                 </form>
             </div>
             </div> <!-- itinerary container -->
