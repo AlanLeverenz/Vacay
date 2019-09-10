@@ -110,22 +110,21 @@ $(document).ready(function() {
 
         // build queryURL
         var queryURL = "https://restcountries.eu/rest/v2/name/" + search;
-        console.log(queryURL);
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then(function(results) {
-            console.log(results[0]);
 
             //  keys to capture
             var countryInfoDiv = $("#country-information");
 
             // insert flag in Country Information header
+            $("#flag").empty();
             var flagInsert = $("#flag");
             var flagSRC = results[0].flag;
             var flagImg = $("<img>");
             flagImg.attr("src", flagSRC);
-            flagImg.attr("width",auto);
+            flagImg.attr("width","82px");
             flagImg.attr("height","82px");
             flagImg.attr("style","float:right");
             flagInsert.append(flagImg);
@@ -163,31 +162,61 @@ $(document).ready(function() {
             var pCallingCodes = $("<p>").html("<b>Calling Code(s):</b> " + callingCodes
             );
 
-            // append to the country info div
-            countryInfoDiv
-                .append(pName)
-                .append(pCapital)
-                .append(pSubRegion)
-                .append(pRegion)
-                .append(pBorders)
-                .append(pCurrency)
-                .append(pLanguages)
-                .append(pPopulation)
-                .append(pTimeZone)
-                .append(pCallingCodes);
+        // append to the country info div
+        countryInfoDiv
+            .append(pName)
+            .append(pCapital)
+            .append(pSubRegion)
+            .append(pRegion)
+            .append(pBorders)
+            .append(pCurrency)
+            .append(pLanguages)
+            .append(pPopulation)
+            .append(pTimeZone)
+            .append(pCallingCodes);
 
-        // CURRENCY QUERY
-        $("#currencyNameCode").empty();
-        var currencyDiv = $("#currencyNameCode");
-        var currencyString = currency + '<span class="badge badge-light">' + code + '</span>';
-        console.log("CURRENCY NAME: " + currency);
-        console.log("CURRENCY CODE: " + code);
-        var currencyNameCode = $("<h4>").html(currencyString);
-        currencyDiv.append(currencyNameCode);
+            // Get currency name and code -------------------------------------
 
-        }); // end ajax
+            $("#currencyNameCode").empty();
+            var currencyDiv = $("#currencyNameCode");
+            var currencyString = currency + '<span class="badge badge-light" id="select-code">' + code + '</span>';
+            var currencyNameCode = $("<h4>").html(currencyString);
+            currencyDiv.append(currencyNameCode);
+            
+            // hard-code the source currency as USD
+            source = "USD";
+            // call function that uses the apilayer.net API to get exchange rate quotes
+            getCurrency(source,code);
 
+        }); // end countriesREST ajax
     }); // end Search button click
+
+
+    // CURRENCY FUNCTION (gets a quote and displays it on vacay.html
+
+    var getCurrency = function(source,code) {
+        var endpoint = 'live';
+        var format = "1";
+        var access_key = '01b52c666cbce3e38e9f5458de93fd6c';
+        var url = "http://apilayer.net/api/" + endpoint + "?access_key=" + access_key + "&currencies=" + code + "&source=" + source + "&format=" + format;
+        $.ajax({
+            url: url,
+            dataType: 'jsonp',
+            success: function(response) {
+                var sourceCode  = source + code;
+                var quote = response.quotes[sourceCode];
+                $("#exchangeRateDisplay").empty();
+                var currencyDivID = $("#exchangeRateDisplay");
+                var currencyQuote = $("<p>");
+                var myQuote = "<b>Exchange Rate:</b> " + quote;
+                currencyQuote.html(myQuote);
+                currencyDivID.append(currencyQuote);
+            } // end response function
+        }); // end ajax
+    } // end getCurrency function
+
+
+    // INVENTORY FIREBASE =============================================
 
     // FIREBASE CODE FOR STORING INVENTORY TABLE ITEMS
     var firebaseConfig = {

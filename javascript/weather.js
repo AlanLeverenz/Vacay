@@ -17,7 +17,6 @@ $(document).ready(function(){
 
         // FUNCTIONS INITIATED UP REQUEST RETURN
       }).then(function(data) {
-        console.log("WEATHER = " + data.list[0]);
 
         // WEATHER PERIOD
         var period = "Current";
@@ -43,7 +42,6 @@ $(document).ready(function(){
         // WIND
           var wind = data.list[0].wind.speed;
           var pwind = $("<p>").html("<b>Wind: </b>" + wind + "mph");
-          // console.log(ptemp);
 
       // ASSIGNING VARS TO THE APPENDING OF RETRIEVED DATA TO THE HTML CONTAINER
       var weatherRender = $("#weatherRender");
