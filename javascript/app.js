@@ -501,6 +501,7 @@ $(document).ready(function() {
             url: url,
             dataType: "jsonp",
             success: function(response) {
+                console.log(response);
                 var sourceCode = source + code;
                 var quote = response.quotes[sourceCode];
                 $("#calc-quote").empty();
