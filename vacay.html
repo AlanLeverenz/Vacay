@@ -13,13 +13,12 @@
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
             crossorigin="anonymous"
         />
-
         <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
         />
 
-        <!-- font awesome kit -->
+        <!-- FONT AWESOME KIT -->
         <script src="https://kit.fontawesome.com/768efcae0e.js"></script>
 
         <!-- CSS STYLE LINK -->
@@ -29,21 +28,16 @@
     <body>
         <div class="container">
             <div
-                class="jumbotron col-lg-8 mx-auto text-center"
-                style="border-radius: 10px; color: white;"
-            >
+                class="jumbotron col-lg-8 mx-auto text-center my-3"
+                style="border-radius: 10px; color: white;">
                 <h1>Vacay</h1>
             </div>
-            <!-- search box -->
+
+            <!-- SEARCH BOX -->
             <div class="row">
-                <div
-                    class="card col-8 mx-auto mb-0 px-0"
-                    id="search-parameters"
-                >
-                    <div
-                        class="card-header pb-0"
-                        style="background-color: rgb(30,30,30); color: white;"
-                    >
+                <div class="card col-8 mx-auto mb-0 px-0" id="search-parameters">
+                    <div class="card-header pb-0"
+                        style="background-color: rgb(30,30,30); color: white;">
                         <h5>Search</h5>
                     </div>
                     <div class="card-body">
@@ -55,36 +49,34 @@
                                         class="form-control"
                                         id="search-term"
                                         type="text"
-                                        placeholder="Enter a location"
-                                    />
+                                        placeholder="Enter a location"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <button
                                     class="btn btn-secondary"
-                                    id="search-button"
-                                >
+                                    id="search-button">
                                     <i class="fa fa-search"></i> Search
                                 </button>
                                 <button
                                     class="btn btn-secondary"
-                                    id="clear-results-button"
-                                >
+                                    id="clear-results-button">
                                     <i class="fa fa-trash"></i> Clear Results
                                 </button>
+                                <!-- country flag inserted here -->
+                                <div class="svg-flag" id="flag" style="float:right"></div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <br />
 
+            <!-- GOOGLE MAPS - DISPLAY NONE WHEN PAGE LOADS -->
             <div class="row">
                 <div
                     class="card col-7 mx-auto my-2 px-0"
                     id="googleMapsIframeDiv"
-                    style="display:none"
-                >
+                    style="display:none">
                     <div>
                         <iframe
                             width="100%"
@@ -95,163 +87,206 @@
                         ></iframe>
                         <img
                             height="20px"
-                            src="images/poweredByGoogle/powered_by_google_on_white_hdpi.png"
-                        />
+                            src="images/poweredByGoogle/powered_by_google_on_white_hdpi.png"/>
                     </div>
                 </div>
             </div>
-            <!-- country information -->
-            <div class="row my-4">
-                <div class="card col-7 mx-auto px-0">
-                    <div
-                        class="card-header pb-0"
-                        id="country-info-header"
-                        style="background-color: rgb(30,30,30); color: white;"
-                    >
+
+            <!-- CARD ROW -->
+            <div class="row">
+
+                <!-- COUNTRY INFO - DISPLAY NONE WHEN PAGE LOADS -->
+                <div class="card col-4 mx-auto px-0 toggle-country" style="display:none">
+                    <div class="card-header pb-0" id="country-info-header"
+                        style="background-color: rgb(30,30,30); color: white;">
                         <h5>Country Information</h5>
                     </div>
-                    <!-- space for country flag SVG area has to be set in view box -->
-                    <!-- <svg width="82" height="82" viewbox="0 0 102 102">
-            <rect x="1" y="1" width="100" height="100" stroke="black" stroke-width="2" fill="white"/>
-            <text fill="black" x="10" y="30" id="flag"></text>
-        </svg> -->
-
-                    <!-- country information appended here -->
+                    <!-- COUNTRY INFO WILL DISPLAY HERE -->
                     <div class="card-body" id="country-information"></div>
                 </div>
-
-            <!-- DANS WEATHER DIV -->
-            <br class="weathertoggle" />
-            <div
-                class="card col-8 mx-auto px-0 weathertoggle"
-                id="weatherContainer"
-            >
-                <div
-                    class="card col-4 mx-auto px-0 weathertoggle"
-                    id="weatherContainer"
-                >
-                    <div
-                        class="card-header pb-0 weathertoggle"
-                        id="weathertoggle"
-                        style="background-color: rgb(30,30,30); color: white;"
-                    >
-                        <!-- CARD TITLE -->
-                        <h5 class="weathertoggle" id="weatherHeader">
-                            Weather
-                        </h5>
+                        
+                <!-- WEATHER REPORT - DISPLAY NONE WHEN PAGE LOADS -->
+                <div class="card col-3 mx-auto px-0 toggle-weather" style="display:none">
+                    <div class="card-header pb-0" id="weather-info-header"
+                        style="background-color: rgb(30,30,30); color: white;">
+                        <h5>Weather</h5>
                     </div>
                     <!-- WEATHER WILL DISPLAY HERE -->
-                    <div
-                        class="card-body weathertoggle"
-                        id="weatherRender"
-                    ></div>
+                    <div class="card-body" id="weatherRender"></div>
                 </div>
-            </div>
-        </div>
 
-        <!-- ALAN'S ITINERARY SECTION -->
+                <!-- CURRENCY CONVERTER - DISPLAY NONE WHEN PAGE LOADS -->
+                <div class="card col-3 mx-auto px-0 toggle-currency" style="display:none">
+                    <div class="card-header pb-0" id="currency-info-header"
+                        style="background-color: rgb(30,30,30); color: white;">
+                        <h5>Currency Converter</h5>
+                    </div>
+
+                    <!-- CURRENCY WILL DISPLAY HERE -->
+                    <div class="card-body">
+
+                        <!-- CURRENCY NAME AND CODE INSERTED HERE -->
+                        <div id="currencyNameCode"></div>
+
+                        <!-- EXCHANGE RATE INSERTED HERE -->
+                        <div id="exchangeRateDisplay"></div>
+
+                        <!-- place calculator in a card to separate -->
+
+                        <div class="card">
+                            <div class="card-body">
+
+                                <!-- USER SELECTS FROM DROPDOWN -->
+                                <div class="dropdown">
+                                    <button class="btn btn-light dropdown-toggle" type="button" id="currency-one-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Source
+                                    </button>
+                                    <div class="dropdown-menu click" id="select1" aria-labelledby="currency-one-button"></div>
+                                </div>
+                                <div id="source-code"></div>
+
+                                <div class="spacer"></div>
+
+                                <div class="dropdown">
+                                    <button class="btn btn-light dropdown-toggle" type="button" id="currency-two-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Target
+                                    </button>
+                                    <div class="dropdown-menu click" id="select2" aria-labelledby="currency-two-button"></div>
+                                </div>
+                                <div id="target-code"></div>
+
+                                <div class="spacer"></div>
+
+                                <!-- calculator -->
+                                <div class="calculator">
+                                    <button
+                                        class="btn btn-light click"
+                                        id="exchangeRateCalc">
+                                        <i class="fas fa-calculator"></i> Quote
+                                    </button>
+                                </div>
+                                <div id="calc-quote"></div>
+                            </div> <!-- end card body -->
+                        </div> <!-- end converter inside card -->
+                    </div> <!-- end card body -->
+                </div> <!-- end currency converter card -->
+            </div> <!-- end row -->
+        </div> <!-- container -->
+
+        <!-- ITINERARY SECTION -->
         <br>
-
         <div class="container">
             
-            <div class="card col-8 mx-auto px-0" id="search-parameters">
+            <div class="card col-12 mx-auto px-0 toggle-itinerary-table" id="search-parameters" style="display:none">
                 <div
                     class="card-header pb-0"
                     style="background-color: rgb(30,30,30); color: white;">
                     <h5>My Itinerary</h5>
                 </div>
 
+                <!-- itinerary table -->
                 <div class="card-body">
                     <table class="table table-hover" id='itinerary-table'>
-                    <thead>
-                        <tr>
-                            <th>Destination</th>
-                            <th>Arrival Date</th>
-                            <th>Arrive Via</th>
-                            <th>Accommodations</th>
-                            <th>Car Rental</th>
-                            <th>Departure Date</th>
-                            <th>Depart Via</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
+                        <thead>
+                            <tr>
+                                <th scope="col">Destination</th>
+                                <th scope="col">Arrival Date</th>
+                                <th scope="col">Arrive Via</th>
+                                <th scope="col">Accommodations</th>
+                                <th scope="col">Car Rental</th>
+                                <th scope="col">Departure Date</th>
+                                <th scope="col">Depart Via</th>
+                            </tr>
+                        </thead>
+                    <!-- ITINERARY TABLE ITEMS INSERTED HERE -->
+                    <tbody></tbody>
                     </table>
+                </div> <!-- end table card-body -->
+
+                <!-- Add itinerary button -->
+                <div class="form-group">
+                    <button
+                        class="btn btn-primary"
+                        id="add-itinerary-button">
+                        <i class="far fa-address-card"></i> Add Itinerary
+                    </button>
                 </div>
+            </div> <!-- end Itinerary table section -->
 
-        <!-- Add Itinerary  -->
-        <div class="card text-black mb-3 mt-2">
-          <div class="card-header">Add Itinerary</div>
-          <div class="card-body">
-            <!-- Entry Form -->
-            <form>
-              <div class="form-group">
-                <label for="destination-input">Destination</label>
-                <input type="text" class="form-control" id="destination-input">
-              </div>
-              <div class="form-group">
-                <label for="arrive-date-input">Arrival Date</label>
-                <input type="text" class="form-control" id="arrive-date-input">
-              </div>
-              <div class="form-group">
-                <label for="arrive-via-input">Arrive Via</label>
-                <input type="text" class="form-control" id="arrive-via-input">
-              </div>
-              <div class="form-group">
-                <label for="accommdations-input">Accommodations</label>
-                <input type="text" class="form-control" id="accommodations-input">
-              </div>
-              <div class="form-group">
-                <label for="car-rental-input">Car Rental</label>
-                <input type="text" class="form-control" id="car-rental-input">
-              </div>
-              <div class="form-group">
-                <label for="departure-date-input">Departure Date</label>
-                <input type="text" class="form-control" id="departure-date-input">
-              </div>
-              <div class="form-group">
-                <label for="depart-via-input">Depart Via</label>
-                <input type="text" class="form-control" id="depart-via-input">
-              </div>
+            <!-- ADD NEW ITINERARY FORM -->
+            <!-- Itinerary Entry Form -->
+            <div class="card text-black mb-3 mt-2 toggle-itinerary-form" style="display:none">
+            <div class="card-header itinerary-form-header">Add Itinerary</div>
 
-              <button type="submit" class="btn btn-primary" id="add-itinerary-btn">Submit</button>
-            </form>
-          </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="destination-input">Destination</label>
+                        <input type="text" class="form-control" id="destination-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="arrive-date-input">Arrival Date</label>
+                        <input type="text" class="form-control" id="arrive-date-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="arrive-via-input">Arrive Via</label>
+                        <input type="text" class="form-control" id="arrive-via-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="accommdations-input">Accommodations</label>
+                        <input type="text" class="form-control" id="accommodations-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="car-rental-input">Car Rental</label>
+                        <input type="text" class="form-control" id="car-rental-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="departure-date-input">Departure Date</label>
+                        <input type="text" class="form-control" id="departure-date-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="depart-via-input">Depart Via</label>
+                        <input type="text" class="form-control" id="depart-via-input">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="add-itinerary-btn">Submit</button>
+                    <button class="btn btn-primary" id="hide-itinerary-form-button">Hide Form</button>
+                </form>
+            </div>
+            </div> <!-- itinerary container -->
         </div>
-      </div>
     </div>
 
-        <!-- SCRIPT SOURCE FILES ========================================================== -->
+    <!-- SCRIPT SOURCE FILES ========================================================== -->
 
-        <!-- jQuery CDN -->
-        <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"
-        ></script>
+    <!-- jQuery CDN -->
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"
+    ></script>
 
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"
-        ></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"
+    ></script>
 
-        <script
-            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"
-        ></script>
+    <script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"
+    ></script>
 
-        <!-- font awesome kit -->
-        <script src="https://kit.fontawesome.com/768efcae0e.js"></script>
+    <!-- font awesome kit -->
+    <script src="https://kit.fontawesome.com/768efcae0e.js"></script>
 
-        <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
 
-        <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-database.js"></script>
 
-        <!-- JS source file -->
-        <script type="text/javascript" src="javascript/app.js"></script>
-        <script type="text/javascript" src="javascript/weather.js"></script>
+    <!-- JS source file -->
+    <script type="text/javascript" src="javascript/app.js"></script>
+    <script type="text/javascript" src="javascript/weather.js"></script>
 
     </body>
 </html>

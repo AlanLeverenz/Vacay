@@ -9,3 +9,38 @@
 svg {
     float: right;
 }
+
+.dropdown-toggle {
+    float:left;
+}
+
+.calculator {
+    float:left;
+}
+
+.spacer {
+    clear:both;
+}
+
+.dropdown {
+    display: inline-block;
+}
+
+#source-code, #calc-quote, #target-code {
+    float:right;
+    padding-right: 12px;
+}
+
+#add-itinerary-button {
+    float:left;
+    margin: 12px;
+}
+
+#hide-itinerary-form-button {
+    float:right;
+    margin: 12px;
+}
+
+.add-margin {
+    margin: 12px;
+}
