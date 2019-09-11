@@ -229,6 +229,26 @@ $(document).ready(function() {
         }); // end countriesREST ajax
     }); // end Search button click
 
+    //currency api test
+    function testNewCurrency(source, other) {
+        var currencyTestURl =
+            "https://api.exchangeratesapi.io/latest?base=" +
+            source +
+            "&symbols=" +
+            other;
+        $.ajax({
+            url: currencyTestURl,
+            method: "GET"
+        }).then(function(results) {
+            console.log(results);
+            var currencyDivID = $("#calc-quote");
+            var currencyQuote = $("<p>");
+            var myQuote =
+                "<b>" + results.rates[Object.keys(results.rates)[0]] + "</b>";
+            currencyQuote.html(myQuote);
+            currencyDivID.append(currencyQuote);
+        });
+    }
     // CURRENCY FUNCTION (gets the selected country's exchange rate and displays it on vacay.html ==================================
     var getCurrency = function(source, code) {
         var endpoint = "live";
@@ -263,175 +283,40 @@ $(document).ready(function() {
 
     // array of currency codes
     var options = [
-        "AED",
-        "AFN",
-        "ALL",
-        "AMD",
-        "ANG",
-        "AOA",
-        "ARS",
-        "AUD",
-        "AWG",
-        "AZN",
-        "BAM",
-        "BBD",
-        "BDT",
-        "BGN",
-        "BHD",
-        "BIF",
-        "BMD",
-        "BND",
-        "BOB",
-        "BRL",
-        "BSD",
-        "BTC",
-        "BTN",
-        "BWP",
-        "BYN",
-        "BYR",
-        "BZD",
         "CAD",
-        "CDF",
-        "CHF",
-        "CLF",
-        "CLP",
-        "CNY",
-        "COP",
-        "CRC",
-        "CUC",
-        "CUP",
-        "CVE",
-        "CZK",
-        "DJF",
-        "DKK",
-        "DOP",
-        "DZD",
-        "EGP",
-        "ERN",
-        "ETB",
-        "EUR",
-        "FJD",
-        "FKP",
-        "GBP",
-        "GEL",
-        "GGP",
-        "GHS",
-        "GIP",
-        "GMD",
-        "GNF",
-        "GTQ",
-        "GYD",
         "HKD",
-        "HNL",
-        "HRK",
-        "HTG",
-        "HUF",
-        "IDR",
-        "ILS",
-        "IMP",
-        "INR",
-        "IQD",
-        "IRR",
         "ISK",
-        "JEP",
-        "JMD",
-        "JOD",
-        "JPY",
-        "KES",
-        "KGS",
-        "KHR",
-        "KMF",
-        "KPW",
-        "KRW",
-        "KWD",
-        "KYD",
-        "KZT",
-        "LAK",
-        "LBP",
-        "LKR",
-        "LRD",
-        "LSL",
-        "LTL",
-        "LVL",
-        "LYD",
-        "MAD",
-        "MDL",
-        "MGA",
-        "MKD",
-        "MMK",
-        "MNT",
-        "MOP",
-        "MRO",
-        "MUR",
-        "MVR",
-        "MWK",
-        "MXN",
-        "MYR",
-        "MZN",
-        "NAD",
-        "NGN",
-        "NIO",
-        "NOK",
-        "NPR",
-        "NZD",
-        "OMR",
-        "PAB",
-        "PEN",
-        "PGK",
         "PHP",
-        "PKR",
-        "PLN",
-        "PYG",
-        "QAR",
+        "DKK",
+        "HUF",
+        "CZK",
+        "AUD",
         "RON",
-        "RSD",
-        "RUB",
-        "RWF",
-        "SAR",
-        "SBD",
-        "SCR",
-        "SDG",
         "SEK",
-        "SGD",
-        "SHP",
-        "SLL",
-        "SOS",
-        "SRD",
-        "STD",
-        "SVC",
-        "SYP",
-        "SZL",
+        "IDR",
+        "INR",
+        "BRL",
+        "RUB",
+        "HRK",
+        "JPY",
         "THB",
-        "TJS",
-        "TMT",
-        "TND",
-        "TOP",
+        "CHF",
+        "SGD",
+        "PLN",
+        "BGN",
         "TRY",
-        "TTD",
-        "TWD",
-        "TZS",
-        "UAH",
-        "UGX",
-        "USD",
-        "UYU",
-        "UZS",
-        "VEF",
-        "VND",
-        "VUV",
-        "WST",
-        "XAF",
-        "XAG",
-        "XAU",
-        "XCD",
-        "XDR",
-        "XOF",
-        "XPF",
-        "YER",
+        "CNY",
+        "NOK",
+        "NZD",
         "ZAR",
-        "ZMK",
-        "ZMW",
-        "ZWL"
-     ];
+        "USD",
+        "MXN",
+        "ILS",
+        "GBP",
+        "KRW",
+        "MYR",
+        "EUR"
+    ];
 
     // INSERT ARRAY INTO BUTTON DROPDOWNS --------
     // source button
@@ -492,40 +377,43 @@ $(document).ready(function() {
         var myTarget = $("#target-code p").text();
         // console.log("source/target = " + mySource + " / " + myTarget);
         // call newQuote function
-        getNewQuote(mySource, myTarget);
+
+        testNewCurrency(mySource, myTarget);
+        // getNewQuote(mySource, myTarget);
     });
 
     // CURRENCY FUNCTION (gets the selected country's exchange rate and displays it on vacay.html ==================================
-    var getNewQuote = function(source, code) {
-        var endpoint = "live";
-        var format = "1";
-        var access_key = "01b52c666cbce3e38e9f5458de93fd6c";
-        var url =
-            "http://apilayer.net/api/" +
-            endpoint +
-            "?access_key=" +
-            access_key +
-            "&currencies=" +
-            code +
-            "&source=" +
-            source +
-            "&format=" +
-            format;
-        $.ajax({
-            url: url,
-            dataType: "jsonp",
-            success: function(response) {
-                var sourceCode = source + code;
-                var quote = response.quotes[sourceCode];
-                $("#calc-quote").empty();
-                var currencyDivID = $("#calc-quote");
-                var currencyQuote = $("<p>");
-                var myQuote = "<b>" + quote + "</b>";
-                currencyQuote.html(myQuote);
-                currencyDivID.append(currencyQuote);
-            } // end response function
-        }); // end ajax
-    }; // end getCurrency function
+    // var getNewQuote = function(source, code) {
+    //     var endpoint = "live";
+    //     var format = "1";
+    //     var access_key = "01b52c666cbce3e38e9f5458de93fd6c";
+    //     var url =
+    //         "http://apilayer.net/api/" +
+    //         endpoint +
+    //         "?access_key=" +
+    //         access_key +
+    //         "&currencies=" +
+    //         code +
+    //         "&source=" +
+    //         source +
+    //         "&format=" +
+    //         format;
+    //     $.ajax({
+    //         url: url,
+    //         dataType: "jsonp",
+    //         success: function(response) {
+    //             console.log(response);
+    //             var sourceCode = source + code;
+    //             var quote = response.quotes[sourceCode];
+    //             $("#calc-quote").empty();
+    //             var currencyDivID = $("#calc-quote");
+    //             var currencyQuote = $("<p>");
+    //             var myQuote = "<b>" + quote + "</b>";
+    //             currencyQuote.html(myQuote);
+    //             currencyDivID.append(currencyQuote);
+    //         } // end response function
+    //     }); // end ajax
+    // }; // end getCurrency function
 
     // INVENTORY FIREBASE ====================================================
 
