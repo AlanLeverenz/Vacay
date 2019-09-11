@@ -242,7 +242,7 @@ $(document).ready(function() {
 
     function getWeatherLatLng(latlng) {
         var latlengQueryURL =
-            "http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=cHHY6ik0KkQaRbDGPQATVu7rGTOggeT0&q=" +
+            "https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=cHHY6ik0KkQaRbDGPQATVu7rGTOggeT0&q=" +
             latlng[0] +
             "%2C" +
             latlng[1];
@@ -256,7 +256,7 @@ $(document).ready(function() {
     }
     function actuallyGetWeather(lockey) {
         var actualWeatherURL =
-            "http://dataservice.accuweather.com/currentconditions/v1/" +
+            "https://dataservice.accuweather.com/currentconditions/v1/" +
             lockey +
             "?apikey=cHHY6ik0KkQaRbDGPQATVu7rGTOggeT0&details=true";
         $.ajax({
