@@ -144,15 +144,21 @@ $(document).ready(function() {
             url: queryURL,
             method: "GET"
         }).then(function(results) {
+            var latlng = results[0].latlng;
+            var latlnglng = latlng.length;
+            console.log("latlng leng", latlng.length);
             if (userInputCountry !== "") {
                 getWeatherLatLng(userinputLatLng);
                 // console.log("halp 1", userinputLatLng);
                 userinputLatLng = [];
-            } else if (results[0].latlng) {
+            } else if (latlnglng != 0) {
+                console.log(results[0]);
                 var latlng = results[0].latlng;
-                // console.log("halp 2", latlng);
+
                 console.log("latlng", latlng);
                 getWeatherLatLng(latlng);
+            } else {
+                getWeatherLatLng([40.804496782, -73.957162838]);
             }
 
             //  keys to capture
