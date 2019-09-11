@@ -28,12 +28,16 @@ svg {
 
 #source-code, #calc-quote, #target-code {
     float:right;
-    padding-right: 12px;
 }
 
 #add-itinerary-btn {
     float:left;
     margin: 12px;
+}
+
+#remove-last-itinerary-button {
+    float:right;
+    /* margin: 12px; */
 }
 
 #hide-itinerary-form-button {

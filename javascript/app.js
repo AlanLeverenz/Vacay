@@ -6,22 +6,26 @@ $.ajaxSetup({
 // === code for gathering data from countriesREST
 
 $(document).ready(function() {
-    // links date picker to date fields in the itinerary form
-
     //Google maps API key
     var googleMapsApikey = "AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg";
     // Temporary variable for current place search country value
     var userInputCountry = "";
+    var userinputLatLng = [];
 
     // onclick CLEAR ==============================================
     $("#clear-results-button").on("click", function(event) {
         event.preventDefault();
+        latlng = [];
         // empty the API search results
         $("#country-information").empty();
         $("#currencyConverter").empty();
         $("#weatherRender").empty();
+        $("#currencyNameCode").empty();
+        $("#exchangeRateDisplay").empty();
+        $("#source-code").text("");
+        $("#target-code").text("");
+        $("#calc-quote").text("");
         $("#googleMapsIframeDiv").hide();
-        // NOTE: Itinerary requires both html and Firebase childSnapshot values removed
     }); // end clear-results-button
 
     var placesQuery =
@@ -41,14 +45,13 @@ $(document).ready(function() {
         return jQuery.ajax(options);
     };
     $.cachedScript(placesQuery).done(function(script, textStatus) {
-        // console.log(textStatus);
         // The input element
         var input = document.getElementById("search-term");
         // Autocomplete result restrictions
         var options = { types: ["(regions)"] };
         //Create autocomplete object
         var autocomplete = new google.maps.places.Autocomplete(input, options);
-        //Feilds IDK
+        // Field IDK
         autocomplete.setFields([
             "address_components",
             "geometry",
@@ -56,9 +59,6 @@ $(document).ready(function() {
             "name"
         ]);
 
-        // --------
-        // ALAN
-        // --------
         // GET COUNTRY NAME FROM AUTOCMPLETE INPUT
         autocomplete.addListener("place_changed", function() {
             var currentPlace = autocomplete.getPlace();
@@ -69,11 +69,14 @@ $(document).ready(function() {
                     currentPlace.address_components[
                         currentPlace.address_components.length - 1
                     ].long_name;
-
-                // console.log("autocomplete", userInputCountry);
-            }
-        });
-    });
+                userinputLatLng = [
+                    currentPlace.geometry.location.lat.call(),
+                    currentPlace.geometry.location.lng.call()
+                ];
+                console.log("userinput latlng", userinputLatLng);
+            } // end if
+        }); // end autocomlete listener
+    }); // end cachedScript
 
     // onclick ADD INVENTORY ITEM (FORM) =====================
     $("#add-itinerary-button").on("click", function(event) {
@@ -90,6 +93,7 @@ $(document).ready(function() {
     // onclick SEARCH =========================================
     $("#search-button").on("click", function(event) {
         event.preventDefault();
+
         // empty the country, currency, and weather child elements
         $("#country-information").empty();
         // $("#currencyConverter").empty();
@@ -114,9 +118,6 @@ $(document).ready(function() {
         }
         console.log("search country result", search);
 
-        // google maps info geocoder thing
-        geocoder = new google.maps.Geocoder();
-
         //reset user input country
         userInputCountry = "";
 
@@ -137,12 +138,28 @@ $(document).ready(function() {
         }
         console.log("SEARCH COUNTRY = " + search);
 
-        // build queryURL
+        // REST COUNTRIES API QUERY ==========================================
+
         var queryURL = "https://restcountries.eu/rest/v2/name/" + search;
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then(function(results) {
+            var latlng = results[0].latlng;
+            var latlnglng = latlng.length;
+            console.log("latlng leng", latlng.length);
+            if (userInputCountry !== "") {
+                getWeatherLatLng(userinputLatLng);
+                userinputLatLng = [];
+            } else if (latlnglng != 0) {
+                console.log(results[0]);
+                var latlng = results[0].latlng;
+                console.log("latlng", latlng);
+                getWeatherLatLng(latlng);
+            } else {
+                getWeatherLatLng([40.804496782, -73.957162838]);
+            }
+
             //  keys to capture
             var countryInfoDiv = $("#country-information");
 
@@ -176,7 +193,8 @@ $(document).ready(function() {
             var currency = results[0].currencies[0]["name"];
             var code = results[0].currencies[0]["code"];
             var pCurrency = $("<p>").html(
-                "<b>Currency:</b> " + currency + " (" + code + ")");
+                "<b>Currency:</b> " + currency + " (" + code + ")"
+            );
 
             var languages = results[0].languages[0]["name"];
             var pLanguages = $("<p>").html("<b>Language:</b> " + languages);
@@ -222,11 +240,83 @@ $(document).ready(function() {
             // set jQuery DOM location for quote to be displayed
             var display = $("#exchangeRateDisplay");
             // call function that uses the apilayer.net API to get exchange rate quotes
-            var quote = getCurrency(source, code);
-
-            // place in html page
+            var quote = getCurrency(source, code, display);
         }); // end countriesREST ajax
     }); // end Search button click
+
+
+    // FUNCTION FOR GETTING LATTITUE AND LONGITUDE COORDINATES
+    function getWeatherLatLng(latlng) {
+        var latlengQueryURL =
+            "https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=ocHoKYTrdtOpop5PXtp2BNKuyqkBfUlk&q=" +
+            latlng[0] +
+            "%2C" +
+            latlng[1];
+        $.ajax({
+            url: latlengQueryURL,
+            method: "GET"
+        }).then(function(results) {
+            var lockey = results["Key"];
+            actuallyGetWeather(lockey);
+        });
+    } // end getWeatherLatLng function
+
+    // ACCUWEATHER API QUERY FUNCTION 
+    function actuallyGetWeather(lockey) {
+        var actualWeatherURL =
+            "https://dataservice.accuweather.com/currentconditions/v1/" +
+            lockey +
+            "?apikey=ocHoKYTrdtOpop5PXtp2BNKuyqkBfUlk&details=true";
+        $.ajax({
+            url: actualWeatherURL,
+            method: "GET"
+        }).then(function(results) {
+            var data = results[0];
+            var period = "Current";
+            var pPeriod = $("<h4>").html(period);
+            // TEMPERATURE
+            var temp = data["Temperature"]["Imperial"]["Value"];
+            var ptemp = $("<p>").html("<b>Temperature: </b>" + temp);
+            // TEMPERATURE HIGH
+            var tempHigh =
+                data["TemperatureSummary"]["Past6HourRange"]["Maximum"][
+                    "Imperial"
+                ]["Value"];
+            var ptempHigh = $("<p>").html("<b>Todays high: </b>" + tempHigh);
+            // TEMPERATURE LOW
+            var tempLow =
+                data["TemperatureSummary"]["Past6HourRange"]["Minimum"][
+                    "Imperial"
+                ]["Value"];
+            var ptempLow = $("<p>").html("<b>Todays low: </b>" + tempLow);
+            // HUMIDITY
+            var humidity = data["RelativeHumidity"];
+            var phumidity = $("<p>").html("<b>Humidity: </b>" + humidity + "%");
+            // PRESSURE
+            var pressure = data["Pressure"]["Imperial"]["Value"];
+            var ppressure = $("<p>").html(
+                "<b>Pressure: </b>" + pressure + "mbar"
+            );
+            // CLOUDS
+            var clouds = data["CloudCover"];
+            var pclouds = $("<p>").html("<b>Clouds: </b>" + clouds);
+            // WIND
+            var wind = data["WindGust"]["Speed"]["Imperial"]["Value"];
+            var pwind = $("<p>").html("<b>Wind: </b>" + wind + "mph");
+
+            // ASSIGNING VARS TO THE APPENDING OF RETRIEVED DATA TO THE HTML CONTAINER
+            var weatherRender = $("#weatherRender");
+            weatherRender
+                .append(pPeriod)
+                .append(ptemp)
+                .append(ptempHigh)
+                .append(ptempLow)
+                .append(phumidity)
+                .append(ppressure)
+                .append(pclouds)
+                .append(pwind);
+        }); // end then response
+    } // end function for ActuallyGetWeather
 
     //currency api test
     function testNewCurrency(source, other) {
@@ -247,14 +337,15 @@ $(document).ready(function() {
             currencyQuote.html(myQuote);
             currencyDivID.append(currencyQuote);
         });
-    }
+    } // end function testNewCurrency
+
     // CURRENCY FUNCTION (gets the selected country's exchange rate and displays it on vacay.html ==================================
     var getCurrency = function(source, code) {
         var endpoint = "live";
         var format = "1";
         var access_key = "01b52c666cbce3e38e9f5458de93fd6c";
         var url =
-            "http://apilayer.net/api/" +
+            "https://apilayer.net/api/" +
             endpoint +
             "?access_key=" +
             access_key +
@@ -328,8 +419,8 @@ $(document).ready(function() {
         );
     });
 
-    // target button
-    $('#select2').empty();
+    // quote button
+    $("#select2").empty();
     $.each(options, function(i, p) {
         $("#select2").append(
             $('<a class="dropdown-item" href="#"></a>')
@@ -374,13 +465,10 @@ $(document).ready(function() {
         // get source and target codes from html
         var mySource = $("#source-code p").text();
         var myTarget = $("#target-code p").text();
-        // console.log("source/target = " + mySource + " / " + myTarget);
-        // call newQuote function
 
         testNewCurrency(mySource, myTarget);
         // getNewQuote(mySource, myTarget);
     });
-    
 
     // INVENTORY FIREBASE ====================================================
 
@@ -402,23 +490,32 @@ $(document).ready(function() {
 
     // ON CLICK EVENT FOR ADDING AN ITINERARY ITEM ==================
 
-    $('#myTable tr').click(function(){
-        $(this).remove();
-        return false;
-    });
-
     $("#add-itinerary-btn").on("click", function(event) {
         // Prevent the default form submit behavior
         event.preventDefault();
 
-            // Grabs user input
-            var destination = $("#destination-input").val().trim();
-            var arriveDate = $("#arrive-date-input").val().trim();
-            var arriveVia = $("#arrive-via-input").val().trim();
-            var accommodations = $("#accommodations-input").val().trim();
-            var carRental = $("#car-rental-input").val().trim();
-            var departDate = $("#departure-date-input").val().trim();
-            var departVia = $("#depart-via-input").val().trim();
+        // Grabs user input
+        var destination = $("#destination-input")
+            .val()
+            .trim();
+        var arriveDate = $("#arrive-date-input")
+            .val()
+            .trim();
+        var arriveVia = $("#arrive-via-input")
+            .val()
+            .trim();
+        var accommodations = $("#accommodations-input")
+            .val()
+            .trim();
+        var carRental = $("#car-rental-input")
+            .val()
+            .trim();
+        var departDate = $("#departure-date-input")
+            .val()
+            .trim();
+        var departVia = $("#depart-via-input")
+            .val()
+            .trim();
 
         // Creates local "temporary" object for holding itinerary
         var newItinerary = {
@@ -431,7 +528,9 @@ $(document).ready(function() {
             departVia: departVia
         };
 
-        // push itinerary items into Firebase
+        // hide the itinerary form
+        $("#toggle-itinerary-form").hide();
+
         vacayData.ref().push(newItinerary);
 
         // logs everything to console
