@@ -176,8 +176,7 @@ $(document).ready(function() {
             var currency = results[0].currencies[0]["name"];
             var code = results[0].currencies[0]["code"];
             var pCurrency = $("<p>").html(
-                "<b>Currency:</b> " + currency + " (" + code + ")"
-            );
+                "<b>Currency:</b> " + currency + " (" + code + ")");
 
             var languages = results[0].languages[0]["name"];
             var pLanguages = $("<p>").html("<b>Language:</b> " + languages);
@@ -381,39 +380,7 @@ $(document).ready(function() {
         testNewCurrency(mySource, myTarget);
         // getNewQuote(mySource, myTarget);
     });
-
-    // CURRENCY FUNCTION (gets the selected country's exchange rate and displays it on vacay.html ==================================
-    // var getNewQuote = function(source, code) {
-    //     var endpoint = "live";
-    //     var format = "1";
-    //     var access_key = "01b52c666cbce3e38e9f5458de93fd6c";
-    //     var url =
-    //         "http://apilayer.net/api/" +
-    //         endpoint +
-    //         "?access_key=" +
-    //         access_key +
-    //         "&currencies=" +
-    //         code +
-    //         "&source=" +
-    //         source +
-    //         "&format=" +
-    //         format;
-    //     $.ajax({
-    //         url: url,
-    //         dataType: "jsonp",
-    //         success: function(response) {
-    //             console.log(response);
-    //             var sourceCode = source + code;
-    //             var quote = response.quotes[sourceCode];
-    //             $("#calc-quote").empty();
-    //             var currencyDivID = $("#calc-quote");
-    //             var currencyQuote = $("<p>");
-    //             var myQuote = "<b>" + quote + "</b>";
-    //             currencyQuote.html(myQuote);
-    //             currencyDivID.append(currencyQuote);
-    //         } // end response function
-    //     }); // end ajax
-    // }; // end getCurrency function
+    
 
     // INVENTORY FIREBASE ====================================================
 
@@ -434,6 +401,11 @@ $(document).ready(function() {
     var vacayData = firebase.database();
 
     // ON CLICK EVENT FOR ADDING AN ITINERARY ITEM ==================
+
+    $('#myTable tr').click(function(){
+        $(this).remove();
+        return false;
+    });
 
     $("#add-itinerary-btn").on("click", function(event) {
         // Prevent the default form submit behavior
@@ -458,9 +430,6 @@ $(document).ready(function() {
             departDate: departDate,
             departVia: departVia
         };
-
-        // hide the itinerary form
-        $("#toggle-itinerary-form").hide();
 
         // push itinerary items into Firebase
         vacayData.ref().push(newItinerary);
