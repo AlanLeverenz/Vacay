@@ -250,7 +250,7 @@ $(document).ready(function() {
 
     function getWeatherLatLng(latlng) {
         var latlengQueryURL =
-            "https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=cHHY6ik0KkQaRbDGPQATVu7rGTOggeT0&q=" +
+            "https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=ocHoKYTrdtOpop5PXtp2BNKuyqkBfUlk&q=" +
             latlng[0] +
             "%2C" +
             latlng[1];
