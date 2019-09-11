@@ -144,11 +144,13 @@ $(document).ready(function() {
             url: queryURL,
             method: "GET"
         }).then(function(results) {
-            if (userinputLatLng !== "") {
+            if (userInputCountry !== "") {
                 getWeatherLatLng(userinputLatLng);
-                userinputLatLng = "";
+                // console.log("halp 1", userinputLatLng);
+                userinputLatLng = [];
             } else if (results[0].latlng) {
                 var latlng = results[0].latlng;
+                // console.log("halp 2", latlng);
                 console.log("latlng", latlng);
                 getWeatherLatLng(latlng);
             }
