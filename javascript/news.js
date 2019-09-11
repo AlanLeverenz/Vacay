@@ -24,7 +24,7 @@ $(document).ready(function() {
         //   var records = $("#number-of-records").val();
         var records = 5;
         // var sYear = $("#start-yr").val().trim();
-        var startYear = "01012019";
+        var startYear = "&start_date=01012018";
         // var eYear = $("#end-yr").val().trim();
         // var endYear = eYear.length > 0 ? "&end_date=" + eYear + "1231" : "";
   
@@ -36,7 +36,8 @@ $(document).ready(function() {
           url: queryURL,
           method: "GET"
         }).then(function(results) {
-  
+         //   https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Germany&start_date=01012019&GAN5Vuqp6dyl6vNHxlmwbLizhaZMVVf6
+
         for ( var i = 0 ; i < records ; i++ ) {
           //  keys to capture
           var topArticlesDiv = $("#top-articles");
@@ -44,11 +45,13 @@ $(document).ready(function() {
           var leadPara = results.response.docs[i].lead_paragraph;
           var pubDate = new Date(results.response.docs[i].pub_date);
           var webURL = results.response.docs[i].web_url;
+
           var aWebURL = "<a href='" + webURL + "' target='_blank'>" + headline + "</a>";
           var pHeadline = $("<h6>").html(headline);
           var pArticle = $("<p>").html(leadPara + " " + pubDate + " " + aWebURL);
           // append to the top-articles div
           topArticlesDiv.append(pHeadline).append(pArticle).append(divider);
+          var divider = $("<hr>");
   
           }; // end for loop
         }); // end then

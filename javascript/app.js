@@ -3,31 +3,15 @@ $.ajaxSetup({
     cache: true
 });
 
-// === code for gathering data from countriesREST
-
 $(document).ready(function() {
+
     //Google maps API key
     var googleMapsApikey = "AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg";
     // Temporary variable for current place search country value
     var userInputCountry = "";
     var userinputLatLng = [];
 
-    // onclick CLEAR ==============================================
-    $("#clear-results-button").on("click", function(event) {
-        event.preventDefault();
-        latlng = [];
-        // empty the API search results
-        $("#country-information").empty();
-        $("#currencyConverter").empty();
-        $("#weatherRender").empty();
-        $("#currencyNameCode").empty();
-        $("#exchangeRateDisplay").empty();
-        $("#source-code").text("");
-        $("#target-code").text("");
-        $("#calc-quote").text("");
-        $("#googleMapsIframeDiv").hide();
-    }); // end clear-results-button
-
+    // GOOGLE MAPS PLACES QUERY VAR
     var placesQuery =
         "https://maps.googleapis.com/maps/api/js?key=" +
         googleMapsApikey +
@@ -38,7 +22,7 @@ $(document).ready(function() {
             dataType: "script",
             cache: true,
             url: url
-        });
+        }); 
 
         // Use $.ajax() since it is more flexible than $.getScript
         // Return the jqXHR object so we can chain callbacks
@@ -78,7 +62,23 @@ $(document).ready(function() {
         }); // end autocomlete listener
     }); // end cachedScript
 
-    // onclick ADD INVENTORY ITEM (FORM) =====================
+    // onclick CLEAR ==========================================
+    $("#clear-results-button").on("click", function(event) {
+        event.preventDefault();
+        latlng = [];
+        // empty the API search results
+        $("#country-information").empty();
+        $("#currencyConverter").empty();
+        $("#weatherRender").empty();
+        $("#currencyNameCode").empty();
+        $("#exchangeRateDisplay").empty();
+        $("#source-code").text("");
+        $("#target-code").text("");
+        $("#calc-quote").text("");
+        $("#googleMapsIframeDiv").hide();
+    }); // end clear-results-button
+
+    // onclick ADD INVENTORY ITEM (FORM) =======================
     $("#add-itinerary-button").on("click", function(event) {
         event.preventDefault();
         $(".toggle-itinerary-form").show();
@@ -90,7 +90,16 @@ $(document).ready(function() {
         $(".toggle-itinerary-form").hide();
     });
 
-    // onclick SEARCH =========================================
+    // onclick REMOVE LAST ITINERARY ITEM ==============
+    $("#remove-last-itinerary-button").on("click", function(event) {
+        event.preventDefault();
+
+// code here to remove the "last" itinerary item. Needs to be sorted by date.
+
+    });
+
+
+    // SEARCH COUNTRY, CURRENCY, WEATHER  ========================
     $("#search-button").on("click", function(event) {
         event.preventDefault();
 
@@ -102,6 +111,7 @@ $(document).ready(function() {
         $(".toggle-country").show();
         $(".toggle-currency").show();
         $(".toggle-weather").show();
+        $(".toggle-news").show();
         $(".toggle-itinerary-table").show();
 
         //search var
@@ -137,6 +147,7 @@ $(document).ready(function() {
             search = searchArr[1];
         }
         console.log("SEARCH COUNTRY = " + search);
+
 
         // REST COUNTRIES API QUERY ==========================================
 
@@ -223,7 +234,7 @@ $(document).ready(function() {
                 .append(pTimeZone)
                 .append(pCallingCodes);
 
-            // Get currency name and code -------------------------------------
+            // Get currency name and code ===============================
 
             $("#currencyNameCode").empty();
             var currencyDiv = $("#currencyNameCode");
@@ -237,15 +248,16 @@ $(document).ready(function() {
 
             // hard-code the source currency as USD
             source = "USD";
-            // set jQuery DOM location for quote to be displayed
-            var display = $("#exchangeRateDisplay");
+            // // set jQuery DOM location for quote to be displayed
+            // var display = $("#exchangeRateDisplay");
             // call function that uses the apilayer.net API to get exchange rate quotes
-            var quote = getCurrency(source, code, display);
+            displayCountryCurrency(source, code);
         }); // end countriesREST ajax
     }); // end Search button click
 
 
-    // FUNCTION FOR GETTING LATTITUE AND LONGITUDE COORDINATES
+    // FUNCTION FOR GETTING LATTITUE AND LONGITUDE COORDINATES ===========
+
     function getWeatherLatLng(latlng) {
         var latlengQueryURL =
             "https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=ocHoKYTrdtOpop5PXtp2BNKuyqkBfUlk&q=" +
@@ -261,7 +273,8 @@ $(document).ready(function() {
         });
     } // end getWeatherLatLng function
 
-    // ACCUWEATHER API QUERY FUNCTION 
+    // ACCUWEATHER API QUERY FUNCTION ================================
+
     function actuallyGetWeather(lockey) {
         var actualWeatherURL =
             "https://dataservice.accuweather.com/currentconditions/v1/" +
@@ -318,8 +331,10 @@ $(document).ready(function() {
         }); // end then response
     } // end function for ActuallyGetWeather
 
-    //currency api test
-    function testNewCurrency(source, other) {
+
+    // TEST NEW CURRENCY - EXCHANGE RATES API QUERY ======================
+
+    function setCurrency(source, other) {
         var currencyTestURl =
             "https://api.exchangeratesapi.io/latest?base=" +
             source +
@@ -339,73 +354,64 @@ $(document).ready(function() {
         });
     } // end function testNewCurrency
 
-    // CURRENCY FUNCTION (gets the selected country's exchange rate and displays it on vacay.html ==================================
-    var getCurrency = function(source, code) {
-        var endpoint = "live";
-        var format = "1";
-        var access_key = "01b52c666cbce3e38e9f5458de93fd6c";
-        var url =
-            "https://apilayer.net/api/" +
-            endpoint +
-            "?access_key=" +
-            access_key +
-            "&currencies=" +
-            code +
-            "&source=" +
-            source +
-            "&format=" +
-            format;
-        $.ajax({
-            url: url,
-            dataType: "jsonp",
-            success: function(response) {
-                var sourceCode = source + code;
-                var quote = response.quotes[sourceCode];
-                $("#exchangeRateDisplay").empty();
-                var currencyDivID = $("#exchangeRateDisplay");
-                var currencyQuote = $("<p>");
-                var myQuote = "<b>Exchange Rate:</b> " + quote;
-                currencyQuote.html(myQuote);
-                currencyDivID.append(currencyQuote);
-            } // end response function
-        }); // end ajax
-    }; // end getCurrency function
+        // DISPLAY COUNTRY CURRENCY FUNCTION ==============================
+        var displayCountryCurrency = function (source,target) {
+
+            $("#source-code").empty();
+            var sourceDiv = $("#source-code");
+            var currencySource = $("<p>");
+            currencySource.attr("id", "source-code-attr");
+            var mySource = "<b>" + source + "</b>";
+            currencySource.html(mySource);
+            sourceDiv.append(currencySource);
+    
+            $("#target-code").empty();
+            var targetDiv = $("#target-code");
+            var currencyTarget = $("<p>");
+            currencyTarget.attr("id", "target-code-attr");
+            var myTarget = "<b>" + target + "</b>";
+            currencyTarget.html(myTarget);
+            targetDiv.append(currencyTarget);
+    
+            setCurrency(source, target);
+    
+        }; // end displayCountryCurrency
 
     // array of currency codes
     var options = [
-        "CAD",
-        "HKD",
-        "ISK",
-        "PHP",
-        "DKK",
-        "HUF",
-        "CZK",
         "AUD",
-        "RON",
-        "SEK",
-        "IDR",
-        "INR",
-        "BRL",
-        "RUB",
-        "HRK",
-        "JPY",
-        "THB",
-        "CHF",
-        "SGD",
-        "PLN",
         "BGN",
-        "TRY",
+        "BRL",
+        "CAD",
+        "CHF",
         "CNY",
+        "CZK",
+        "DKK",
+        "EUR",
+        "GBP",
+        "HKD",
+        "HRK",
+        "HUF",
+        "IDR",
+        "ILS",
+        "INR",
+        "ISK",
+        "JPY",
+        "KRW",
+        "MXN",
+        "MYR",
         "NOK",
         "NZD",
-        "ZAR",
+        "PHP",
+        "PLN",
+        "RON",
+        "RUB",
+        "SEK",
+        "SGD",
+        "THB",
+        "TRY",
         "USD",
-        "MXN",
-        "ILS",
-        "GBP",
-        "KRW",
-        "MYR",
-        "EUR"
+        "ZAR"
     ];
 
     // INSERT ARRAY INTO BUTTON DROPDOWNS --------
@@ -429,7 +435,10 @@ $(document).ready(function() {
         );
     });
 
+
+
     // CLICK ON CURRENCY CONVERSION BUTTONS ===========================
+
     // currency source
     $(document).on("click", "#select1 a", function() {
         // get Source code
@@ -466,8 +475,8 @@ $(document).ready(function() {
         var mySource = $("#source-code p").text();
         var myTarget = $("#target-code p").text();
 
-        testNewCurrency(mySource, myTarget);
-        // getNewQuote(mySource, myTarget);
+        setCurrency(mySource, myTarget);
+
     });
 
     // INVENTORY FIREBASE ====================================================
