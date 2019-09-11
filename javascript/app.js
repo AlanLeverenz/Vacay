@@ -266,7 +266,7 @@ $(document).ready(function() {
         var actualWeatherURL =
             "https://dataservice.accuweather.com/currentconditions/v1/" +
             lockey +
-            "?apikey=cHHY6ik0KkQaRbDGPQATVu7rGTOggeT0&details=true";
+            "?apikey=ocHoKYTrdtOpop5PXtp2BNKuyqkBfUlk&q&details=true";
         $.ajax({
             url: actualWeatherURL,
             method: "GET"
