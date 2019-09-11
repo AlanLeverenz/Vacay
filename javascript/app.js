@@ -10,10 +10,12 @@ $(document).ready(function() {
     var googleMapsApikey = "AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg";
     // Temporary variable for current place search country value
     var userInputCountry = "";
+    var userinputLatLng = [];
 
     // onclick CLEAR ==============================================
     $("#clear-results-button").on("click", function(event) {
         event.preventDefault();
+        latlng = [];
         // empty the API search results
         $("#country-information").empty();
         $("#currencyConverter").empty();
@@ -67,8 +69,11 @@ $(document).ready(function() {
                     currentPlace.address_components[
                         currentPlace.address_components.length - 1
                     ].long_name;
-
-                // console.log("autocomplete", userInputCountry);
+                userinputLatLng = [
+                    currentPlace.geometry.location.lat.call(),
+                    currentPlace.geometry.location.lng.call()
+                ];
+                console.log("userinput latlng", userinputLatLng);
             }
         });
     });
@@ -88,6 +93,7 @@ $(document).ready(function() {
     // onclick SEARCH =========================================
     $("#search-button").on("click", function(event) {
         event.preventDefault();
+
         // empty the country, currency, and weather child elements
         $("#country-information").empty();
         // $("#currencyConverter").empty();
@@ -111,9 +117,6 @@ $(document).ready(function() {
             search = userInputCountry;
         }
         console.log("search country result", search);
-
-        // google maps info geocoder thing
-        geocoder = new google.maps.Geocoder();
 
         //reset user input country
         userInputCountry = "";
@@ -141,6 +144,15 @@ $(document).ready(function() {
             url: queryURL,
             method: "GET"
         }).then(function(results) {
+            if (userinputLatLng !== "") {
+                getWeatherLatLng(userinputLatLng);
+                userinputLatLng = "";
+            } else if (results[0].latlng) {
+                var latlng = results[0].latlng;
+                console.log("latlng", latlng);
+                getWeatherLatLng(latlng);
+            }
+
             //  keys to capture
             var countryInfoDiv = $("#country-information");
 
@@ -225,7 +237,78 @@ $(document).ready(function() {
 
             // place in html page
         }); // end countriesREST ajax
+        //weather
     }); // end Search button click
+
+    function getWeatherLatLng(latlng) {
+        var latlengQueryURL =
+            "http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=cHHY6ik0KkQaRbDGPQATVu7rGTOggeT0&q=" +
+            latlng[0] +
+            "%2C" +
+            latlng[1];
+        $.ajax({
+            url: latlengQueryURL,
+            method: "GET"
+        }).then(function(results) {
+            var lockey = results["Key"];
+            actuallyGetWeather(lockey);
+        });
+    }
+    function actuallyGetWeather(lockey) {
+        var actualWeatherURL =
+            "http://dataservice.accuweather.com/currentconditions/v1/" +
+            lockey +
+            "?apikey=cHHY6ik0KkQaRbDGPQATVu7rGTOggeT0&details=true";
+        $.ajax({
+            url: actualWeatherURL,
+            method: "GET"
+        }).then(function(results) {
+            var data = results[0];
+            var period = "Current";
+            var pPeriod = $("<h4>").html(period);
+            // TEMPERATURE
+            var temp = data["Temperature"]["Imperial"]["Value"];
+            var ptemp = $("<p>").html("<b>Temperature: </b>" + temp);
+            // TEMPERATURE HIGH
+            var tempHigh =
+                data["TemperatureSummary"]["Past6HourRange"]["Maximum"][
+                    "Imperial"
+                ]["Value"];
+            var ptempHigh = $("<p>").html("<b>Todays high: </b>" + tempHigh);
+            // TEMPERATURE LOW
+            var tempLow =
+                data["TemperatureSummary"]["Past6HourRange"]["Minimum"][
+                    "Imperial"
+                ]["Value"];
+            var ptempLow = $("<p>").html("<b>Todays low: </b>" + tempLow);
+            // HUMIDITY
+            var humidity = data["RelativeHumidity"];
+            var phumidity = $("<p>").html("<b>Humidity: </b>" + humidity + "%");
+            // PRESSURE
+            var pressure = data["Pressure"]["Imperial"]["Value"];
+            var ppressure = $("<p>").html(
+                "<b>Pressure: </b>" + pressure + "mbar"
+            );
+            // CLOUDS
+            var clouds = data["CloudCover"];
+            var pclouds = $("<p>").html("<b>Clouds: </b>" + clouds);
+            // WIND
+            var wind = data["WindGust"]["Speed"]["Imperial"]["Value"];
+            var pwind = $("<p>").html("<b>Wind: </b>" + wind + "mph");
+
+            // ASSIGNING VARS TO THE APPENDING OF RETRIEVED DATA TO THE HTML CONTAINER
+            var weatherRender = $("#weatherRender");
+            weatherRender
+                .append(pPeriod)
+                .append(ptemp)
+                .append(ptempHigh)
+                .append(ptempLow)
+                .append(phumidity)
+                .append(ppressure)
+                .append(pclouds)
+                .append(pwind);
+        });
+    }
 
     //currency api test
     function testNewCurrency(source, other) {
