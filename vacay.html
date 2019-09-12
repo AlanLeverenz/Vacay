@@ -11,7 +11,8 @@
             rel="stylesheet"
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-            crossorigin="anonymous"/>
+            crossorigin="anonymous"
+        />
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css"
@@ -27,39 +28,31 @@
         <!-- CSS STYLE LINK -->
         <link rel="stylesheet" href="css/style.css" />
 
-        <!-- google font links -->
-        <link href="https://fonts.googleapis.com/css?family=Red+Hat+Display&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Mandali&display=swap" rel="stylesheet">  
         <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"></script>
         <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
         <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
     </head>
 
-    <body style="height: auto; background-image: url(images/dansimages/background1.png);background-repeat: no-repeat;
-    background-size: cover; padding-bottom:30px;">
+    <body>
         <div class="container">
             <div
-                class="jumbotron col-lg-10 mx-auto text-center my-3"
-                style="height: 400px;background-image: url(images/dansimages/vacay_4.png);background-repeat: no-repeat;
-                background-size:cover;border-style:solid;border-width:10px;border-color:white;border-radius:5px;color:white;">
-               
-               <h1 style="font-family: 'Red Hat Display', sans-serif; font-size:67px;color: white;border-style: solid; border-color: white;border-radius:5px;
-               border-radius: 5px; letter-spacing: 5px;text-align: center;">VACAY</h1>
+                class="jumbotron col-lg-8 mx-auto text-center my-3"
+                style="border-radius: 10px; color: white;">
+                <h1 style="display:none">Vacay</h1>
             </div>
          
             <!-- SEARCH BOX -->
             <div class="row">
                 
-                <div class="card col-8 mx-auto mb-0 px-0" id="search-parameters" style="margin-bottom:20px; background-color: #ebfffe;">
-                    <div class="card-header pb-0"
-                        style="background-color: rgb(30,30,30); background-image: url(images/dansimages/cardtitleback.png);color: white;">
-                        <h5>SEARCH</h5>
+                <div class="card col-8 mx-auto mb-0 px-0" id="search-parameters">
+                    <div class="card-header pb-0">
+                        <h5>Search</h5>
                     </div>
                     <div class="card-body">
                         <form>
                             <div class="form-group">
-                                <label for="search-term">COUNTRY</label>
+                                <label for="search-term">Country</label>
                                 <div id="pac-container">
                                     <input
                                         class="form-control"
@@ -88,7 +81,7 @@
             </div>
 
             <!-- GOOGLE MAPS - DISPLAY NONE WHEN PAGE LOADS -->
-            <div class="row" style="margin-bottom:20px;">
+            <div class="row">
                 <div
                     class="card col-7 mx-auto my-2 px-0"
                     id="googleMapsIframeDiv"
@@ -113,9 +106,8 @@
             <div class="row">
 
                 <!-- COUNTRY INFO - DISPLAY NONE WHEN PAGE LOADS -->
-                <div class="card col-4 mx-auto px-0 toggle-country" style="display:none;background-color: #ebfffe;">
-                    <div class="card-header pb-0" id="country-info-header"
-                        style="background-color: rgb(30,30,30); background-image: url(images/dansimages/cardtitleback.png);color: white;">
+                <div class="card col-4 mx-auto px-0 toggle-country" style="display:none">
+                    <div class="card-header pb-0" id="country-info-header">
                         <h5>Country Information</h5>
                     </div>
                     <!-- COUNTRY INFO WILL DISPLAY HERE -->
@@ -123,9 +115,8 @@
                 </div>
                         
                 <!-- WEATHER REPORT - DISPLAY NONE WHEN PAGE LOADS -->
-                <div class="card col-3 mx-auto px-0 toggle-weather" style="display:none;background-color: #ebfffe;">
-                    <div class="card-header pb-0" id="weather-info-header"
-                        style="background-color: rgb(30,30,30); background-image: url(images/dansimages/cardtitleback.png); color: white;">
+                <div class="card col-3 mx-auto px-0 toggle-weather" style="display:none">
+                    <div class="card-header pb-0" id="weather-info-header">
                         <h5>Weather</h5>
                     </div>
                     <!-- WEATHER WILL DISPLAY HERE -->
@@ -133,9 +124,8 @@
                 </div>
 
                 <!-- CURRENCY CONVERTER - DISPLAY NONE WHEN PAGE LOADS -->
-                <div class="card col-3 mx-auto px-0 toggle-currency" style="display:none;background-color: #ebfffe;">
-                    <div class="card-header pb-0" id="currency-info-header"
-                        style="background-color: rgb(30,30,30); color: white;background-image: url(images/dansimages/cardtitleback.png);">
+                <div class="card col-3 mx-auto px-0 toggle-currency" style="display:none">
+                    <div class="card-header pb-0" id="currency-info-header">
                         <h5>Currency Converter</h5>
                     </div>
 
@@ -187,8 +177,8 @@
         </div> <!-- container -->
 
         <!-- NEWS SECTION -->
-        <div class="card col-10 mx-auto px-0 toggle-news mt-2" style="display:none; background-color: #ebfffe;">
-            <div class="card-header pb-0" id="top-articles-header" style="background-color: rgb(30,30,30); background-image: url(images/dansimages/cardtitleback.png); color: white;">
+        <div class="card col-10 mx-auto px-0 toggle-news mt-2" style="display:none">
+            <div class="card-header pb-0" id="top-articles-header">
                 <h5>Top NY Times Articles</h5>
             </div>
             <div class="card-body" id="top-articles">
@@ -199,10 +189,9 @@
         <br>
         <div class="container">
             
-            <div class="card col-12 mx-auto px-0 toggle-itinerary-table" id="search-parameters" style="display:none;background-color: #ebfffe;">
+            <div class="card col-12 mx-auto px-0 toggle-itinerary-table" id="search-parameters" style="display:none">
                 <div
-                    class="card-header pb-0"
-                    style="background-color: rgb(30,30,30); color: white;background-image: url(images/dansimages/cardtitleback.png);">
+                    class="card-header pb-0">
                     <h5>My Itinerary</h5>
                 </div>
 
@@ -241,7 +230,7 @@
             <!-- Itinerary Entry Form -->
             <div class="card text-black mb-3 mt-2 toggle-itinerary-form" style="display:none">
 
-            <div class="card-body" style="margin-bottom:30px;">
+            <div class="card-body">
                 <form>
                     <div class="form-group">
                         <label for="destination-input">Destination</label>
@@ -288,7 +277,6 @@
             </div> <!-- itinerary container -->
         </div>
     </div>
-    <p style="text-align: center;color:white;margin-top:20px;">Developed by Team AVAD</p>
 
     <!-- SCRIPT SOURCE FILES ========================================================== -->
 
@@ -324,7 +312,6 @@
 
     <!-- JS source file -->
     <script type="text/javascript" src="javascript/app.js"></script>
-    <script type="text/javascript" src="javascript/weather.js"></script>
     <script type="text/javascript" src="javascript/news.js"></script>
 
     </body>
