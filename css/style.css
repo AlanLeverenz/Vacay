@@ -1,9 +1,14 @@
 .jumbotron {
-    background-image: url(../images/sunset.jpg); 
-    background-position: center;
+    background-image: url(../images/carib-horseback.JPG); 
+    background-position: bottom;
     height: 200px;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.card-header {
+    background-color: rgb(4, 158, 230); 
+    color: white;
 }
 
 svg {
@@ -28,12 +33,15 @@ svg {
 
 #source-code, #calc-quote, #target-code {
     float:right;
-    padding-right: 12px;
 }
 
-#add-itinerary-button {
+#submit-itinerary-button {
     float:left;
     margin: 12px;
+}
+
+#remove-all-itinerary-button {
+    float:right;
 }
 
 #hide-itinerary-form-button {
