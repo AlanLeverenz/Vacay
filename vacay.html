@@ -28,9 +28,16 @@
         <!-- CSS STYLE LINK -->
         <link rel="stylesheet" href="css/style.css" />
 
+<<<<<<< HEAD
         <!-- google font links -->
         <link href="https://fonts.googleapis.com/css?family=Red+Hat+Display&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Mandali&display=swap" rel="stylesheet">  
+=======
+        <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"></script>
+        <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+>>>>>>> master
     </head>
 
     <body style="height: auto; background-image: url(images/dansimages/background1.png);background-repeat: no-repeat;
@@ -106,7 +113,7 @@
                 </div>
             </div>
 
-            <!-- CARD ROW -->
+            <!-- CARD ROW FOR COUNTRY WEATHER AND CURRENCY-->
             <div class="row">
 
                 <!-- COUNTRY INFO - DISPLAY NONE WHEN PAGE LOADS -->
@@ -142,11 +149,7 @@
                         <!-- CURRENCY NAME AND CODE INSERTED HERE -->
                         <div id="currencyNameCode"></div>
 
-                        <!-- EXCHANGE RATE INSERTED HERE -->
-                        <div id="exchangeRateDisplay"></div>
-
-                        <!-- place calculator in a card to separate -->
-
+                        <!-- place calculator in a card -->
                         <div class="card">
                             <div class="card-body">
 
@@ -187,6 +190,15 @@
             </div> <!-- end row -->
         </div> <!-- container -->
 
+        <!-- NEWS SECTION -->
+        <div class="card col-10 mx-auto px-0 toggle-news mt-2" style="display:none; background-color: #ebfffe;">
+            <div class="card-header pb-0" id="top-articles-header" style="background-color: rgb(30,30,30); background-image: url(images/dansimages/cardtitleback.png); color: white;">
+                <h5>Top NY Times Articles</h5>
+            </div>
+            <div class="card-body" id="top-articles">
+            </div>
+        </div>
+
         <!-- ITINERARY SECTION -->
         <br>
         <div class="container">
@@ -194,7 +206,7 @@
             <div class="card col-12 mx-auto px-0 toggle-itinerary-table" id="search-parameters" style="display:none;background-color: #ebfffe;">
                 <div
                     class="card-header pb-0"
-                    style="background-color: rgb(30,30,30); color: white;background-image: url(images/dansimages/cardtitleback.png);">
+                    style="background-color: rgb(30,30,30); color: white;">
                     <h5>My Itinerary</h5>
                 </div>
 
@@ -217,20 +229,21 @@
                     </table>
                 </div> <!-- end table card-body -->
 
-                <!-- Add itinerary button -->
+                <!-- Add itinerary and remove itinerary buttons -->
                 <div class="form-group">
                     <button
                         class="btn btn-primary"
                         id="add-itinerary-button">
                         <i class="far fa-address-card"></i> Add Itinerary
                     </button>
+                    <!-- remove itinerary button -->
+                    <button class="btn btn-primary" id="remove-all-itinerary-button"> <i class="fa fa-trash"></i> Remove All</button>
                 </div>
             </div> <!-- end Itinerary table section -->
 
             <!-- ADD NEW ITINERARY FORM -->
             <!-- Itinerary Entry Form -->
             <div class="card text-black mb-3 mt-2 toggle-itinerary-form" style="display:none">
-            <div class="card-header itinerary-form-header">Add Itinerary</div>
 
             <div class="card-body" style="margin-bottom:30px;">
                 <form>
@@ -241,12 +254,11 @@
                     <div class="form-group">
                         <label for="arrive-date-input">Arrival Date</label>
                         <div class="input-group date" data-provide="datepicker">
-                                <input type="text" class="form-control" id="arrive-date-input">
-                                <div class="input-group-addon">
-                                    <span class="glyphicon glyphicon-th"></span>
-                                </div>
+                            <input type="text" class="form-control" id="arrive-date-input">
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
                         </div>
-                    
                     </div>
                     <div class="form-group">
                         <label for="arrive-via-input">Arrive Via</label>
@@ -261,20 +273,19 @@
                         <input type="text" class="form-control" id="car-rental-input">
                     </div>
                     <div class="form-group">
-                            <label for="departure-date-input">Departure Date</label>
-                            <div class="input-group date" data-provide="datepicker">
-                                    <input type="text" class="form-control" id="departure-date-input">
-                                    <div class="input-group-addon">
-                                        <span class="glyphicon glyphicon-th"></span>
-                                    </div>
+                        <label for="departure-date-input">Departure Date</label>
+                        <div class="input-group date" data-provide="datepicker">
+                            <input type="text" class="form-control" id="departure-date-input">
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
                             </div>
-                    
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="depart-via-input">Depart Via</label>
                         <input type="text" class="form-control" id="depart-via-input">
                     </div>
-                    <button type="submit" class="btn btn-primary" id="add-itinerary-btn">Submit</button>
+                    <button type="submit" class="btn btn-primary" id="submit-itinerary-button">Submit</button>
                     <button class="btn btn-primary" id="hide-itinerary-form-button">Hide Form</button>
                 </form>
        
@@ -305,7 +316,9 @@
     ></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
-<script>$(".datepicker").datepicker();</script>
+
+    <script>$(".datepicker").datepicker();</script>
+
     <!-- font awesome kit -->
     <script src="https://kit.fontawesome.com/768efcae0e.js"></script>
 
@@ -316,6 +329,7 @@
     <!-- JS source file -->
     <script type="text/javascript" src="javascript/app.js"></script>
     <script type="text/javascript" src="javascript/weather.js"></script>
+    <script type="text/javascript" src="javascript/news.js"></script>
 
     </body>
 </html>

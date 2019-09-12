@@ -1,0 +1,42 @@
+body {
+    background-image: url("../images/carib-ocean1.JPG");
+    background-position: bottom;
+    background-size: cover;
+    background-repeat: repeat-x;
+    background-color: aliceblue;
+}
+
+h1 {
+    color: rgb(55, 31, 211);
+}
+
+.jumbotron {
+    background-color: transparent;
+}
+
+p {
+    font-size: 1.5em;
+    color: rgb(51, 49, 59);
+}
+
+.lead {
+    font-weight: 400;
+}
+
+.legend {
+    font-size: 1.2em;
+    font-weight: 300;
+    color: white;
+    text-align: center;
+}
+
+#dreamteam {
+    font-weight: 400;
+    color: rgb(55, 31, 211);
+}
+
+.categories {
+    margin-bottom: 20px;
+    background-color: rgb(4, 158, 230);
+    padding: 15px;
+}
