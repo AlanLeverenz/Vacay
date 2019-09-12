@@ -30,14 +30,13 @@ svg {
     float:right;
 }
 
-#add-itinerary-btn {
+#submit-itinerary-button {
     float:left;
     margin: 12px;
 }
 
-#remove-last-itinerary-button {
+#remove-all-itinerary-button {
     float:right;
-    /* margin: 12px; */
 }
 
 #hide-itinerary-form-button {
