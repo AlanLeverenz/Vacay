@@ -1,9 +1,13 @@
 .jumbotron {
+<<<<<<< HEAD
+    color:white;
+=======
     background-image: url(../images/carib-horseback.JPG); 
     background-position: bottom;
     height: 200px;
     background-repeat: no-repeat;
     background-size: cover;
+>>>>>>> master
 }
 
 .card-header {
@@ -52,3 +56,7 @@ svg {
 .add-margin {
     margin: 12px;
 }
+<<<<<<< HEAD
+
+=======
+>>>>>>> master
