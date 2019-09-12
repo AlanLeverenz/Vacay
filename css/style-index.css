@@ -1,10 +1,15 @@
 body {
+    background-image: url("../images/carib-ocean1.JPG");
     /* background-image: url("http://blog.schneider-electric.com/wp-content/uploads/2015/05/cloud.jpg"); */
-    background-image: linear-gradient( to bottom, #eaf6ff, #0050ac);
-    background-position: center;
+    /* background-image: linear-gradient( to bottom, #eaf6ff, #0050ac); */
+    background-position: bottom;
     background-size: cover;
     background-repeat: repeat-x;
     background-color: aliceblue;
+}
+
+h1 {
+    color: rgb(55, 31, 211);
 }
 
 .jumbotron {
@@ -12,11 +17,8 @@ body {
 }
 
 p {
-    font-size: 1.25em;
-}
-
-#simpleclick {
-    color: rgb(82, 63, 207);
+    font-size: 1.5em;
+    color: rgb(51, 49, 59);
 }
 
 .lead {
@@ -37,4 +39,6 @@ p {
 
 .categories {
     margin-bottom: 20px;
+    background-color: rgb(4, 158, 230);
+    padding: 15px;
 }

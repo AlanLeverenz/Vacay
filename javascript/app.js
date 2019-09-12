@@ -5,6 +5,9 @@ $.ajaxSetup({
 
 $(document).ready(function() {
 
+    // fade in effect to Vacay title
+    $("h1").fadeIn(4000);
+
     //Google maps API key
     var googleMapsApikey = "AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg";
     // Temporary variable for current place search country value

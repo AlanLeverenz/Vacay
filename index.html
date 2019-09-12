@@ -18,7 +18,7 @@
             href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
         />
         <!-- CSS STYLE LINK -->
-        <!-- <link rel="stylesheet" href="css/style.css"> -->
+        <link rel="stylesheet" href="css/style-index.css">
     </head>
 
     <body>
@@ -27,26 +27,35 @@
                 <div class="col">
                     <div class="jumbotron my-5 text-center">
                         <h1 class="display-4">Vacay</h1>
-                        <p class="lead">Like traveling? Vacay is for you!</p>
+                        <p class="lead">Traveling? Vacay is for you!</p>
                         <hr class="my-4" />
-                        <p>
-                            With a simple click, you are imagining your
-                            adventure in the country of your choice.
+                        <p id="simpleclick">
+                            A simple click gives you a snapshot of the country you wish.
                         </p>
-                        <p>
-                            Brought to you by <b>Anya, Alan, Dan, and Veger</b>
+                        <p id="crafted">
+                            crafted by</p>
                         </p>
+                        <p id="dreamteam">Anya, Alan, Dan, and Veger</p>
                         <a
                             class="btn btn-primary btn-lg"
+                            id="lets-go-button"
                             href="vacay.html"
                             role="button"
                             >Let's Go!</a>
                     </div>
                 </div>
             </div>
+
+            <div class="row categories">
+                <div class="col-2 legend" id="maps">Basics</div>
+                <div class="col-2 legend" id="maps">Maps</div>
+                <div class="col-2 legend" id="weather">Weather</div>
+                <div class="col-2 legend" id="currency">Currency</div>
+                <div class="col-2 legend" id="news">News</div>
+                <div class="col-2 legend" id="itinerary">Itinerary</div>
+            </div>
         </div>
     </div>
-
 </div> <!-- end container-->
 
 
