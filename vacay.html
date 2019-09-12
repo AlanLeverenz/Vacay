@@ -27,28 +27,36 @@
 
         <!-- CSS STYLE LINK -->
         <link rel="stylesheet" href="css/style.css" />
+
+        <!-- google font links -->
+        <link href="https://fonts.googleapis.com/css?family=Red+Hat+Display&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Mandali&display=swap" rel="stylesheet">  
     </head>
 
-    <body>
+    <body style="height: auto; background-image: url(images/dansimages/background1.png);background-repeat: no-repeat;
+    background-size: cover; padding-bottom:30px;">
         <div class="container">
             <div
-                class="jumbotron col-lg-8 mx-auto text-center my-3"
-                style="border-radius: 10px; color: white;">
-                <h1>Vacay</h1>
+                class="jumbotron col-lg-10 mx-auto text-center my-3"
+                style="height: auto;background-image: url(images/dansimages/vacay_2crop.png);background-repeat: no-repeat;
+                background-size:cover;border-style:solid;border-width:10px;border-color:white;border-radius:5px;color:white;box-shadow: 4px 2px 5px 2px #37373792;">
+               
+               <h1 style="font-family: 'Red Hat Display', sans-serif; font-size:67px;color: white;border-style: solid; border-color: white;border-radius:5px;
+               border-radius: 5px; letter-spacing: 5px;text-align: center;">VACAY</h1>
             </div>
          
             <!-- SEARCH BOX -->
             <div class="row">
                 
-                <div class="card col-8 mx-auto mb-0 px-0" id="search-parameters">
+                <div class="card col-8 mx-auto mb-0 px-0" id="search-parameters" style="margin-bottom:20px;">
                     <div class="card-header pb-0"
                         style="background-color: rgb(30,30,30); color: white;">
-                        <h5>Search</h5>
+                        <h5>SEARCH</h5>
                     </div>
                     <div class="card-body">
                         <form>
                             <div class="form-group">
-                                <label for="search-term">Country</label>
+                                <label for="search-term">COUNTRY</label>
                                 <div id="pac-container">
                                     <input
                                         class="form-control"
@@ -77,7 +85,7 @@
             </div>
 
             <!-- GOOGLE MAPS - DISPLAY NONE WHEN PAGE LOADS -->
-            <div class="row">
+            <div class="row" style="margin-bottom:20px;">
                 <div
                     class="card col-7 mx-auto my-2 px-0"
                     id="googleMapsIframeDiv"
@@ -224,7 +232,7 @@
             <div class="card text-black mb-3 mt-2 toggle-itinerary-form" style="display:none">
             <div class="card-header itinerary-form-header">Add Itinerary</div>
 
-            <div class="card-body">
+            <div class="card-body" style="margin-bottom:30px;">
                 <form>
                     <div class="form-group">
                         <label for="destination-input">Destination</label>
@@ -306,7 +314,7 @@
 
     <!-- JS source file -->
     <script type="text/javascript" src="javascript/app.js"></script>
-    <!-- <script type="text/javascript" src="javascript/weather.js"></script> -->
+    <script type="text/javascript" src="javascript/weather.js"></script>
 
     </body>
 </html>
