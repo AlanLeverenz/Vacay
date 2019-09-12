@@ -1,7 +1,5 @@
 body {
     background-image: url("../images/carib-ocean1.JPG");
-    /* background-image: url("http://blog.schneider-electric.com/wp-content/uploads/2015/05/cloud.jpg"); */
-    /* background-image: linear-gradient( to bottom, #eaf6ff, #0050ac); */
     background-position: bottom;
     background-size: cover;
     background-repeat: repeat-x;
