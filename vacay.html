@@ -27,6 +27,11 @@
 
         <!-- CSS STYLE LINK -->
         <link rel="stylesheet" href="css/style.css" />
+
+        <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"></script>
+        <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
     </head>
 
     <body>
@@ -34,15 +39,14 @@
             <div
                 class="jumbotron col-lg-8 mx-auto text-center my-3"
                 style="border-radius: 10px; color: white;">
-                <h1>Vacay</h1>
+                <h1 style="display:none">Vacay</h1>
             </div>
          
             <!-- SEARCH BOX -->
             <div class="row">
                 
                 <div class="card col-8 mx-auto mb-0 px-0" id="search-parameters">
-                    <div class="card-header pb-0"
-                        style="background-color: rgb(30,30,30); color: white;">
+                    <div class="card-header pb-0">
                         <h5>Search</h5>
                     </div>
                     <div class="card-body">
@@ -98,13 +102,12 @@
                 </div>
             </div>
 
-            <!-- CARD ROW -->
+            <!-- CARD ROW FOR COUNTRY WEATHER AND CURRENCY-->
             <div class="row">
 
                 <!-- COUNTRY INFO - DISPLAY NONE WHEN PAGE LOADS -->
                 <div class="card col-4 mx-auto px-0 toggle-country" style="display:none">
-                    <div class="card-header pb-0" id="country-info-header"
-                        style="background-color: rgb(30,30,30); color: white;">
+                    <div class="card-header pb-0" id="country-info-header">
                         <h5>Country Information</h5>
                     </div>
                     <!-- COUNTRY INFO WILL DISPLAY HERE -->
@@ -113,8 +116,7 @@
                         
                 <!-- WEATHER REPORT - DISPLAY NONE WHEN PAGE LOADS -->
                 <div class="card col-3 mx-auto px-0 toggle-weather" style="display:none">
-                    <div class="card-header pb-0" id="weather-info-header"
-                        style="background-color: rgb(30,30,30); color: white;">
+                    <div class="card-header pb-0" id="weather-info-header">
                         <h5>Weather</h5>
                     </div>
                     <!-- WEATHER WILL DISPLAY HERE -->
@@ -123,8 +125,7 @@
 
                 <!-- CURRENCY CONVERTER - DISPLAY NONE WHEN PAGE LOADS -->
                 <div class="card col-3 mx-auto px-0 toggle-currency" style="display:none">
-                    <div class="card-header pb-0" id="currency-info-header"
-                        style="background-color: rgb(30,30,30); color: white;">
+                    <div class="card-header pb-0" id="currency-info-header">
                         <h5>Currency Converter</h5>
                     </div>
 
@@ -134,11 +135,7 @@
                         <!-- CURRENCY NAME AND CODE INSERTED HERE -->
                         <div id="currencyNameCode"></div>
 
-                        <!-- EXCHANGE RATE INSERTED HERE -->
-                        <div id="exchangeRateDisplay"></div>
-
-                        <!-- place calculator in a card to separate -->
-
+                        <!-- place calculator in a card -->
                         <div class="card">
                             <div class="card-body">
 
@@ -179,14 +176,22 @@
             </div> <!-- end row -->
         </div> <!-- container -->
 
+        <!-- NEWS SECTION -->
+        <div class="card col-10 mx-auto px-0 toggle-news mt-2" style="display:none">
+            <div class="card-header pb-0" id="top-articles-header">
+                <h5>Top NY Times Articles</h5>
+            </div>
+            <div class="card-body" id="top-articles">
+            </div>
+        </div>
+
         <!-- ITINERARY SECTION -->
         <br>
         <div class="container">
             
             <div class="card col-12 mx-auto px-0 toggle-itinerary-table" id="search-parameters" style="display:none">
                 <div
-                    class="card-header pb-0"
-                    style="background-color: rgb(30,30,30); color: white;">
+                    class="card-header pb-0">
                     <h5>My Itinerary</h5>
                 </div>
 
@@ -209,20 +214,21 @@
                     </table>
                 </div> <!-- end table card-body -->
 
-                <!-- Add itinerary button -->
+                <!-- Add itinerary and remove itinerary buttons -->
                 <div class="form-group">
                     <button
                         class="btn btn-primary"
                         id="add-itinerary-button">
                         <i class="far fa-address-card"></i> Add Itinerary
                     </button>
+                    <!-- remove itinerary button -->
+                    <button class="btn btn-primary" id="remove-all-itinerary-button"> <i class="fa fa-trash"></i> Remove All</button>
                 </div>
             </div> <!-- end Itinerary table section -->
 
             <!-- ADD NEW ITINERARY FORM -->
             <!-- Itinerary Entry Form -->
             <div class="card text-black mb-3 mt-2 toggle-itinerary-form" style="display:none">
-            <div class="card-header itinerary-form-header">Add Itinerary</div>
 
             <div class="card-body">
                 <form>
@@ -233,12 +239,11 @@
                     <div class="form-group">
                         <label for="arrive-date-input">Arrival Date</label>
                         <div class="input-group date" data-provide="datepicker">
-                                <input type="text" class="form-control" id="arrive-date-input">
-                                <div class="input-group-addon">
-                                    <span class="glyphicon glyphicon-th"></span>
-                                </div>
+                            <input type="text" class="form-control" id="arrive-date-input">
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
                         </div>
-                    
                     </div>
                     <div class="form-group">
                         <label for="arrive-via-input">Arrive Via</label>
@@ -253,20 +258,19 @@
                         <input type="text" class="form-control" id="car-rental-input">
                     </div>
                     <div class="form-group">
-                            <label for="departure-date-input">Departure Date</label>
-                            <div class="input-group date" data-provide="datepicker">
-                                    <input type="text" class="form-control" id="departure-date-input">
-                                    <div class="input-group-addon">
-                                        <span class="glyphicon glyphicon-th"></span>
-                                    </div>
+                        <label for="departure-date-input">Departure Date</label>
+                        <div class="input-group date" data-provide="datepicker">
+                            <input type="text" class="form-control" id="departure-date-input">
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
                             </div>
-                    
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="depart-via-input">Depart Via</label>
                         <input type="text" class="form-control" id="depart-via-input">
                     </div>
-                    <button type="submit" class="btn btn-primary" id="add-itinerary-btn">Submit</button>
+                    <button type="submit" class="btn btn-primary" id="submit-itinerary-button">Submit</button>
                     <button class="btn btn-primary" id="hide-itinerary-form-button">Hide Form</button>
                 </form>
        
@@ -296,7 +300,9 @@
     ></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
-<script>$(".datepicker").datepicker();</script>
+
+    <script>$(".datepicker").datepicker();</script>
+
     <!-- font awesome kit -->
     <script src="https://kit.fontawesome.com/768efcae0e.js"></script>
 
@@ -306,7 +312,7 @@
 
     <!-- JS source file -->
     <script type="text/javascript" src="javascript/app.js"></script>
-    <!-- <script type="text/javascript" src="javascript/weather.js"></script> -->
+    <script type="text/javascript" src="javascript/news.js"></script>
 
     </body>
 </html>
