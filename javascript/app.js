@@ -263,8 +263,9 @@ $(document).ready(function() {
              // Create Firebase event for adding itineraries to the database and a table row
             vacayData
             .ref()
-            .on("child_added", function(childSnapshot, prevChildKey) {  
-                // console.log(childSnapshot.val());
+            .on("value", function(childSnapshot) {  // EDIT HERE
+                console.log("INSIDE VALUE");
+                console.log(childSnapshot.val());
 
                 // Store everything in a variable
                 var tDestination = childSnapshot.val().destination;
