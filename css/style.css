@@ -1,5 +1,8 @@
 .jumbotron {
     background-image: url(../images/sunset.jpg); 
+    /* background-image: url(../images/palm-tree-caribbean.jpg);  */
+    /* background-image: url(../images/night-mountains.jpg);  */
+    /* background-image: url("http://blog.schneider-electric.com/wp-content/uploads/2015/05/cloud.jpg"); */
     background-position: center;
     height: 200px;
     background-repeat: no-repeat;

@@ -1,0 +1,40 @@
+body {
+    /* background-image: url("http://blog.schneider-electric.com/wp-content/uploads/2015/05/cloud.jpg"); */
+    background-image: linear-gradient( to bottom, #eaf6ff, #0050ac);
+    background-position: center;
+    background-size: cover;
+    background-repeat: repeat-x;
+    background-color: aliceblue;
+}
+
+.jumbotron {
+    background-color: transparent;
+}
+
+p {
+    font-size: 1.25em;
+}
+
+#simpleclick {
+    color: rgb(82, 63, 207);
+}
+
+.lead {
+    font-weight: 400;
+}
+
+.legend {
+    font-size: 1.2em;
+    font-weight: 300;
+    color: white;
+    text-align: center;
+}
+
+#dreamteam {
+    font-weight: 400;
+    color: rgb(55, 31, 211);
+}
+
+.categories {
+    margin-bottom: 20px;
+}
