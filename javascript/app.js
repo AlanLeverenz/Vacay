@@ -266,27 +266,31 @@ $(document).ready(function() {
             .on("value", function(childSnapshot) {  // EDIT HERE
                 console.log("INSIDE VALUE");
                 console.log(childSnapshot.val());
+                var len = childSnapshot.length;
+                
+                for (; i < len ; i++) {
 
-                // Store everything in a variable
-                var tDestination = childSnapshot.val().destination;
-                var tArriveDate = childSnapshot.val().arriveDate;
-                var tArriveVia = childSnapshot.val().arriveVia;
-                var tAccommodations = childSnapshot.val().accommodations;
-                var tCarRental = childSnapshot.val().carRental;
-                var tDepartDate = childSnapshot.val().departDate;
-                var tDepartVia = childSnapshot.val().departVia;
+                    // Store everything in a variable
+                    var tDestination = childSnapshot.val().destination;
+                    var tArriveDate = childSnapshot.val().arriveDate;
+                    var tArriveVia = childSnapshot.val().arriveVia;
+                    var tAccommodations = childSnapshot.val().accommodations;
+                    var tCarRental = childSnapshot.val().carRental;
+                    var tDepartDate = childSnapshot.val().departDate;
+                    var tDepartVia = childSnapshot.val().departVia;
 
-                $("#itinerary-table tbody").append(
-                    $("<tr>").append(
-                        $("<th scope='row'>").text(tDestination),
-                        $("<td>").text(tArriveDate),
-                        $("<td>").text(tArriveVia),
-                        $("<td>").text(tAccommodations),
-                        $("<td>").text(tCarRental),
-                        $("<td>").text(tDepartDate),
-                        $("<td>").text(tDepartVia)
-                    ) // end append tbody
-                ); // end append tr
+                    $("#itinerary-table tbody").append(
+                        $("<tr>").append(
+                            $("<th scope='row'>").text(tDestination),
+                            $("<td>").text(tArriveDate),
+                            $("<td>").text(tArriveVia),
+                            $("<td>").text(tAccommodations),
+                            $("<td>").text(tCarRental),
+                            $("<td>").text(tDepartDate),
+                            $("<td>").text(tDepartVia)
+                        ) // end append tbody
+                    ); // end append tr
+                }; // end for
             }); // end vacay.ref
         }); // end countriesREST ajax
     }); // end Search button click
