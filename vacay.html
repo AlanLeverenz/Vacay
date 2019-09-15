@@ -138,7 +138,7 @@
                         <div class="card">
                             <div class="card-body">
 
-                                <!-- USER SELECTS FROM DROPDOWN -->
+                                <!-- USER SELECTS FROM DROPDOWN (includes anchor -->
                                 <div class="dropdown">
                                     <button class="btn btn-light dropdown-toggle" type="button" id="currency-one-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Base
@@ -170,7 +170,29 @@
                                 <div id="calc-quote"></div>
                             </div> <!-- end card body -->
                         </div> <!-- end converter inside card -->
+
+                        <!-- Converter Card -->
+                        <div class="card">
+                            <div class="card-body">
+
+                                <form>
+                                    <div class="form-group">
+                                        <label for="baseCurrencyAmount">Base Amount</label>
+                                        <input type="text" class="form-control" id="baseCurrencyAmount" placeholder="">
+                                    </div>
+                                    <div class="form-group">
+                                        <button
+                                            class="btn btn-light click"
+                                            id="convertBaseAmount">
+                                            <i class="fas fa-arrow-down"></i> Convert
+                                        </button>
+                                        <input type="text" class="form-control" id="targetCurrencyAmount" placeholder="">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div> <!-- end card body -->
+
                 </div> <!-- end currency converter card -->
             </div> <!-- end row -->
         </div> <!-- container -->
@@ -230,6 +252,7 @@
             <!-- Itinerary Entry Form -->
             <div class="card text-black mb-3 mt-2 toggle-itinerary-form" style="display:none">
 
+            <!-- includes anchor point for the form -->
             <div class="card-body">
                 <form>
                     <div class="form-group">
@@ -280,6 +303,12 @@
 
     <!-- SCRIPT SOURCE FILES ========================================================== -->
 
+    <!-- location hash -->
+    <script>
+        if (location.hash) {
+            location.href = location.hash;
+        }
+    </script>
     <!-- jQuery CDN -->
     <script
         src="https://code.jquery.com/jquery-3.4.1.min.js"

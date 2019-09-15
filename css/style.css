@@ -43,6 +43,20 @@ svg {
     clear:both;
 }
 
+#convertBaseAmount {
+    margin-bottom: 10px;
+} 
+
+#currency-one-button, #currency-two-button, 
+#exchangeRateCalc, #convertBaseAmount,
+#baseCurrencyAmount, #targetCurrencyAmount {
+    font-size: 1.2rem;
+}
+
+#baseCurrencyAmount, #targetCurrencyAmount {
+    font-weight: 700;
+}
+
 .dropdown {
     display: inline-block;
 }

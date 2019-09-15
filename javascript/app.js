@@ -376,25 +376,15 @@ $(document).ready(function() {
         var API_key = "231d60d3c3c46df524fec57f238b3a02";
         var endpoint = 'convert';
         var convertURL = url_base + endpoint + '?access_key=' + API_key +'&from=' + from + '&to=' + to + '&amount=' + amount;
-
         $.ajax({
             url: convertURL,
             method: "GET"
             }).then(function(results) {
                 console.log("CONVERT RESULT:");
-                console.log(results);
+                console.log(results.result);
                 // display amount result
-                var convertAmountID = $("#convert-amount");
-                var convertAmount = $("<p>");
-                var myResult = "<b>" + results.result + "<b>";
-                convertAmount.html(myResult);
-                convertAmountID.append(convertAmount);
-                // display the rate
-                var convertRateID = $("#convert-rate");
-                var convertRate = $("<p>");
-                var myRate = "<b>" + results.result + "<b>";
-                convertAmount.html(myRate);
-                convertRateID.append(convertRate);
+                var newAmount = results.result;
+                $("#targetCurrencyAmount").val(newAmount);
             }); // end function
         }; // end function convertAmount
 
@@ -447,40 +437,175 @@ $(document).ready(function() {
 
     // array of currency codes --------------------------------
     var options = [
-        "AUD",
-        "BGN",
-        "BRL",
-        "CAD",
-        "CHF",
-        "CNY",
-        "CZK",
-        "DKK",
-        "EUR",
-        "GBP",
-        "HKD",
-        "HRK",
-        "HUF",
-        "IDR",
-        "ILS",
-        "INR",
-        "ISK",
-        "JPY",
-        "KRW",
-        "MXN",
-        "MYR",
-        "NOK",
-        "NZD",
-        "PHP",
-        "PLN",
-        "RON",
-        "RUB",
-        "SEK",
-        "SGD",
-        "THB",
-        "TRY",
-        "USD",
-        "ZAR"
-    ];
+        "AED,United Arab Emirates Dirham",
+        "AFN,Afghan Afghani",
+        "ALL,Albanian Lek",
+        "AMD,Armenian Dram",
+        "ANG,Netherlands Antillean Guilder",
+        "AOA,Angolan Kwanza",
+        "ARS,Argentine Peso",
+        "AUD,Australian Dollar",
+        "AWG,Aruban Florin",
+        "AZN,Azerbaijani Manat",
+        "BAM,Bosnia-Herzegovina Convertible Mark",
+        "BBD,Barbadian Dollar",
+        "BDT,Bangladeshi Taka",
+        "BGN,Bulgarian Lev",
+        "BHD,Bahraini Dinar",
+        "BIF,Burundian Franc",
+        "BMD,Bermudan Dollar",
+        "BND,Brunei Dollar",
+        "BOB,Bolivian Boliviano",
+        "BRL,Brazilian Real",
+        "BSD,Bahamian Dollar",
+        "BTC,Bitcoin",
+        "BTN,Bhutanese Ngultrum",
+        "BWP,Botswanan Pula",
+        "BYR,Belarusian Ruble",
+        "BYN,New Belarusian Ruble",
+        "BZD,Belize Dollar",
+        "CAD,Canadian Dollar",
+        "CDF,Congolese Franc",
+        "CHF,Swiss Franc",
+        "CLF,Chilean Unit of Account (UF)",
+        "CLP,Chilean Peso",
+        "CNY,Chinese Yuan",
+        "COP,Colombian Peso",
+        "CRC,Costa Rican Colon",
+        "CUC,Cuban Convertible Peso",
+        "CUP,Cuban Peso",
+        "CVE,Cape Verdean Escudo",
+        "CZK,Czech Republic Koruna",
+        "DJF,Djiboutian Franc",
+        "DKK,Danish Krone",
+        "DOP,Dominican Peso",
+        "DZD,Algerian Dinar",
+        "EGP,Egyptian Pound",
+        "ERN,Eritrean Nakfa",
+        "ETB,Ethiopian Birr",
+        "EUR,Euro",
+        "FJD,Fijian Dollar",
+        "FKP,Falkland Islands Pound",
+        "GBP,British Pound Sterling",
+        "GEL,Georgian Lari",
+        "GGP,Guernsey Pound",
+        "GHS,Ghanaian Cedi",
+        "GIP,Gibraltar Pound",
+        "GMD,Gambian Dalasi",
+        "GNF,Guinean Franc",
+        "GTQ,Guatemalan Quetzal",
+        "GYD,Guyanaese Dollar",
+        "HKD,Hong Kong Dollar",
+        "HNL,Honduran Lempira",
+        "HRK,Croatian Kuna",
+        "HTG,Haitian Gourde",
+        "HUF,Hungarian Forint",
+        "IDR,Indonesian Rupiah",
+        "ILS,Israeli New Sheqel",
+        "IMP,Manx pound",
+        "INR,Indian Rupee",
+        "IQD,Iraqi Dinar",
+        "IRR,Iranian Rial",
+        "ISK,Icelandic Króna",
+        "JEP,Jersey Pound",
+        "JMD,Jamaican Dollar",
+        "JOD,Jordanian Dinar",
+        "JPY,Japanese Yen",
+        "KES,Kenyan Shilling",
+        "KGS,Kyrgystani Som",
+        "KHR,Cambodian Riel",
+        "KMF,Comorian Franc",
+        "KPW,North Korean Won",
+        "KRW,South Korean Won",
+        "KWD,Kuwaiti Dinar",
+        "KYD,Cayman Islands Dollar",
+        "KZT,Kazakhstani Tenge",
+        "LAK,Laotian Kip",
+        "LBP,Lebanese Pound",
+        "LKR,Sri Lankan Rupee",
+        "LRD,Liberian Dollar",
+        "LSL,Lesotho Loti",
+        "LTL,Lithuanian Litas",
+        "LVL,Latvian Lats",
+        "LYD,Libyan Dinar",
+        "MAD,Moroccan Dirham",
+        "MDL,Moldovan Leu",
+        "MGA,Malagasy Ariary",
+        "MKD,Macedonian Denar",
+        "MMK,Myanma Kyat",
+        "MNT,Mongolian Tugrik",
+        "MOP,Macanese Pataca",
+        "MRO,Mauritanian Ouguiya",
+        "MUR,Mauritian Rupee",
+        "MVR,Maldivian Rufiyaa",
+        "MWK,Malawian Kwacha",
+        "MXN,Mexican Peso",
+        "MYR,Malaysian Ringgit",
+        "MZN,Mozambican Metical",
+        "NAD,Namibian Dollar",
+        "NGN,Nigerian Naira",
+        "NIO,Nicaraguan Córdoba",
+        "NOK,Norwegian Krone",
+        "NPR,Nepalese Rupee",
+        "NZD,New Zealand Dollar",
+        "OMR,Omani Rial",
+        "PAB,Panamanian Balboa",
+        "PEN,Peruvian Nuevo Sol",
+        "PGK,Papua New Guinean Kina",
+        "PHP,Philippine Peso",
+        "PKR,Pakistani Rupee",
+        "PLN,Polish Zloty",
+        "PYG,Paraguayan Guarani",
+        "QAR,Qatari Rial",
+        "RON,Romanian Leu",
+        "RSD,Serbian Dinar",
+        "RUB,Russian Ruble",
+        "RWF,Rwandan Franc",
+        "SAR,Saudi Riyal",
+        "SBD,Solomon Islands Dollar",
+        "SCR,Seychellois Rupee",
+        "SDG,Sudanese Pound",
+        "SEK,Swedish Krona",
+        "SGD,Singapore Dollar",
+        "SHP,Saint Helena Pound",
+        "SLL,Sierra Leonean Leone",
+        "SOS,Somali Shilling",
+        "SRD,Surinamese Dollar",
+        "STD,Sao Tome and Principe Dobra",
+        "SVC,Salvadoran Colón",
+        "SYP,Syrian Pound",
+        "SZL,Swazi Lilangeni",
+        "THB,Thai Baht",
+        "TJS,Tajikistani Somoni",
+        "TMT,Turkmenistani Manat",
+        "TND,Tunisian Dinar",
+        "TOP,Tongan Pa?anga",
+        "TRY,Turkish Lira",
+        "TTD,Trinidad and Tobago Dollar",
+        "TWD,New Taiwan Dollar",
+        "TZS,Tanzanian Shilling",
+        "UAH,Ukrainian Hryvnia",
+        "UGX,Ugandan Shilling",
+        "USD,United States Dollar",
+        "UYU,Uruguayan Peso",
+        "UZS,Uzbekistan Som",
+        "VEF,Venezuelan Bolívar Fuerte",
+        "VND,Vietnamese Dong",
+        "VUV,Vanuatu Vatu",
+        "WST,Samoan Tala",
+        "XAF,CFA Franc BEAC",
+        "XAG,Silver (troy ounce)",
+        "XAU,Gold (troy ounce)",
+        "XCD,East Caribbean Dollar",
+        "XDR,Special Drawing Rights",
+        "XOF,CFA Franc BCEAO",
+        "XPF,CFP Franc",
+        "YER,Yemeni Rial",
+        "ZAR,South African Rand",
+        "ZMK,Zambian Kwacha (pre-2013)",
+        "ZMW,Zambian Kwacha",
+        "ZWL,Zimbabwean Dollar"
+        ];
 
     // build dropdown list of currency codes --------
     // source button
@@ -508,7 +633,9 @@ $(document).ready(function() {
     // currency source
     $(document).on("click", "#select1 a", function() {
         // get Source code
-        var source = $(this).text();
+        var str = $(this).text();
+        var codeArr = str.split(",");
+        var source =  codeArr[0];
         $("#source-code").empty();
         var sourceDiv = $("#source-code");
         var currencySource = $("<p>");
@@ -516,12 +643,15 @@ $(document).ready(function() {
         var mySource = "<b>" + source + "</b>";
         currencySource.html(mySource);
         sourceDiv.append(currencySource);
+        $("#currency-one-button").focus();
     });
 
     // currency target
     $(document).on("click", "#select2 a", function() {
         // get target code
-        var target = $(this).text();
+        var str = $(this).text();
+        var codeArr = str.split(",");
+        var target =  codeArr[0];
         $("#target-code").empty();
         var targetDiv = $("#target-code");
         var currencyTarget = $("<p>");
@@ -541,6 +671,16 @@ $(document).ready(function() {
         setCurrency(mySource, myTarget);
     });
 
+    // convert currency amount from base to target
+    $(document).on("click", "#convertBaseAmount", function() {
+        var from = $("#source-code").text();
+        console.log("FROM = " +  from);
+        var to = $("#target-code").text();
+        console.log("TO = " + to);
+        var amount = $("#baseCurrencyAmount").val();
+        console.log("BASE AMOUNT = " + amount);
+        convertAmount(from, to, amount);
+    });
 
 
     // INVENTORY FIREBASE ====================================================
