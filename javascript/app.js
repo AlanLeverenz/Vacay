@@ -65,6 +65,7 @@ $(document).ready(function() {
         }); // end autocomlete listener
     }); // end cachedScript
 
+
     // ON CLICK EVENTS ================================================
 
     // onclick CLEAR ==========================================
@@ -81,6 +82,8 @@ $(document).ready(function() {
         $("#target-code").text("");
         $("#calc-quote").text("");
         $("#googleMapsIframeDiv").hide();
+        $("#itinerary-table tbody").empty();
+
     }); // end clear-results-button
 
     // onclick ADD INVENTORY ITEM (FORM) =====================
@@ -147,12 +150,11 @@ $(document).ready(function() {
         );
         $("#googleMapsIframeDiv").show();
 
-        // parse search-term to get country
+        // Parse search-term to get country
         if (search.includes(", ")) {
             searchArr = search.split(", ");
             search = searchArr[1];
         }
-        // console.log("SEARCH COUNTRY = " + search);
 
         // REST COUNTRIES API QUERY ==========================================
 
@@ -226,7 +228,7 @@ $(document).ready(function() {
                 "<b>Calling Code(s):</b> " + callingCodes
             );
 
-            // append to the country info div
+            // append to the country information column
             countryInfoDiv
                 .append(pName)
                 .append(pCapital)
@@ -239,7 +241,7 @@ $(document).ready(function() {
                 .append(pTimeZone)
                 .append(pCallingCodes);
 
-            // Get currency name and code ===============================
+            // Display the currency name and code ===============================
 
             $("#currencyNameCode").empty();
             var currencyDiv = $("#currencyNameCode");
@@ -259,48 +261,43 @@ $(document).ready(function() {
             // show the itinerary table
             $("#toggle-itinerary-table").show();
 
-            // get snapshot of itinerary items stored in Firebase
-             // Create Firebase event for adding itineraries to the database and a table row
+             // Create Firebase listener event to add a snapshot of items to the database and a table row
             vacayData
             .ref()
-            .on("value", function(childSnapshot) {  // EDIT HERE
-                console.log("INSIDE VALUE");
-                console.log(childSnapshot.val());
-                var len = childSnapshot.length;
-                
-                for (; i < len ; i++) {
+            .on("child_added", function(childSnapshot) { 
+                // console.log(childSnapshot.val());
 
-                    // Store everything in a variable
-                    var tDestination = childSnapshot.val().destination;
-                    var tArriveDate = childSnapshot.val().arriveDate;
-                    var tArriveVia = childSnapshot.val().arriveVia;
-                    var tAccommodations = childSnapshot.val().accommodations;
-                    var tCarRental = childSnapshot.val().carRental;
-                    var tDepartDate = childSnapshot.val().departDate;
-                    var tDepartVia = childSnapshot.val().departVia;
+                // Store everything in a variable
+                var tDestination = childSnapshot.val().destination;
+                var tArriveDate = childSnapshot.val().arriveDate;
+                var tArriveVia = childSnapshot.val().arriveVia;
+                var tAccommodations = childSnapshot.val().accommodations;
+                var tCarRental = childSnapshot.val().carRental;
+                var tDepartDate = childSnapshot.val().departDate;
+                var tDepartVia = childSnapshot.val().departVia;
 
-                    $("#itinerary-table tbody").append(
-                        $("<tr>").append(
-                            $("<th scope='row'>").text(tDestination),
-                            $("<td>").text(tArriveDate),
-                            $("<td>").text(tArriveVia),
-                            $("<td>").text(tAccommodations),
-                            $("<td>").text(tCarRental),
-                            $("<td>").text(tDepartDate),
-                            $("<td>").text(tDepartVia)
-                        ) // end append tbody
-                    ); // end append tr
-                }; // end for
-            }); // end vacay.ref
+                $("#itinerary-table > tbody").append(
+                    $("<tr>").append(
+                        $("<th scope='row'>").text(tDestination),
+                        $("<td>").text(tArriveDate),
+                        $("<td>").text(tArriveVia),
+                        $("<td>").text(tAccommodations),
+                        $("<td>").text(tCarRental),
+                        $("<td>").text(tDepartDate),
+                        $("<td>").text(tDepartVia)
+                    ) // end append tbody
+                ); // end append tr
+            }); //on child_added
         }); // end countriesREST ajax
     }); // end Search button click
 
 
-    // FUNCTION FOR GETTING LATTITUE AND LONGITUDE COORDINATES ===========
+    // FUNCTION FOR USING LATTITUE AND LONGITUDE COORDINATES TO GET WEATHER ===========
 
     function getWeatherLatLng(latlng) {
+        var API_key = "ocHoKYTrdtOpop5PXtp2BNKuyqkBfUlk";
         var latlengQueryURL =
-            "https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=ocHoKYTrdtOpop5PXtp2BNKuyqkBfUlk&q=" +
+            "https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=" + API_key + "&q=" +
             latlng[0] +
             "%2C" +
             latlng[1];
@@ -313,13 +310,14 @@ $(document).ready(function() {
         });
     } // end getWeatherLatLng function
 
-    // ACCUWEATHER API QUERY FUNCTION ================================
+    // ACCUWEATHER API QUERY DISPLAY RESULTS IN WEATHER BOX ================================
 
     function actuallyGetWeather(lockey) {
+        var API_key = "ocHoKYTrdtOpop5PXtp2BNKuyqkBfUlk";
         var actualWeatherURL =
             "https://dataservice.accuweather.com/currentconditions/v1/" +
             lockey +
-            "?apikey=ocHoKYTrdtOpop5PXtp2BNKuyqkBfUlk&details=true";
+            "?apikey=" + API_key + "&details=true";
         $.ajax({
             url: actualWeatherURL,
             method: "GET"
@@ -372,16 +370,44 @@ $(document).ready(function() {
     } // end function for ActuallyGetWeather
 
 
-    // SET CURRENCY - EXCHANGE RATES API QUERY ======================
+    // CONVERT CURRENCY AMOUNT =================================
+    function convertAmount (from, to, amount) {
+        var url_base = "http://data.fixer.io/api/";
+        var API_key = "231d60d3c3c46df524fec57f238b3a02";
+        var endpoint = 'convert';
+        var convertURL = url_base + endpoint + '?access_key=' + API_key +'&from=' + from + '&to=' + to + '&amount=' + amount;
 
-    function setCurrency(source, other) {
-        var currencyTestURl =
-            "https://api.exchangeratesapi.io/latest?base=" +
-            source +
-            "&symbols=" +
-            other;
         $.ajax({
-            url: currencyTestURl,
+            url: convertURL,
+            method: "GET"
+            }).then(function(results) {
+                console.log("CONVERT RESULT:");
+                console.log(results);
+                // display amount result
+                var convertAmountID = $("#convert-amount");
+                var convertAmount = $("<p>");
+                var myResult = "<b>" + results.result + "<b>";
+                convertAmount.html(myResult);
+                convertAmountID.append(convertAmount);
+                // display the rate
+                var convertRateID = $("#convert-rate");
+                var convertRate = $("<p>");
+                var myRate = "<b>" + results.result + "<b>";
+                convertAmount.html(myRate);
+                convertRateID.append(convertRate);
+            }); // end function
+        }; // end function convertAmount
+
+
+    // GET RATE FOR CURRENCY CODE ======================================
+    function setCurrency(base, other) {
+        var url_base = "http://data.fixer.io/api/";
+        var API_key = "231d60d3c3c46df524fec57f238b3a02";
+        var endpoint = 'latest';
+        var currencyURL =
+            url_base + endpoint + '?access_key=' + API_key + '&base=' + base + '&symbols=' + other;
+        $.ajax({
+            url: currencyURL,
             method: "GET"
         }).then(function(results) {
             console.log(results);
@@ -391,33 +417,35 @@ $(document).ready(function() {
                 "<b>" + results.rates[Object.keys(results.rates)[0]] + "</b>";
             currencyQuote.html(myQuote);
             currencyDivID.append(currencyQuote);
-        });
-    } // end function setCurrency
+        }); // end then
+    }; // end function setCurrency
 
-        // DISPLAY COUNTRY CURRENCY FUNCTION ==============================
-        var displayCountryCurrency = function (source,target) {
 
-            $("#source-code").empty();
-            var sourceDiv = $("#source-code");
-            var currencySource = $("<p>");
-            currencySource.attr("id", "source-code-attr");
-            var mySource = "<b>" + source + "</b>";
-            currencySource.html(mySource);
-            sourceDiv.append(currencySource);
-    
-            $("#target-code").empty();
-            var targetDiv = $("#target-code");
-            var currencyTarget = $("<p>");
-            currencyTarget.attr("id", "target-code-attr");
-            var myTarget = "<b>" + target + "</b>";
-            currencyTarget.html(myTarget);
-            targetDiv.append(currencyTarget);
-    
-            setCurrency(source, target);
-    
-        }; // end displayCountryCurrency
+    // DISPLAY COUNTRY CURRENCY FUNCTION ==============================
+    var displayCountryCurrency = function(source,target) {
 
-    // array of currency codes
+        $("#source-code").empty();
+        var sourceDiv = $("#source-code");
+        var currencySource = $("<p>");
+        currencySource.attr("id", "source-code-attr");
+        var mySource = "<b>" + source + "</b>";
+        currencySource.html(mySource);
+        sourceDiv.append(currencySource);
+
+        $("#target-code").empty();
+        var targetDiv = $("#target-code");
+        var currencyTarget = $("<p>");
+        currencyTarget.attr("id", "target-code-attr");
+        var myTarget = "<b>" + target + "</b>";
+        currencyTarget.html(myTarget);
+        targetDiv.append(currencyTarget);
+
+        setCurrency(source, target);  // function call
+
+    }; // end displayCountryCurrency
+
+
+    // array of currency codes --------------------------------
     var options = [
         "AUD",
         "BGN",
@@ -454,7 +482,7 @@ $(document).ready(function() {
         "ZAR"
     ];
 
-    // INSERT ARRAY INTO BUTTON DROPDOWNS --------
+    // build dropdown list of currency codes --------
     // source button
     $("#select1").empty();
     $.each(options, function(i, p) {
@@ -503,7 +531,7 @@ $(document).ready(function() {
         targetDiv.append(currencyTarget);
     });
 
-    // currency target
+    // currency rate
     $(document).on("click", "#exchangeRateCalc", function() {
         // get source and target codes from html
         var mySource = $("#source-code p").text();
@@ -511,8 +539,9 @@ $(document).ready(function() {
         // remove existing value
         $("#calc-quote").text("");
         setCurrency(mySource, myTarget);
-
     });
+
+
 
     // INVENTORY FIREBASE ====================================================
 
@@ -572,9 +601,13 @@ $(document).ready(function() {
             departVia: departVia
         };
 
+        // push the new itinerary into the referenced location in Firebase
         vacayData.ref().push(newItinerary);
 
-        // clears all of the text boxes
+        // empties the table body
+        $("#itinerary-table tbody").empty();
+
+        // clears all of the form text boxes
         $("#destination-input").val("");
         $("#arrive-date-input").val("");
         $("#arrive-via-input").val("");
@@ -583,10 +616,10 @@ $(document).ready(function() {
         $("#departure-date-input").val("");
         $("#depart-via-input").val("");
 
-        // Create Firebase event for adding itineraries to the database and a table row
+        // Create Firebase listener event for adding itineraries to the database
         vacayData
             .ref()
-            .on("child_added", function(childSnapshot, prevChildKey) {
+            .on("child_added", function(childSnapshot) { //prevChildKey
                 // console.log(childSnapshot.val());
 
                 // Store everything in a variable
@@ -598,6 +631,7 @@ $(document).ready(function() {
                 var tDepartDate = childSnapshot.val().departDate;
                 var tDepartVia = childSnapshot.val().departVia;
 
+                // add a table in the html file
                 $("#itinerary-table tbody").append(
                     $("<tr>").append(
                         $("<th scope='row'>").text(tDestination),
@@ -608,7 +642,58 @@ $(document).ready(function() {
                         $("<td>").text(tDepartDate),
                         $("<td>").text(tDepartVia)
                     ) // end append tbody
-                ); // end append tr
-            }); // end vacay.ref
-    }); // END ADD ITINERARY BUTTON
+            ); // end append tr
+        }); // end vacay.ref
+    }); // end submit
 }); // end document.ready
+
+// CODE BIN
+
+    /* REAL TIME RATES CODE
+
+    // set endpoint and your access key
+endpoint = 'latest'
+access_key = 'API_KEY';
+
+// get the most recent exchange rates via the "latest" endpoint:
+$.ajax({
+    url: 'https://data.fixer.io/api/' + endpoint + '?access_key=' + access_key,   
+    dataType: 'jsonp',
+    success: function(json) {
+
+        // exchange rata data is stored in json.rates
+        alert(json.rates.GBP);
+        
+        // base currency is stored in json.base
+        alert(json.base);
+        
+        // timestamp can be accessed in json.timestamp
+        alert(json.timestamp);
+        
+    }
+});
+
+    {
+        "success": false,
+        "error": {
+            "code": 104,
+            "info": "Your monthly API request volume has been reached. Please upgrade your plan."    
+        }
+    }
+    */
+
+    /*
+    {
+        "success": true,
+        "timestamp": 1568436246,
+        "base": "EUR",
+        "date": "2019-09-14",
+        "rates": {
+        "USD": 1.115648,
+        "AUD": 1.622268,
+        "CAD": 1.483087,
+        "PLN": 4.35666,
+        "MXN": 21.652531
+        }
+    }
+    */

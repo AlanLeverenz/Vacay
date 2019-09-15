@@ -4,6 +4,22 @@
     height: 200px;
     background-repeat: no-repeat;
     background-size: cover;
+    border-radius: 10px;
+    color: white;
+}
+
+body {
+ font-size: 1.2rem;
+}
+
+.toggle-country, .toggle-converter {
+    min-width: 220px;
+    width: 100%;
+}
+
+.toggle-weather {
+    min-width: 180px;
+    width: 100%;
 }
 
 .card-header {
@@ -35,18 +51,20 @@ svg {
     float:right;
 }
 
-#submit-itinerary-button {
-    float:left;
-    margin: 12px;
-}
-
 #remove-all-itinerary-button {
     float:right;
+    margin: 0 12px;
 }
 
+#add-itinerary-button {
+    margin: 0 12px;
+}
+
+#submit-itinerary-button {
+    float:left;
+}
 #hide-itinerary-form-button {
     float:right;
-    margin: 12px;
 }
 
 .add-margin {
