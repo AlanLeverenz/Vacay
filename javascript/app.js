@@ -83,6 +83,9 @@ $(document).ready(function() {
         $("#calc-quote").text("");
         $("#googleMapsIframeDiv").hide();
         $("#itinerary-table tbody").empty();
+        $("#baseCurrencyAmount").val("");
+        $("#targetCurrencyAmount").val("");
+        $("#flag").empty();
 
     }); // end clear-results-button
 
