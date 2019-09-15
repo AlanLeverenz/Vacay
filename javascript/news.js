@@ -21,17 +21,12 @@ $(document).ready(function() {
     
         // fetch form values
         var search = $("#search-term").val().trim();
-        //   var records = $("#number-of-records").val();
         var records = 5;
-        // var sYear = $("#start-yr").val().trim();
         var startYear = "&start_date=01012018";
-        // var eYear = $("#end-yr").val().trim();
-        // var endYear = eYear.length > 0 ? "&end_date=" + eYear + "1231" : "";
   
     // build queryURL
     var apiKey = "GAN5Vuqp6dyl6vNHxlmwbLizhaZMVVf6";
     var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + search + startYear + "&api-key=" + apiKey;
-      console.log(queryURL);
      $.ajax({
           url: queryURL,
           method: "GET"

@@ -85,7 +85,9 @@ $(document).ready(function() {
         $("#itinerary-table tbody").empty();
         $("#baseCurrencyAmount").val("");
         $("#targetCurrencyAmount").val("");
+        $("#search-term").val("");
         $("#flag").empty();
+
 
     }); // end clear-results-button
 
@@ -244,7 +246,7 @@ $(document).ready(function() {
                 .append(pTimeZone)
                 .append(pCallingCodes);
 
-            // Display the currency name and code ===============================
+            // Display the currency name and code gathered from countries api 
 
             $("#currencyNameCode").empty();
             var currencyDiv = $("#currencyNameCode");
@@ -279,6 +281,7 @@ $(document).ready(function() {
                 var tDepartDate = childSnapshot.val().departDate;
                 var tDepartVia = childSnapshot.val().departVia;
 
+                // append to the itinerary table
                 $("#itinerary-table > tbody").append(
                     $("<tr>").append(
                         $("<th scope='row'>").text(tDestination),
@@ -371,26 +374,6 @@ $(document).ready(function() {
                 .append(pwind);
         }); // end then response
     } // end function for ActuallyGetWeather
-
-
-    // CONVERT CURRENCY AMOUNT =================================
-    function convertAmount (from, to, amount) {
-        var url_base = "http://data.fixer.io/api/";
-        var API_key = "231d60d3c3c46df524fec57f238b3a02";
-        var endpoint = 'convert';
-        var convertURL = url_base + endpoint + '?access_key=' + API_key +'&from=' + from + '&to=' + to + '&amount=' + amount;
-        $.ajax({
-            url: convertURL,
-            method: "GET"
-            }).then(function(results) {
-                console.log("CONVERT RESULT:");
-                console.log(results.result);
-                // display amount result
-                var newAmount = results.result;
-                $("#targetCurrencyAmount").val(newAmount);
-            }); // end function
-        }; // end function convertAmount
-
 
     // GET RATE FOR CURRENCY CODE ======================================
     function setCurrency(base, other) {
@@ -631,10 +614,31 @@ $(document).ready(function() {
         );
     });
 
+    
+    // CONVERT CURRENCY AMOUNT =================================
+    function convertAmount (from, to, amount) {
+        var url_base = "http://data.fixer.io/api/";
+        var API_key = "231d60d3c3c46df524fec57f238b3a02";
+        var endpoint = 'convert';
+        var convertURL = url_base + endpoint + '?access_key=' + API_key +'&from=' + from + '&to=' + to + '&amount=' + amount;
+        $.ajax({
+            url: convertURL,
+            method: "GET"
+            }).then(function(results) {
+            console.log("CONVERT RESULT:");
+            console.log(results.result);
+            // display amount result
+            var newAmount = results.result;
+            $("#targetCurrencyAmount").val(newAmount);
+        }); // end function
+    }; // end function convertAmount
+
+
     // CLICK ON CURRENCY CONVERSION BUTTONS ===========================
 
     // currency source
-    $(document).on("click", "#select1 a", function() {
+    $(document).on("click", "#select1 a", function(event) {
+        event.preventDefault();
         // get Source code
         var str = $(this).text();
         var codeArr = str.split(",");
@@ -650,7 +654,8 @@ $(document).ready(function() {
     });
 
     // currency target
-    $(document).on("click", "#select2 a", function() {
+    $(document).on("click", "#select2 a", function(event) {
+        event.preventDefault();
         // get target code
         var str = $(this).text();
         var codeArr = str.split(",");
@@ -665,7 +670,8 @@ $(document).ready(function() {
     });
 
     // currency rate
-    $(document).on("click", "#exchangeRateCalc", function() {
+    $(document).on("click", "#exchangeRateCalc", function(event) {
+        event.preventDefault();
         // get source and target codes from html
         var mySource = $("#source-code p").text();
         var myTarget = $("#target-code p").text();
@@ -675,7 +681,8 @@ $(document).ready(function() {
     });
 
     // convert currency amount from base to target
-    $(document).on("click", "#convertBaseAmount", function() {
+    $(document).on("click", "#convertBaseAmount", function(event) {
+        event.preventDefault();
         var from = $("#source-code").text();
         console.log("FROM = " +  from);
         var to = $("#target-code").text();
