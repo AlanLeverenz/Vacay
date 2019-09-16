@@ -370,7 +370,7 @@ $(document).ready(function() {
 
     // GET RATE FOR CURRENCY CODE ======================================
     function setCurrency(base, other) {
-        var url_base = "http://data.fixer.io/api/";
+        var url_base = "https://data.fixer.io/api/";
         var API_key = "231d60d3c3c46df524fec57f238b3a02";
         var endpoint = 'latest';
         var currencyURL =
@@ -609,7 +609,7 @@ $(document).ready(function() {
     
     // CONVERT CURRENCY AMOUNT =================================
     function convertAmount (from, to, amount) {
-        var url_base = "http://data.fixer.io/api/";
+        var url_base = "https://data.fixer.io/api/";
         var API_key = "231d60d3c3c46df524fec57f238b3a02";
         var endpoint = 'convert';
         var convertURL = url_base + endpoint + '?access_key=' + API_key +'&from=' + from + '&to=' + to + '&amount=' + amount;
