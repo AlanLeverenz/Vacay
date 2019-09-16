@@ -51,7 +51,6 @@ $(document).ready(function() {
             var currentPlace = autocomplete.getPlace();
 
             if (currentPlace.address_components) {
-                // console.log(currentPlace.address_components);
                 userInputCountry =
                     currentPlace.address_components[
                         currentPlace.address_components.length - 1
@@ -60,7 +59,6 @@ $(document).ready(function() {
                     currentPlace.geometry.location.lat.call(),
                     currentPlace.geometry.location.lng.call()
                 ];
-                // console.log("userinput latlng", userinputLatLng);
             } // end if
         }); // end autocomlete listener
     }); // end cachedScript
@@ -137,7 +135,6 @@ $(document).ready(function() {
             search = $("#search-term")
                 .val()
                 .trim();
-            console.log(search);
         } else {
             search = userInputCountry;
         }
@@ -170,14 +167,11 @@ $(document).ready(function() {
         }).then(function(results) {
             var latlng = results[0].latlng;
             var latlnglng = latlng.length;
-            console.log("latlng leng", latlng.length);
             if (userInputCountry !== "") {
                 getWeatherLatLng(userinputLatLng);
                 userinputLatLng = [];
             } else if (latlnglng != 0) {
-                console.log(results[0]);
                 var latlng = results[0].latlng;
-                console.log("latlng", latlng);
                 getWeatherLatLng(latlng);
             } else {
                 getWeatherLatLng([40.804496782, -73.957162838]);
@@ -270,7 +264,6 @@ $(document).ready(function() {
             vacayData
             .ref()
             .on("child_added", function(childSnapshot) { 
-                // console.log(childSnapshot.val());
 
                 // Store everything in a variable
                 var tDestination = childSnapshot.val().destination;
@@ -386,7 +379,6 @@ $(document).ready(function() {
             url: currencyURL,
             method: "GET"
         }).then(function(results) {
-            console.log(results);
             var currencyDivID = $("#calc-quote");
             var currencyQuote = $("<p>");
             var myQuote =
@@ -625,8 +617,6 @@ $(document).ready(function() {
             url: convertURL,
             method: "GET"
             }).then(function(results) {
-            console.log("CONVERT RESULT:");
-            console.log(results.result);
             // display amount result
             var newAmount = results.result;
             $("#targetCurrencyAmount").val(newAmount);
@@ -650,7 +640,6 @@ $(document).ready(function() {
         var mySource = "<b>" + source + "</b>";
         currencySource.html(mySource);
         sourceDiv.append(currencySource);
-        $("#currency-one-button").focus();
     });
 
     // currency target
@@ -669,7 +658,7 @@ $(document).ready(function() {
         targetDiv.append(currencyTarget);
     });
 
-    // currency rate
+    // button to get currency rate
     $(document).on("click", "#exchangeRateCalc", function(event) {
         event.preventDefault();
         // get source and target codes from html
@@ -684,12 +673,22 @@ $(document).ready(function() {
     $(document).on("click", "#convertBaseAmount", function(event) {
         event.preventDefault();
         var from = $("#source-code").text();
-        console.log("FROM = " +  from);
         var to = $("#target-code").text();
-        console.log("TO = " + to);
         var amount = $("#baseCurrencyAmount").val();
-        console.log("BASE AMOUNT = " + amount);
         convertAmount(from, to, amount);
+    });
+
+    // button to switch currency codes and rate
+    $(document).on("click", "#reverseCodesCalc", function(event) {
+        event.preventDefault();
+        // get source and target codes from html
+        var mySource = $("#target-code p").text();
+        var myTarget = $("#source-code p").text();
+        // remove existing value and replace with new
+        $("#calc-quote").text("");
+        // setCurrency(mySource, myTarget);
+        // switch the codes on the page
+        displayCountryCurrency(mySource, myTarget);
     });
 
 
@@ -769,8 +768,7 @@ $(document).ready(function() {
         // Create Firebase listener event for adding itineraries to the database
         vacayData
             .ref()
-            .on("child_added", function(childSnapshot) { //prevChildKey
-                // console.log(childSnapshot.val());
+            .on("child_added", function(childSnapshot) { 
 
                 // Store everything in a variable
                 var tDestination = childSnapshot.val().destination;
@@ -796,54 +794,3 @@ $(document).ready(function() {
         }); // end vacay.ref
     }); // end submit
 }); // end document.ready
-
-// CODE BIN
-
-    /* REAL TIME RATES CODE
-
-    // set endpoint and your access key
-endpoint = 'latest'
-access_key = 'API_KEY';
-
-// get the most recent exchange rates via the "latest" endpoint:
-$.ajax({
-    url: 'https://data.fixer.io/api/' + endpoint + '?access_key=' + access_key,   
-    dataType: 'jsonp',
-    success: function(json) {
-
-        // exchange rata data is stored in json.rates
-        alert(json.rates.GBP);
-        
-        // base currency is stored in json.base
-        alert(json.base);
-        
-        // timestamp can be accessed in json.timestamp
-        alert(json.timestamp);
-        
-    }
-});
-
-    {
-        "success": false,
-        "error": {
-            "code": 104,
-            "info": "Your monthly API request volume has been reached. Please upgrade your plan."    
-        }
-    }
-    */
-
-    /*
-    {
-        "success": true,
-        "timestamp": 1568436246,
-        "base": "EUR",
-        "date": "2019-09-14",
-        "rates": {
-        "USD": 1.115648,
-        "AUD": 1.622268,
-        "CAD": 1.483087,
-        "PLN": 4.35666,
-        "MXN": 21.652531
-        }
-    }
-    */

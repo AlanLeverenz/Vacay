@@ -138,7 +138,8 @@
                         <div class="card">
                             <div class="card-body">
 
-                                <!-- USER SELECTS FROM DROPDOWN (includes anchor -->
+                                <!-- USER SELECTS FROM DROPDOWN -->
+                                <!-- base currency dropdown button -->
                                 <div class="dropdown">
                                     <button class="btn btn-light dropdown-toggle" type="button" id="currency-one-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Base
@@ -149,6 +150,7 @@
 
                                 <div class="spacer"></div>
 
+                                <!-- target currency dropdown button -->
                                 <div class="dropdown">
                                     <button class="btn btn-light dropdown-toggle" type="button" id="currency-two-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Target
@@ -159,12 +161,18 @@
 
                                 <div class="spacer"></div>
 
-                                <!-- calculator -->
+                                <!-- calculator button -->
                                 <div class="calculator">
                                     <button
                                         class="btn btn-light click"
                                         id="exchangeRateCalc">
-                                        <i class="fas fa-calculator"></i> Quote
+                                        <i class="fas fa-calculator"></i> Rate
+                                    </button>
+                                    <!-- reverse currencies button -->
+                                    <button
+                                        class="btn btn-light click"
+                                        id="reverseCodesCalc">
+                                        <i class="fas fa-sync-alt"></i> 
                                     </button>
                                 </div>
                                 <div id="calc-quote"></div>

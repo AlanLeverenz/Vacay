@@ -5,7 +5,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 10px;
-    color: white;
+    color: rgb(55, 31, 211);
 }
 
 body {
@@ -49,7 +49,7 @@ svg {
 
 #currency-one-button, #currency-two-button, 
 #exchangeRateCalc, #convertBaseAmount,
-#baseCurrencyAmount, #targetCurrencyAmount {
+#baseCurrencyAmount, #targetCurrencyAmount, #search-term {
     font-size: 1.2rem;
 }
 
