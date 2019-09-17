@@ -35,10 +35,11 @@ svg {
     float:left;
 }
 
-#changeUnit {
+#change-unit {
     position: relative;
     top: -6px;
     margin-bottom: -10px;
+    margin-left: 10px;
 }
 
 .calculator {

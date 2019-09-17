@@ -73,7 +73,8 @@ $(document).ready(function() {
         // empty the API search results
         $("#country-information").empty();
         $("#currencyConverter").empty();
-        $("#weatherRender").empty();
+        $("#weatherRenderImperial").empty();
+        $("#weatherRenderMetric").empty();
         $("#currencyNameCode").empty();
         $("#exchangeRateDisplay").empty();
         $("#source-code").text("");
@@ -110,6 +111,21 @@ $(document).ready(function() {
         vacayData.ref().remove();
     });
 
+    // onclick to toggle weather unit type (imperial or metric)
+    $(document).on("click", "#change-unit", function(event) {
+        event.preventDefault();
+        console.log("UNIT BUTTON CLICKED");
+        var currentUnit = $("#change-unit button").attr("value");
+        console.log("CURRENT UNIT = " + currentUnit);
+        if ( currentUnit === "Imperial" ) {
+            $("#weatherRenderImperial").hide();
+            $("#weatherRenderMetric").show();
+        } else {
+            $("#weatherRenderMetric").hide();
+            $("#weatherRenderImperial").show();
+        }
+    });
+
 
     // SEARCH COUNTRY, CURRENCY, WEATHER  =============================
 
@@ -132,7 +148,9 @@ $(document).ready(function() {
         // empty the country, currency, and weather child elements
         $("#country-information").empty();
         // $("#currencyConverter").empty();
-        $("#weatherRender").empty();
+        $("#weatherRenderImperial").empty();        
+        $("#weatherRenderMetric").empty();
+
         // remove text from currency tags
         $("#calc-quote").text("");
         $("#baseCurrencyAmount").val("");
@@ -344,38 +362,38 @@ $(document).ready(function() {
         }).then(function(results) {
             var data = results[0];
             console.log(results);
+
+            // MEASUREMENT TYPE - IMPERIAL is the default when page loads ------ IMPERIAL
             var period = "Current";
             var pPeriod = $("<h4>").html(period);
 
-            // MEASUREMENT TYPE - Imperial is the default when page loads
             var unit = "Imperial";
             var buttonTag = $("<button>");
             buttonTag.attr("class", "btn btn-light click");
             buttonTag.attr("value","Imperial");
-            buttonTag.attr("id", "changeUnit");
+            buttonTag.attr("id", "change-unit");
             var faTag = $("<i>");
             faTag.attr("class", "fas fa-sync-alt");
             buttonTag.append(faTag);
-            var pUnit = $("<p>").html("<b>Unit:</b> " + unit + "&nbsp;");
+            var pUnit = $("<p>").html("<b>Unit:</b> " + unit);
             pUnit.append(buttonTag);
 
             // TEMPERATURE
             var temp = data["Temperature"]["Imperial"]["Value"];
-            var ptemp = $("<p>").html("<b>Temperature: </b>" + temp);
-
+            var ptemp = $("<p>").html("<b>Temperature: </b>" + temp + " F");
             // TEMPERATURE HIGH
             var tempHigh =
                 data["TemperatureSummary"]["Past6HourRange"]["Maximum"][
                     "Imperial"
                 ]["Value"];
-            var ptempHigh = $("<p>").html("<b>Todays high: </b>" + tempHigh);
+            var ptempHigh = $("<p>").html("<b>Todays high: </b>" + tempHigh + " F");
 
             // TEMPERATURE LOW
             var tempLow =
                 data["TemperatureSummary"]["Past6HourRange"]["Minimum"][
                     "Imperial"
                 ]["Value"];
-            var ptempLow = $("<p>").html("<b>Todays low: </b>" + tempLow);
+            var ptempLow = $("<p>").html("<b>Todays low: </b>" + tempLow + " F");
 
             // HUMIDITY
             var humidity = data["RelativeHumidity"];
@@ -384,7 +402,7 @@ $(document).ready(function() {
             // PRESSURE
             var pressure = data["Pressure"]["Imperial"]["Value"];
             var ppressure = $("<p>").html(
-                "<b>Pressure: </b>" + pressure + " mbar");
+                "<b>Pressure: </b>" + pressure + " inHg");
 
             // CLOUDS
             var clouds = data["CloudCover"];
@@ -392,10 +410,14 @@ $(document).ready(function() {
 
             // WIND
             var wind = data["WindGust"]["Speed"]["Imperial"]["Value"];
-            var pwind = $("<p>").html("<b>Wind: </b>" + wind + " mph");
+            var pwind = $("<p>").html("<b>Wind Gusts: </b>" + wind + " mi/h");
+
+            // PRECIPITATION
+            var precipitation = data["PrecipitationSummary"]["Past6Hours"]["Imperial"]["Value"];
+            var pPrecipitation = $("<p>").html("<b>Precipitation: </b>" + precipitation + " in");
 
             // ASSIGNING VARS TO THE APPENDING OF RETRIEVED DATA TO THE HTML CONTAINER
-            var weatherRender = $("#weatherRender");
+            var weatherRender = $("#weatherRenderImperial");
             weatherRender
                 .append(pPeriod)
                 .append(pUnit)
@@ -405,8 +427,78 @@ $(document).ready(function() {
                 .append(phumidity)
                 .append(ppressure)
                 .append(pclouds)
-                .append(pwind);
+                .append(pwind)
+                .append(pPrecipitation);
+
+            // MEASUREMENT TYPE - LOADING METRIC COPY ------ METRIC
+            var period = "Current";
+            var pPeriod = $("<h4>").html(period);
+
+            var unit = "Metric";
+            var buttonTag = $("<button>");
+            buttonTag.attr("class", "btn btn-light click");
+            buttonTag.attr("value","Metric");
+            buttonTag.attr("id", "change-unit");
+            var faTag = $("<i>");
+            faTag.attr("class", "fas fa-sync-alt");
+            buttonTag.append(faTag);
+            var pUnit = $("<p>").html("<b>Unit:</b> " + unit);
+            pUnit.append(buttonTag);
+
+            // TEMPERATURE
+            var temp = data["Temperature"]["Metric"]["Value"];
+            var ptemp = $("<p>").html("<b>Temperature: </b>" + temp + " C");
+
+            // TEMPERATURE HIGH
+            var tempHigh =
+                data["TemperatureSummary"]["Past6HourRange"]["Maximum"][
+                    "Metric"
+                ]["Value"];
+            var ptempHigh = $("<p>").html("<b>Todays high: </b>" + tempHigh + " C");
+
+            // TEMPERATURE LOW
+            var tempLow =
+                data["TemperatureSummary"]["Past6HourRange"]["Minimum"][
+                    "Metric"
+                ]["Value"];
+            var ptempLow = $("<p>").html("<b>Todays low: </b>" + tempLow + " C");
+
+            // HUMIDITY
+            var humidity = data["RelativeHumidity"];
+            var phumidity = $("<p>").html("<b>Humidity: </b>" + humidity + "%");
+
+            // PRESSURE
+            var pressure = data["Pressure"]["Metric"]["Value"];
+            var ppressure = $("<p>").html(
+                "<b>Pressure: </b>" + pressure + " mb");
+
+            // CLOUDS
+            var clouds = data["CloudCover"];
+            var pclouds = $("<p>").html("<b>Cloud Cover: </b>" + clouds);
+
+            // WIND
+            var wind = data["WindGust"]["Speed"]["Metric"]["Value"];
+            var pwind = $("<p>").html("<b>Wind Gusts: </b>" + wind + " km/h");
+
+            // PRECIPITATION
+            var precipitation = data["PrecipitationSummary"]["Past6Hours"]["Metric"]["Value"];
+            var pPrecipitation = $("<p>").html("<b>Precipitation: </b>" + precipitation + " mm");
+
+            // ASSIGNING VARS TO THE APPENDING OF RETRIEVED DATA TO THE HTML CONTAINER
+            var weatherRender = $("#weatherRenderMetric");
+            weatherRender
+                .append(pPeriod)
+                .append(pUnit)
+                .append(ptemp)
+                .append(ptempHigh)
+                .append(ptempLow)
+                .append(phumidity)
+                .append(ppressure)
+                .append(pclouds)
+                .append(pwind)
+                .append(pPrecipitation);
         }); // end then response
+
     } // end function for ActuallyGetWeather
 
     // GET RATE FOR CURRENCY CODE ======================================
