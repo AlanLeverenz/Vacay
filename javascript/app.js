@@ -237,8 +237,8 @@ $(document).ready(function() {
             var pLanguages = $("<p>").html("<b>Language:</b> " + languages);
 
             var population = results[0].population;
-            population = addCommas(population);
-            var pPopulation = $("<p>").html("<b>Population:</b> " + population);
+            var cPopulation = addCommas(population);
+            var pPopulation = $("<p>").html("<b>Population:</b> " + cPopulation);
 
             var timeZone = results[0].timezones.join(", ");
             var pTimeZone = $("<p>").html("<b>Time Zones:</b> " + timeZone);
@@ -281,7 +281,7 @@ $(document).ready(function() {
             // show the itinerary table
             $("#toggle-itinerary-table").show();
 
-             // Create Firebase listener event to add a snapshot of items to the database and a table row
+             // Create Firebase listener event to add a snapshot of items to the html table
             vacayData
             .ref()
             .on("child_added", function(childSnapshot) { 
@@ -346,32 +346,50 @@ $(document).ready(function() {
             console.log(results);
             var period = "Current";
             var pPeriod = $("<h4>").html(period);
+
+            // MEASUREMENT TYPE - Imperial is the default when page loads
+            var unit = "Imperial";
+            var buttonTag = $("<button>");
+            buttonTag.attr("class", "btn btn-light click");
+            buttonTag.attr("value","Imperial");
+            buttonTag.attr("id", "changeUnit");
+            var faTag = $("<i>");
+            faTag.attr("class", "fas fa-sync-alt");
+            buttonTag.append(faTag);
+            var pUnit = $("<p>").html("<b>Unit:</b> " + unit + "&nbsp;");
+            pUnit.append(buttonTag);
+
             // TEMPERATURE
             var temp = data["Temperature"]["Imperial"]["Value"];
             var ptemp = $("<p>").html("<b>Temperature: </b>" + temp);
+
             // TEMPERATURE HIGH
             var tempHigh =
                 data["TemperatureSummary"]["Past6HourRange"]["Maximum"][
                     "Imperial"
                 ]["Value"];
             var ptempHigh = $("<p>").html("<b>Todays high: </b>" + tempHigh);
+
             // TEMPERATURE LOW
             var tempLow =
                 data["TemperatureSummary"]["Past6HourRange"]["Minimum"][
                     "Imperial"
                 ]["Value"];
             var ptempLow = $("<p>").html("<b>Todays low: </b>" + tempLow);
+
             // HUMIDITY
             var humidity = data["RelativeHumidity"];
             var phumidity = $("<p>").html("<b>Humidity: </b>" + humidity + "%");
+
             // PRESSURE
             var pressure = data["Pressure"]["Imperial"]["Value"];
             var ppressure = $("<p>").html(
-                "<b>Pressure: </b>" + pressure + " mbar"
-            );
+                "<b>Pressure: </b>" + pressure + " mbar");
+
             // CLOUDS
             var clouds = data["CloudCover"];
             var pclouds = $("<p>").html("<b>Cloud Cover: </b>" + clouds);
+
             // WIND
             var wind = data["WindGust"]["Speed"]["Imperial"]["Value"];
             var pwind = $("<p>").html("<b>Wind: </b>" + wind + " mph");
@@ -380,6 +398,7 @@ $(document).ready(function() {
             var weatherRender = $("#weatherRender");
             weatherRender
                 .append(pPeriod)
+                .append(pUnit)
                 .append(ptemp)
                 .append(ptempHigh)
                 .append(ptempLow)
@@ -641,8 +660,8 @@ $(document).ready(function() {
             }).then(function(results) {
             // display amount result (with commas)
             var newAmount = results.result;
-            newAmount = addCommas(newAmount);
-            $("#targetCurrencyAmount").val(newAmount);
+            var cNewAmount = addCommas(newAmount);
+            $("#targetCurrencyAmount").val(cNewAmount);
         }); // end function
     }; // end function convertAmount
 

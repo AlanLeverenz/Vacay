@@ -35,6 +35,12 @@ svg {
     float:left;
 }
 
+#changeUnit {
+    position: relative;
+    top: -6px;
+    margin-bottom: -10px;
+}
+
 .calculator {
     float:left;
 }
@@ -44,7 +50,7 @@ svg {
 }
 
 #convertBaseAmount {
-    margin-bottom: 10px;
+    margin-top: -10px;
 } 
 
 #currency-one-button, #currency-two-button, 
