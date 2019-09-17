@@ -111,19 +111,20 @@ $(document).ready(function() {
         vacayData.ref().remove();
     });
 
-    // onclick to toggle weather unit type (imperial or metric)
-    $(document).on("click", "#change-unit", function(event) {
+    // onclick to toggle weather unit type EDIT HERE - USE KEY VALUE PAIR OBJECT TO STORE AND RENDER
+    $(document).on("click", "#toggle-unit", function(event) {
         event.preventDefault();
-        console.log("UNIT BUTTON CLICKED");
-        var currentUnit = $("#change-unit button").attr("value");
-        console.log("CURRENT UNIT = " + currentUnit);
-        if ( currentUnit === "Imperial" ) {
+        var pText = $("#unit-name").text();
+        console.log(pText);
+        var gotUnit = pText.includes("Imperial");
+        console.log(gotUnit);
+        if ( gotUnit == true ) {
             $("#weatherRenderImperial").hide();
             $("#weatherRenderMetric").show();
         } else {
             $("#weatherRenderMetric").hide();
             $("#weatherRenderImperial").show();
-        }
+        } 
     });
 
 
@@ -370,12 +371,13 @@ $(document).ready(function() {
             var unit = "Imperial";
             var buttonTag = $("<button>");
             buttonTag.attr("class", "btn btn-light click");
-            buttonTag.attr("value","Imperial");
-            buttonTag.attr("id", "change-unit");
+            buttonTag.attr("name","Imperial");
+            buttonTag.attr("id", "toggle-unit");
             var faTag = $("<i>");
             faTag.attr("class", "fas fa-sync-alt");
             buttonTag.append(faTag);
             var pUnit = $("<p>").html("<b>Unit:</b> " + unit);
+            pUnit.attr("id", "unit-name");
             pUnit.append(buttonTag);
 
             // TEMPERATURE
@@ -437,12 +439,13 @@ $(document).ready(function() {
             var unit = "Metric";
             var buttonTag = $("<button>");
             buttonTag.attr("class", "btn btn-light click");
-            buttonTag.attr("value","Metric");
-            buttonTag.attr("id", "change-unit");
+            buttonTag.attr("name","Metric");
+            buttonTag.attr("id", "toggle-unit");
             var faTag = $("<i>");
             faTag.attr("class", "fas fa-sync-alt");
             buttonTag.append(faTag);
             var pUnit = $("<p>").html("<b>Unit:</b> " + unit);
+            pUnit.attr("id", "unit-name");
             pUnit.append(buttonTag);
 
             // TEMPERATURE
