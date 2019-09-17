@@ -113,6 +113,19 @@ $(document).ready(function() {
 
     // SEARCH COUNTRY, CURRENCY, WEATHER  =============================
 
+    // function to add commas in long integers (for population, currencies)
+    function addCommas(nStr){
+        nStr += '';
+        var x = nStr.split('.');
+        var x1 = x[0];
+        var x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    } // end addCommas function
+
     $("#search-button").on("click", function(event) {
         event.preventDefault();
 
@@ -171,6 +184,7 @@ $(document).ready(function() {
             url: queryURL,
             method: "GET"
         }).then(function(results) {
+            console.log(results);
             var latlng = results[0].latlng;
             var latlnglng = latlng.length;
             if (userInputCountry !== "") {
@@ -223,10 +237,11 @@ $(document).ready(function() {
             var pLanguages = $("<p>").html("<b>Language:</b> " + languages);
 
             var population = results[0].population;
+            population = addCommas(population);
             var pPopulation = $("<p>").html("<b>Population:</b> " + population);
 
-            var timeZone = results[0].timezones[0];
-            var pTimeZone = $("<p>").html("<b>Time Zone:</b> " + timeZone);
+            var timeZone = results[0].timezones.join(", ");
+            var pTimeZone = $("<p>").html("<b>Time Zones:</b> " + timeZone);
 
             var callingCodes = results[0].callingCodes[0];
             var pCallingCodes = $("<p>").html(
@@ -420,7 +435,7 @@ $(document).ready(function() {
     }; // end displayCountryCurrency
 
 
-    // array of currency codes --------------------------------
+    // array of currency codes (collapsed) ----------
     var options = [
             "AED: United Arab Emirates Dirham",
             "AFN: Afghan Afghani",
@@ -624,8 +639,9 @@ $(document).ready(function() {
             url: convertURL,
             method: "GET"
             }).then(function(results) {
-            // display amount result
+            // display amount result (with commas)
             var newAmount = results.result;
+            newAmount = addCommas(newAmount);
             $("#targetCurrencyAmount").val(newAmount);
         }); // end function
     }; // end function convertAmount
