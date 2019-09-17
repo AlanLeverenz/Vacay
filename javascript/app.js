@@ -124,6 +124,8 @@ $(document).ready(function() {
         $("#calc-quote").text("");
         $("#baseCurrencyAmount").val("");
         $("#targetCurrencyAmount").val("");
+        // clear itinerary items from html table
+        $("#itinerary-table > tbody").empty();
         // show cards
         $(".toggle-country").show();
         $(".toggle-currency").show();
