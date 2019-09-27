@@ -92,3 +92,7 @@ svg {
 .add-margin {
     margin: 12px;
 }
+
+@media only screen and (max-width: 575) {
+    body { font-size: 1em; }
+}

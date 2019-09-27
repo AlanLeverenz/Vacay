@@ -85,8 +85,6 @@ $(document).ready(function() {
         $("#targetCurrencyAmount").val("");
         $("#search-term").val("");
         $("#flag").empty();
-
-
     }); // end clear-results-button
 
     // onclick ADD INVENTORY ITEM (FORM) =====================
@@ -346,7 +344,7 @@ $(document).ready(function() {
         });
     } // end getWeatherLatLng function
 
-    // ACCUWEATHER API QUERY STORE IN SESSION STORAGE ====================
+    // ACCUWEATHER API QUERY STORE IN LOCAL STORAGE ====================
 
     function actuallyGetWeather(lockey) {
         var API_key = "ocHoKYTrdtOpop5PXtp2BNKuyqkBfUlk";
