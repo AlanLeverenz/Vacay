@@ -1,7 +1,7 @@
 .jumbotron {
     background-image: url(../images/carib-horseback.JPG); 
     background-position: bottom;
-    height: 200px;
+    height: 180px;
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 10px;
@@ -13,12 +13,16 @@ body {
 }
 
 .toggle-country, .toggle-converter {
-    min-width: 220px;
+    /* min-width: 240px; */
     width: 100%;
 }
 
 .toggle-weather {
-    min-width: 180px;
+    /* min-width: 200px; */
+    width: 100%;
+}
+
+.toggle-search {
     width: 100%;
 }
 
@@ -94,5 +98,10 @@ svg {
 }
 
 @media only screen and (max-width: 575) {
-    body { font-size: 1em; }
+    body { font-size: .9em; }
+    #currency-one-button, #currency-two-button, 
+    #exchangeRateCalc, #convertBaseAmount,
+    #baseCurrencyAmount, #targetCurrencyAmount, #search-term {
+        font-size: .9em;
+    }
 }
