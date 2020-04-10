@@ -1,5 +1,6 @@
 
-![Vacay](/images/readme-images/splash-title.png)
+![Vacay](/images/readme-images/vacay-horse-title.png)
+
 
 ## What it does
 
