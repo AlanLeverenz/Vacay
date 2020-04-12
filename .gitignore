@@ -1,2 +1,4 @@
 .DS_Store
-./javascript/ourApiKeys.javascript
+.env
+/node_modules
+/javascript/ourApiKeys.javascript

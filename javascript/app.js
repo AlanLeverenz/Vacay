@@ -3,6 +3,12 @@ $.ajaxSetup({
     cache: true
 });
 
+// import env file
+// require('dotenv').config();
+// const googleMapsApikey = process.env.googleMapsApikey;
+
+// import googleMapsApikey from 'ourApiKeys.js';
+
 $(document).ready(function() {
 
     // fade in effect to Vacay title
@@ -26,6 +32,8 @@ $(document).ready(function() {
             cache: true,
             url: url
         }); 
+
+        // console.log('googleMapsApiKey = ' + googleMapsApikey);
 
         // Use $.ajax() since it is more flexible than $.getScript
         // Return the jqXHR object so we can chain callbacks

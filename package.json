@@ -1,0 +1,23 @@
+{
+  "name": "vacay",
+  "version": "1.0.0",
+  "description": "vacay app",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlanLeverenz/Vacay.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlanLeverenz/Vacay/issues"
+  },
+  "homepage": "https://github.com/AlanLeverenz/Vacay#readme"
+}
