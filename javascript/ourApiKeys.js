@@ -1,4 +1,10 @@
-export const googleMapsApikey = "AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg";
+// module.exports = {
+
+// googleMapsApikey : "AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg"
+
+// }
+
+// export default googleMapsApikey;
 
 // $("#placesApiSrc").attr(
 //     "src",
@@ -7,3 +13,6 @@ export const googleMapsApikey = "AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg";
 //         "&libraries=places"
 // );
 
+const googleMapsApikey = 'AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg';
+
+module.exports = { googleMapsApikey };
