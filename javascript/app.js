@@ -1,11 +1,5 @@
 const googleMapsApikey = 'AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg';
 
-// require('./ourApiKeys.js');
-
-// const googleMapsApikey = require(googleMapsApikey);
-
-// import googleMapsApikey from './ourApiKeys.js';
-
 // import env file
 // require('dotenv').config();
 // const googleMapsApikey = process.env.googleMapsApikey;
@@ -19,9 +13,6 @@ $(document).ready(function () {
   // fade in effect to Vacay title
   $('h1').fadeIn(4000);
 
-  //Google maps API key
-  // var googleMapsApikey = "AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg";
-  // Temporary variable for current place search country value
   var userInputCountry = '';
   var userinputLatLng = [];
 
