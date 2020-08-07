@@ -12,7 +12,7 @@ After clicking "Let's Go" in the splash page, the app presents a search box to e
 
 ### Search
 
-The user can enter a city or country and Google will list matching search terms from its database. After setting the search query, press the Return key or click the __Search__ button.
+The user can enter a city or country and Google will list matching search terms from its database. After setting the search query, press the Return key or click the **Search** button.
 
 ![Search](/images/readme-images/search-buttons.png)
 
@@ -20,11 +20,11 @@ The user can enter a city or country and Google will list matching search terms 
 
 ![Country Data](/images/readme-images/country-weather-currency-columns.png)
 
-__Country stats.__ Lists basic information and statistics, such as language, population, capitol city, bordering countries, and currency.
+**Country stats.** Lists basic information and statistics, such as language, population, capitol city, bordering countries, and currency.
 
-__Weather.__ The weather's geographic location is the region of the capitol city. The user can switch between Metric and Imperial measurements, i.e., Celsius versus Fahrenheit temperatures, kilometers versus miles.
+**Weather.** The weather's geographic location is the region of the capitol city. The user can switch between Metric and Imperial measurements, i.e., Celsius versus Fahrenheit temperatures, kilometers versus miles.
 
-__Currency.__ The country's currency rate is measured against the US dollar. The user can actually select their own base and target rate currencies. The currency calculator applies the current base/target currencies.
+**Currency.** The country's currency rate is measured against the US dollar. The user can actually select their own base and target rate currencies. The currency calculator applies the current base/target currencies.
 
 ![Currency](/images/readme-images/currency-converter.png)
 
@@ -40,28 +40,30 @@ Five New York Times articles are returned from the country search query. These a
 
 ![Itinerary](images/readme-images/itinerary-list.png)
 
-Click __Add Itinerary__ button to create an itinerary item.
+Click **Add Itinerary** button to create an itinerary item.
 
-Click __Submit__ to save the itinerary item.
+Click **Submit** to save the itinerary item.
 
 Other buttons to click are:
 
-__Remove All__. Removes all itinerary items from the Firebase database.
+**Remove All**. Removes all itinerary items from the Firebase database.
 
-__Hide Form__. Hides the form to reduce the size of the web page.
+**Hide Form**. Hides the form to reduce the size of the web page.
 
 ## Technology
 
 There are four API's at work in this web app.
 
-1) Country Data. https://restcountries.eu
+1. Country Data. https://restcountries.eu
 
-2) Google Maps. https://www.google.com/maps
+2. Google Maps. https://www.google.com/maps
 
-3) AcccuWeather. https://dataservice.accuweather.com.
+3. AcccuWeather. https://dataservice.accuweather.com.
 
-4) Currency. https://data.fixer.io.
+4. Currency. https://data.fixer.io.
 
 The itinerary uses Google's Firebase noSQL database.
+
+To support client-side use of require() calls, Browserify was installed. It recursively analyzes such calls, builds a bundle which can be served in an html script tag.
 
 The URL to the app is https://alanleverenz.github.io/Vacay/
