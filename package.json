@@ -4,6 +4,7 @@
   "description": "vacay app",
   "main": "index.js",
   "dependencies": {
+    "browserify": "^16.5.2",
     "dotenv": "^8.2.0"
   },
   "devDependencies": {},
@@ -14,7 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/AlanLeverenz/Vacay.git"
   },
-  "author": "",
+  "author": "Alan Leverenz, Anya Keller",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/AlanLeverenz/Vacay/issues"

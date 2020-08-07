@@ -1,8 +1,8 @@
-const googleMapsApikey = 'AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg';
+// const googleMapsApikey = 'AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg';
 
 // import env file
-// require('dotenv').config();
-// const googleMapsApikey = process.env.googleMapsApikey;
+require('dotenv').config();
+let googleMapsApikey = process.env.googleMapsApikey;
 
 // AJAX SETUP
 $.ajaxSetup({
