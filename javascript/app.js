@@ -1,8 +1,8 @@
-// const googleMapsApikey = 'AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg';
-
+const googleMapsApikey = 'AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg';
+// module.exports = {
 // import env file
-require('dotenv').config();
-let googleMapsApikey = process.env.googleMapsApikey;
+// require('dotenv').config();
+// let googleMapsApikey = process.env.googleMapsApikey;
 
 // AJAX SETUP
 $.ajaxSetup({
@@ -965,3 +965,6 @@ $(document).ready(function () {
     }); // end vacay.ref
   }); // end submit
 }); // end document.ready
+// }
+
+// modules.export = './app.js';

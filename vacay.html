@@ -23,7 +23,7 @@
     />
 
         <!-- FONT AWESOME KIT -->
-        <script src="https://kit.fontawesome.com/768efcae0e.js"></script>
+        <!-- <script src="https://kit.fontawesome.com/768efcae0e.js"></script> -->
 
         <!-- CSS STYLE LINK -->
         <link rel="stylesheet" href="css/style.css" />
@@ -101,108 +101,112 @@
                 </div>
             </div>
 
-            <!-- CARD ROW FOR COUNTRY WEATHER AND CURRENCY-->
-            <div class="row">
+            <!-- Container Flex -->
+            <div class="container container-flex">
 
-                <!-- COUNTRY INFO - DISPLAY NONE WHEN PAGE LOADS -->
-                <div class="card col-4 mx-auto px-0 toggle-country" style="display:none">
-                    <div class="card-header pb-0" id="country-info-header">
-                        <h5>Country Stats</h5>
-                    </div>
-                    <!-- COUNTRY INFO WILL DISPLAY HERE -->
-                    <div class="card-body" id="country-information"></div>
-                </div>
-                        
-                <!-- WEATHER REPORT - DISPLAY NONE WHEN PAGE LOADS -->
-                <div class="card col-3 mx-auto px-0 toggle-weather" style="display:none">
-                    <div class="card-header pb-0" id="weather-info-header">
-                        <h5>Weather</h5>
-                    </div>
-                    <!-- WEATHER WILL DISPLAY HERE -->
-                    <div class="card-body" id="weatherRender"></div>
-                </div>
+                <!-- CARD ROW FOR COUNTRY WEATHER AND CURRENCY-->
+                <div class="row">
 
-                <!-- CURRENCY CONVERTER - DISPLAY NONE WHEN PAGE LOADS -->
-                <div class="card col-4 mx-auto px-0 toggle-currency" style="display:none">
-                    <div class="card-header pb-0" id="currency-info-header">
-                        <h5>Currency</h5>
+                    <!-- COUNTRY INFO - DISPLAY NONE WHEN PAGE LOADS -->
+                    <div class="card col-4 mx-auto px-0 toggle-country" style="display:none">
+                        <div class="card-header pb-0" id="country-info-header">
+                            <h5>Country Stats</h5>
+                        </div>
+                        <!-- COUNTRY INFO WILL DISPLAY HERE -->
+                        <div class="card-body" id="country-information"></div>
+                    </div>
+                            
+                    <!-- WEATHER REPORT - DISPLAY NONE WHEN PAGE LOADS -->
+                    <div class="card col-3 mx-auto px-0 toggle-weather" style="display:none">
+                        <div class="card-header pb-0" id="weather-info-header">
+                            <h5>Weather</h5>
+                        </div>
+                        <!-- WEATHER WILL DISPLAY HERE -->
+                        <div class="card-body" id="weatherRender"></div>
                     </div>
 
-                    <!-- CURRENCY WILL DISPLAY HERE -->
-                    <div class="card-body">
+                    <!-- CURRENCY CONVERTER - DISPLAY NONE WHEN PAGE LOADS -->
+                    <div class="card col-4 mx-auto px-0 toggle-currency" style="display:none">
+                        <div class="card-header pb-0" id="currency-info-header">
+                            <h5>Currency</h5>
+                        </div>
 
-                        <!-- CURRENCY NAME AND CODE INSERTED HERE -->
-                        <div id="currencyNameCode"></div>
+                        <!-- CURRENCY WILL DISPLAY HERE -->
+                        <div class="card-body">
 
-                        <!-- place calculator in a card -->
-                        <div class="card">
-                            <div class="card-body">
+                            <!-- CURRENCY NAME AND CODE INSERTED HERE -->
+                            <div id="currencyNameCode"></div>
 
-                                <!-- USER SELECTS FROM DROPDOWN -->
-                                <!-- base currency dropdown button -->
-                                <div class="dropdown">
-                                    <button class="btn btn-light dropdown-toggle" type="button" id="currency-one-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Base
-                                    </button>
-                                    <div class="dropdown-menu click" id="select1" aria-labelledby="currency-one-button"></div>
-                                </div>
-                                <div id="source-code"></div>
+                            <!-- place calculator in a card -->
+                            <div class="card">
+                                <div class="card-body">
 
-                                <div class="spacer"></div>
-
-                                <!-- target currency dropdown button -->
-                                <div class="dropdown">
-                                    <button class="btn btn-light dropdown-toggle" type="button" id="currency-two-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Target
-                                    </button>
-                                    <div class="dropdown-menu click" id="select2" aria-labelledby="currency-two-button"></div>
-                                </div>
-                                <div id="target-code"></div>
-
-                                <div class="spacer"></div>
-
-                                <!-- calculator button -->
-                                <div class="calculator">
-                                    <button
-                                        class="btn btn-light click"
-                                        id="exchangeRateCalc">
-                                        <i class="fas fa-calculator"></i> Rate
-                                    </button>
-                                    <!-- reverse currencies button -->
-                                    <button
-                                        class="btn btn-light click"
-                                        id="reverseCodesCalc">
-                                        <i class="fas fa-sync-alt"></i> 
-                                    </button>
-                                </div>
-                                <div id="calc-quote"></div>
-                            </div> <!-- end card body -->
-                        </div> <!-- end converter inside card -->
-
-                        <!-- Converter Card -->
-                        <div class="card">
-                            <div class="card-body">
-
-                                <form>
-                                    <div class="form-group">
-                                        <label for="baseCurrencyAmount">Base Amount</label>
-                                        <input type="text" class="form-control" id="baseCurrencyAmount" placeholder="">
+                                    <!-- USER SELECTS FROM DROPDOWN -->
+                                    <!-- base currency dropdown button -->
+                                    <div class="dropdown">
+                                        <button class="btn btn-light dropdown-toggle" type="button" id="currency-one-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Base
+                                        </button>
+                                        <div class="dropdown-menu click" id="select1" aria-labelledby="currency-one-button"></div>
                                     </div>
-                                    <div class="form-group">
+                                    <div id="source-code"></div>
+
+                                    <div class="spacer"></div>
+
+                                    <!-- target currency dropdown button -->
+                                    <div class="dropdown">
+                                        <button class="btn btn-light dropdown-toggle" type="button" id="currency-two-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Target
+                                        </button>
+                                        <div class="dropdown-menu click" id="select2" aria-labelledby="currency-two-button"></div>
+                                    </div>
+                                    <div id="target-code"></div>
+
+                                    <div class="spacer"></div>
+
+                                    <!-- calculator button -->
+                                    <div class="calculator">
                                         <button
                                             class="btn btn-light click"
-                                            id="convertBaseAmount">
-                                            <i class="fas fa-arrow-down"></i> Convert
+                                            id="exchangeRateCalc">
+                                            <i class="fas fa-calculator"></i> Rate
                                         </button>
-                                        <input type="text" class="form-control" id="targetCurrencyAmount" placeholder="">
+                                        <!-- reverse currencies button -->
+                                        <button
+                                            class="btn btn-light click"
+                                            id="reverseCodesCalc">
+                                            <i class="fas fa-sync-alt"></i> 
+                                        </button>
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div> <!-- end card body -->
+                                    <div id="calc-quote"></div>
+                                </div> <!-- end card body -->
+                            </div> <!-- end converter inside card -->
 
-                </div> <!-- end currency converter card -->
-            </div> <!-- end row -->
+                            <!-- Converter Card -->
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="baseCurrencyAmount">Base Amount</label>
+                                            <input type="text" class="form-control" id="baseCurrencyAmount" placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <button
+                                                class="btn btn-light click"
+                                                id="convertBaseAmount">
+                                                <i class="fas fa-arrow-down"></i> Convert
+                                            </button>
+                                            <input type="text" class="form-control" id="targetCurrencyAmount" placeholder="">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div> <!-- end card body -->
+
+                    </div> <!-- end currency converter card -->
+                </div> <!-- end row -->
+            </div> <!-- container-flex-->
         </div> <!-- container -->
 
         <!-- NEWS SECTION -->
@@ -341,14 +345,16 @@
     <script>$(".datepicker").datepicker();</script>
 
     <!-- font awesome kit -->
-    <script src="https://kit.fontawesome.com/768efcae0e.js"></script>
+    <!-- <script src="https://kit.fontawesome.com/768efcae0e.js"></script> -->
 
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-database.js"></script>
 
     <!-- JS source file -->
     <!-- <script type="text/javascript" src="javascript/currency.js"></script> -->
+    <!-- <script src="bundle.js"></script> -->
     <script type="text/javascript" src="javascript/app.js"></script>
     <script type="text/javascript" src="javascript/news.js"></script>
 

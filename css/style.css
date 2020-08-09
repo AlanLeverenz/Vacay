@@ -1,107 +1,151 @@
 .jumbotron {
-    background-image: url(../images/carib-horseback.JPG); 
-    background-position: bottom;
-    height: 180px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 10px;
-    color: rgb(55, 31, 211);
+  background-image: url(../images/carib-horseback.JPG);
+  background-position: bottom;
+  height: 180px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 10px;
+  color: rgb(55, 31, 211);
 }
 
 body {
- font-size: 1.2rem;
+  font-size: 1.2rem;
 }
 
-.toggle-country, .toggle-converter {
-    /* min-width: 240px; */
-    width: 100%;
+.toggle-country,
+.toggle-converter {
+  /* min-width: 240px; */
+  width: 100%;
 }
 
 .toggle-weather {
-    /* min-width: 200px; */
-    width: 100%;
+  /* min-width: 200px; */
+  width: 100%;
 }
 
 .toggle-search {
-    width: 100%;
+  width: 100%;
 }
 
 .card-header {
-    background-color: rgb(4, 158, 230); 
-    color: white;
+  background-color: rgb(4, 158, 230);
+  color: white;
 }
 
 svg {
-    float: right;
+  float: right;
 }
 
 .dropdown-toggle {
-    float:left;
+  float: left;
 }
 
 #toggle-unit {
-    position: relative;
-    top: -6px;
-    margin-bottom: -10px;
-    margin-left: 10px;
+  position: relative;
+  top: -6px;
+  margin-bottom: -10px;
+  margin-left: 10px;
 }
 
 .calculator {
-    float:left;
+  float: left;
 }
 
 .spacer {
-    clear:both;
+  clear: both;
 }
 
 #convertBaseAmount {
-    margin-top: -10px;
-    margin-bottom: 5px;
-} 
-
-#currency-one-button, #currency-two-button, 
-#exchangeRateCalc, #convertBaseAmount,
-#baseCurrencyAmount, #targetCurrencyAmount, #search-term {
-    font-size: 1.2rem;
+  margin-top: -10px;
+  margin-bottom: 5px;
 }
 
-#baseCurrencyAmount, #targetCurrencyAmount {
-    font-weight: 700;
+#currency-one-button,
+#currency-two-button,
+#exchangeRateCalc,
+#convertBaseAmount,
+#baseCurrencyAmount,
+#targetCurrencyAmount,
+#search-term {
+  font-size: 1.2rem;
+}
+
+#baseCurrencyAmount,
+#targetCurrencyAmount {
+  font-weight: 700;
 }
 
 .dropdown {
-    display: inline-block;
+  display: inline-block;
 }
 
-#source-code, #calc-quote, #target-code {
-    float:right;
+#source-code,
+#calc-quote,
+#target-code {
+  float: right;
 }
 
 #remove-all-itinerary-button {
-    float:right;
-    margin: 0 12px;
+  float: right;
+  margin: 0 12px;
 }
 
 #add-itinerary-button {
-    margin: 0 12px;
+  margin: 0 12px;
 }
 
 #submit-itinerary-button {
-    float:left;
+  float: left;
 }
 #hide-itinerary-form-button {
-    float:right;
+  float: right;
 }
 
 .add-margin {
-    margin: 12px;
+  margin: 12px;
+}
+
+.container {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.container-flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* @media (min-width: 675px) {
+    .container-flex {
+        flex-direction: row;
+    } */
+
+.toggle-country .toggle-weather .toggle-converter {
+  min-width: 300;
 }
 
 @media only screen and (max-width: 575) {
-    body { font-size: .9em; }
-    #currency-one-button, #currency-two-button, 
-    #exchangeRateCalc, #convertBaseAmount,
-    #baseCurrencyAmount, #targetCurrencyAmount, #search-term {
-        font-size: .9em;
-    }
+  /* .container-flex {
+    flex-direction: row;
+  } */
+  body {
+    font-size: 0.9em;
+  }
+  #currency-one-button,
+  #currency-two-button,
+  #exchangeRateCalc,
+  #convertBaseAmount,
+  #baseCurrencyAmount,
+  #targetCurrencyAmount,
+  #search-term {
+    font-size: 0.9em;
+  }
+  .toggle-country .toggle-weather {
+    width: 50%;
+  }
+  .toggle-converter {
+    width: auto;
+  }
 }
