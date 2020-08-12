@@ -12,17 +12,6 @@ body {
   font-size: 1.2rem;
 }
 
-.toggle-country,
-.toggle-converter {
-  /* min-width: 240px; */
-  width: 100%;
-}
-
-.toggle-weather {
-  /* min-width: 200px; */
-  width: 100%;
-}
-
 .toggle-search {
   width: 100%;
 }
@@ -113,23 +102,22 @@ svg {
 
 .container-flex {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
 }
 
-/* @media (min-width: 675px) {
-    .container-flex {
-        flex-direction: row;
-    } */
-
-.toggle-country .toggle-weather .toggle-converter {
-  min-width: 300;
+#country {
+  width: 30%;
+}
+#weather {
+  width: 30%;
+}
+#currency {
+  width: auto;
 }
 
-@media only screen and (max-width: 575) {
-  /* .container-flex {
-    flex-direction: row;
-  } */
+/* small sizes */
+@media only screen and (max-width: 761) {
   body {
     font-size: 0.9em;
   }
@@ -142,10 +130,26 @@ svg {
   #search-term {
     font-size: 0.9em;
   }
-  .toggle-country .toggle-weather {
-    width: 50%;
+}
+
+/* medium sizes */
+@media screen and (max-width: 864px) {
+  .container-flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
   }
-  .toggle-converter {
-    width: auto;
+  .box {
+    margin-bottom: 0.5em;
+  }
+  #country {
+    width: 48%;
+  }
+  #weather {
+    width: 48%;
+  }
+  #currency {
+    width: 98%;
   }
 }

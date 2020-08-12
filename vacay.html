@@ -20,10 +20,10 @@
         <link
         rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+        />
 
         <!-- FONT AWESOME KIT -->
-        <!-- <script src="https://kit.fontawesome.com/768efcae0e.js"></script> -->
+        <script src="https://kit.fontawesome.com/768efcae0e.js"></script>
 
         <!-- CSS STYLE LINK -->
         <link rel="stylesheet" href="css/style.css" />
@@ -104,11 +104,11 @@
             <!-- Container Flex -->
             <div class="container container-flex">
 
-                <!-- CARD ROW FOR COUNTRY WEATHER AND CURRENCY-->
-                <div class="row">
+                <!-- CARDS FOR COUNTRY WEATHER AND CURRENCY-->
+                <!-- <div class="row"> -->
 
                     <!-- COUNTRY INFO - DISPLAY NONE WHEN PAGE LOADS -->
-                    <div class="card col-4 mx-auto px-0 toggle-country" style="display:none">
+                    <div class="card box mx-auto px-0 toggle-country" id="country" style="display:none">
                         <div class="card-header pb-0" id="country-info-header">
                             <h5>Country Stats</h5>
                         </div>
@@ -117,7 +117,7 @@
                     </div>
                             
                     <!-- WEATHER REPORT - DISPLAY NONE WHEN PAGE LOADS -->
-                    <div class="card col-3 mx-auto px-0 toggle-weather" style="display:none">
+                    <div class="card box mx-auto px-0 toggle-weather"  id="weather" style="display:none">
                         <div class="card-header pb-0" id="weather-info-header">
                             <h5>Weather</h5>
                         </div>
@@ -126,7 +126,7 @@
                     </div>
 
                     <!-- CURRENCY CONVERTER - DISPLAY NONE WHEN PAGE LOADS -->
-                    <div class="card col-4 mx-auto px-0 toggle-currency" style="display:none">
+                    <div class="card box mx-auto px-0 toggle-currency" id="currency" style="display:none">
                         <div class="card-header pb-0" id="currency-info-header">
                             <h5>Currency</h5>
                         </div>
@@ -205,7 +205,7 @@
                         </div> <!-- end card body -->
 
                     </div> <!-- end currency converter card -->
-                </div> <!-- end row -->
+                <!-- </div> end row -->
             </div> <!-- container-flex-->
         </div> <!-- container -->
 
