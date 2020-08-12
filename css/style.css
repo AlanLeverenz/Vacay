@@ -95,7 +95,7 @@ svg {
 }
 
 .container {
-  width: 90%;
+  width: 100%;
   max-width: 900px;
   margin: 0 auto;
 }
@@ -116,8 +116,8 @@ svg {
   width: auto;
 }
 
-/* small sizes */
-@media only screen and (max-width: 761) {
+/* extra small */
+@media only screen and (max-width: 576px) {
   body {
     font-size: 0.9em;
   }
@@ -132,8 +132,12 @@ svg {
   }
 }
 
+/* small sizes */
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+}
+
 /* medium sizes */
-@media screen and (max-width: 864px) {
+@media screen and (max-width: 769px) {
   .container-flex {
     display: flex;
     flex-direction: row;
@@ -144,12 +148,12 @@ svg {
     margin-bottom: 0.5em;
   }
   #country {
-    width: 48%;
+    width: 50%;
   }
   #weather {
-    width: 48%;
+    width: 50%;
   }
   #currency {
-    width: 98%;
+    width: 100%;
   }
 }
