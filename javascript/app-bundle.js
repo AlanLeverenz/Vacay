@@ -1,3 +1,4 @@
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 // require api key data
 const chain = require('./ourApiKeys');
 
@@ -6,6 +7,8 @@ const googleMapsApikey = chain.keys.googleMapsApikey;
 const accuApiKey = chain.keys.accuApiKey;
 const fixerApiKey = chain.keys.fixerApiKey;
 const firebaseApiKey = chain.keys.firebaseApiKey;
+
+// const googleMapsApiKey = 'AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg';
 
 // AJAX SETUP
 $.ajaxSetup({
@@ -32,7 +35,9 @@ $(document).ready(function () {
       url: url,
     });
 
-    // Using $.ajax() since it is more flexible than $.getScript
+    // console.log('googleMapsApiKey = ' + googleMapsApikey);
+
+    // Use $.ajax() since it is more flexible than $.getScript
     // Return the jqXHR object so we can chain callbacks
     return jQuery.ajax(options);
   };
@@ -321,6 +326,7 @@ $(document).ready(function () {
   // WEATHER API ========================================
 
   function getWeatherLatLng(latlng) {
+    // accuApiKey = 'ocHoKYTrdtOpop5PXtp2BNKuyqkBfUlk';
     var latlengQueryURL =
       'https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=' +
       accuApiKey +
@@ -340,6 +346,7 @@ $(document).ready(function () {
   // ACCUWEATHER API QUERY STORE IN LOCAL STORAGE ====================
 
   function actuallyGetWeather(lockey) {
+    // var accuApiKey = 'ocHoKYTrdtOpop5PXtp2BNKuyqkBfUlk';
     var actualWeatherURL =
       'https://dataservice.accuweather.com/currentconditions/v1/' +
       lockey +
@@ -551,6 +558,7 @@ $(document).ready(function () {
   // GET RATE FOR CURRENCY CODE ======================================
   function setCurrency(base, other) {
     var url_base = 'https://data.fixer.io/api/';
+    // var fixerApiKey = '231d60d3c3c46df524fec57f238b3a02';
     var endpoint = 'latest';
     var currencyURL =
       url_base +
@@ -787,6 +795,7 @@ $(document).ready(function () {
   // CONVERT CURRENCY AMOUNT =================================
   function convertAmount(from, to, amount) {
     var url_base = 'https://data.fixer.io/api/';
+    // var fixerApiKey = '231d60d3c3c46df524fec57f238b3a02';
     var endpoint = 'convert';
     var convertURL =
       url_base +
@@ -963,3 +972,16 @@ $(document).ready(function () {
     }); // end vacay.ref
   }); // end submit
 }); // end document.ready
+
+},{"./ourApiKeys":2}],2:[function(require,module,exports){
+const keys = {
+  googleMapsApikey: 'AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg',
+  accuApiKey: 'ocHoKYTrdtOpop5PXtp2BNKuyqkBfUlk',
+  nytApiKey: 'GAN5Vuqp6dyl6vNHxlmwbLizhaZMVVf6',
+  fixerApiKey: '231d60d3c3c46df524fec57f238b3a02',
+  firebaseApiKey: 'AIzaSyD5TgHMFez2lODS4UgYrIobJSWGPtf0bI8',
+};
+
+exports.keys = keys;
+
+},{}]},{},[1]);
