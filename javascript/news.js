@@ -22,7 +22,7 @@ $(document).ready(function () {
     // fetch form values
     var search = $('#search-term').val().trim();
     var records = 5;
-    var startYear = '&start_date=01012018';
+    var startYear = '&start_date=01012019';
 
     // build queryURL
     // get api key
