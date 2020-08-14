@@ -1,11 +1,16 @@
 // require api key data
 const chain = require('./ourApiKeys');
 
-// get api keys
+// assign api keys
 const googleMapsApikey = chain.keys.googleMapsApikey;
 const accuApiKey = chain.keys.accuApiKey;
 const fixerApiKey = chain.keys.fixerApiKey;
 const firebaseApiKey = chain.keys.firebaseApiKey;
+const firebaseAuthDomain = chain.keys.firebaseAuthDomain;
+const firebaseDatabaseURL = chain.keys.firebaseDatabaseURL;
+const firebaseProjectId = chain.keys.firebaseProjectId;
+const firebaseMessagingSenderId = chain.keys.firebaseMessagingSenderId;
+const firebaseAppId = chain.keys.firebaseAppId;
 
 // AJAX SETUP
 $.ajaxSetup({
@@ -882,13 +887,12 @@ $(document).ready(function () {
   // FIREBASE CODE FOR STORING INVENTORY TABLE ITEMS
   var firebaseConfig = {
     apiKey: firebaseApiKey,
-    // apiKey: 'AIzaSyD5TgHMFez2lODS4UgYrIobJSWGPtf0bI8',
-    authDomain: 'bcs-vacay-p1.firebaseapp.com',
-    databaseURL: 'https://bcs-vacay-p1.firebaseio.com',
-    projectId: 'bcs-vacay-p1',
+    authDomain: firebaseAuthDomain,
+    databaseURL: firebaseDatabaseURL,
+    projectId: firebaseProjectId,
     storageBucket: '',
-    messagingSenderId: '1029877283379',
-    appId: '1:1029877283379:web:7e7ee570b829e6699cc146',
+    messagingSenderId: firebaseMessagingSenderId,
+    appId: firebaseAppId,
   };
 
   // Initialize Firebase
