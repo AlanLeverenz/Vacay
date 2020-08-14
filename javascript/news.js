@@ -1,5 +1,5 @@
 // require api key data
-const chain = require('./ourApiKeys');
+const chain = require('./apikeys');
 
 $(document).ready(function () {
   // onclick CLEAR ==============================================

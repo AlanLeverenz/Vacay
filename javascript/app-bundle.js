@@ -1,14 +1,33 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-// require api key data
-const chain = require('./ourApiKeys');
+const keys = {
+  googleMapsApikey: 'AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg',
+  accuApiKey: 'ocHoKYTrdtOpop5PXtp2BNKuyqkBfUlk',
+  nytApiKey: 'GAN5Vuqp6dyl6vNHxlmwbLizhaZMVVf6',
+  fixerApiKey: '231d60d3c3c46df524fec57f238b3a02',
+  firebaseApiKey: 'AIzaSyD5TgHMFez2lODS4UgYrIobJSWGPtf0bI8',
+  firebaseAuthDomain: 'bcs-vacay-p1.firebaseapp.com',
+  firebaseDatabaseURL: 'https://bcs-vacay-p1.firebaseio.com',
+  firebaseProjectId: 'bcs-vacay-p1',
+  firebaseMessagingSenderId: '1029877283379',
+  firebaseAppId: '1:1029877283379:web:7e7ee570b829e6699cc146',
+};
 
-// get api keys
+exports.keys = keys;
+
+},{}],2:[function(require,module,exports){
+// require api key data
+const chain = require('./apikeys');
+
+// assign api keys
 const googleMapsApikey = chain.keys.googleMapsApikey;
 const accuApiKey = chain.keys.accuApiKey;
 const fixerApiKey = chain.keys.fixerApiKey;
 const firebaseApiKey = chain.keys.firebaseApiKey;
-
-// const googleMapsApiKey = 'AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg';
+const firebaseAuthDomain = chain.keys.firebaseAuthDomain;
+const firebaseDatabaseURL = chain.keys.firebaseDatabaseURL;
+const firebaseProjectId = chain.keys.firebaseProjectId;
+const firebaseMessagingSenderId = chain.keys.firebaseMessagingSenderId;
+const firebaseAppId = chain.keys.firebaseAppId;
 
 // AJAX SETUP
 $.ajaxSetup({
@@ -35,9 +54,7 @@ $(document).ready(function () {
       url: url,
     });
 
-    // console.log('googleMapsApiKey = ' + googleMapsApikey);
-
-    // Use $.ajax() since it is more flexible than $.getScript
+    // Using $.ajax() since it is more flexible than $.getScript
     // Return the jqXHR object so we can chain callbacks
     return jQuery.ajax(options);
   };
@@ -326,7 +343,6 @@ $(document).ready(function () {
   // WEATHER API ========================================
 
   function getWeatherLatLng(latlng) {
-    // accuApiKey = 'ocHoKYTrdtOpop5PXtp2BNKuyqkBfUlk';
     var latlengQueryURL =
       'https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=' +
       accuApiKey +
@@ -346,7 +362,6 @@ $(document).ready(function () {
   // ACCUWEATHER API QUERY STORE IN LOCAL STORAGE ====================
 
   function actuallyGetWeather(lockey) {
-    // var accuApiKey = 'ocHoKYTrdtOpop5PXtp2BNKuyqkBfUlk';
     var actualWeatherURL =
       'https://dataservice.accuweather.com/currentconditions/v1/' +
       lockey +
@@ -558,7 +573,6 @@ $(document).ready(function () {
   // GET RATE FOR CURRENCY CODE ======================================
   function setCurrency(base, other) {
     var url_base = 'https://data.fixer.io/api/';
-    // var fixerApiKey = '231d60d3c3c46df524fec57f238b3a02';
     var endpoint = 'latest';
     var currencyURL =
       url_base +
@@ -795,7 +809,6 @@ $(document).ready(function () {
   // CONVERT CURRENCY AMOUNT =================================
   function convertAmount(from, to, amount) {
     var url_base = 'https://data.fixer.io/api/';
-    // var fixerApiKey = '231d60d3c3c46df524fec57f238b3a02';
     var endpoint = 'convert';
     var convertURL =
       url_base +
@@ -891,13 +904,12 @@ $(document).ready(function () {
   // FIREBASE CODE FOR STORING INVENTORY TABLE ITEMS
   var firebaseConfig = {
     apiKey: firebaseApiKey,
-    // apiKey: 'AIzaSyD5TgHMFez2lODS4UgYrIobJSWGPtf0bI8',
-    authDomain: 'bcs-vacay-p1.firebaseapp.com',
-    databaseURL: 'https://bcs-vacay-p1.firebaseio.com',
-    projectId: 'bcs-vacay-p1',
+    authDomain: firebaseAuthDomain,
+    databaseURL: firebaseDatabaseURL,
+    projectId: firebaseProjectId,
     storageBucket: '',
-    messagingSenderId: '1029877283379',
-    appId: '1:1029877283379:web:7e7ee570b829e6699cc146',
+    messagingSenderId: firebaseMessagingSenderId,
+    appId: firebaseAppId,
   };
 
   // Initialize Firebase
@@ -973,15 +985,4 @@ $(document).ready(function () {
   }); // end submit
 }); // end document.ready
 
-},{"./ourApiKeys":2}],2:[function(require,module,exports){
-const keys = {
-  googleMapsApikey: 'AIzaSyAAXRzfOEywj2IQRnUNL42XHdT43bu0VUg',
-  accuApiKey: 'ocHoKYTrdtOpop5PXtp2BNKuyqkBfUlk',
-  nytApiKey: 'GAN5Vuqp6dyl6vNHxlmwbLizhaZMVVf6',
-  fixerApiKey: '231d60d3c3c46df524fec57f238b3a02',
-  firebaseApiKey: 'AIzaSyD5TgHMFez2lODS4UgYrIobJSWGPtf0bI8',
-};
-
-exports.keys = keys;
-
-},{}]},{},[1]);
+},{"./apikeys":1}]},{},[2]);

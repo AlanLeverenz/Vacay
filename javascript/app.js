@@ -1,5 +1,5 @@
 // require api key data
-const chain = require('./ourApiKeys');
+const chain = require('./apikeys');
 
 // assign api keys
 const googleMapsApikey = chain.keys.googleMapsApikey;
