@@ -52,7 +52,9 @@ Other buttons to click are:
 
 ## Technology
 
-There are four API's at work in this web app.
+### API's
+
+There are six API's at work in this web app.
 
 1. Country Data. https://restcountries.eu
 
@@ -62,8 +64,29 @@ There are four API's at work in this web app.
 
 4. Currency. https://data.fixer.io.
 
+5. NY Times. https://api.nytimes.com/
+
+6. Google Firebase. https://firebase.google.com
+
+### NoSQL Database
+
 The itinerary uses Google's Firebase noSQL database.
 
-To support client-side use of require() calls, Browserify was installed. It recursively analyzes such calls, builds a bundle which can be served in an html script tag.
+### Browserify
+
+API key management made it necessary to install Browserify as a NodeJS dependency.
+
+https://github.com/browserify/browserify
+
+Browserify supports client-side browsers by bundling JavaScript files with 'require' declarations that import external modules. This is useful in the absence of a nodeJS server that normally handles module imports/exports.
+
+Browersify uses the following CLI to generate a bundle file, which is inserted in the HTML file's script tag, e.g.:
+
+```
+$ browserify app.js > bundle.js
+
+<script type="text/javascript" src="bundle.js"></script>
+
+```
 
 The URL to the app is https://alanleverenz.github.io/Vacay/
